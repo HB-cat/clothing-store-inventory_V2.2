@@ -1,0 +1,46 @@
+### ==========================================================
+### 分类管理 — CRUD + 拖拽排序
+### 先保证 {{token}} 在 env 中有效
+### ==========================================================
+
+### 1. 获取分类列表（注册后自动生成5个预置分类）
+GET http://localhost:8080/api/categories
+Authorization: Bearer {{token}}
+
+### 2. 新增分类
+POST http://localhost:8080/api/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "鞋类"
+}
+
+### 3. 修改分类名称（把 id 换成实际值）
+PUT http://localhost:8080/api/categories/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "裙装类"
+}
+
+### 4. 删除分类（分类下有商品会提示）
+DELETE http://localhost:8080/api/categories/99
+Authorization: Bearer {{token}}
+
+### 5. 批量更新排序
+PUT http://localhost:8080/api/categories/sort
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+[
+  {
+    "id": 1,
+    "sortOrder": 2
+  },
+  {
+    "id": 2,
+    "sortOrder": 1
+  }
+]

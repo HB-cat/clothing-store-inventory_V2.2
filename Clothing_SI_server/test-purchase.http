@@ -1,0 +1,32 @@
+### ==========================================================
+### 进货入库
+### 先保证 {{token}} 有效，且已有商品
+### ==========================================================
+
+### 1. 来源1：从我的商品进货补货
+POST http://localhost:8080/api/purchases/my-products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 2,
+  "combinationId": 1,
+  "quantity": 10
+}
+
+### 2. 来源2：新建商品并入库（一步完成）
+POST http://localhost:8080/api/purchases/new-product
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "新进货T恤",
+  "categoryId": 22,
+  "purchasePrice": 35.00,
+  "sellingPrice": 79.00,
+  "imageUrl": "",
+  "combinations": [
+    { "attrsJson": "{\"颜色\":\"白色\",\"尺码\":\"L\"}", "stock": 30 },
+    { "attrsJson": "{\"颜色\":\"黑色\",\"尺码\":\"XL\"}", "stock": 20 }
+  ]
+}

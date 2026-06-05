@@ -1,0 +1,25 @@
+# Maven
+clothing_SI_server/target/
+clothing_SI_server/HELP.md
+
+# Gradle
+Clothing_SI_client/.gradle/
+Clothing_SI_client/build/
+Clothing_SI_client/app/build/
+Clothing_SI_client/local.properties
+Clothing_SI_client/gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+**/application-local.properties
+**/*.env

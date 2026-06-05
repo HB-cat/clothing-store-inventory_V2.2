@@ -1,0 +1,82 @@
+### ==========================================================
+### 认证管理 — 注册/登录/修改密码
+### 先运行 #1~#3 注册，复制 username 到 #5，再运行 #5 登录
+### 登录后将 token 更新到 http-client.env.json
+### ==========================================================
+
+### 1. 注册 - 零售商
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "role": 1,
+  "password": "abc123456",
+  "shopName": "小张服装店"
+}
+
+### 2. 注册 - 批发商
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "role": 2,
+  "password": "abc123456",
+  "shopName": "王老板批发"
+}
+
+### 3. 注册 - 买家
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "role": 3,
+  "password": "abc123456",
+  "nickname": "李小姐"
+}
+
+### 4. 错误测试 - 密码太短
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "role": 1,
+  "password": "123",
+  "shopName": "测试店铺"
+}
+
+### 5. 登录（把 username 改成注册返回的实际值）
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "ret_gW989",
+  "password": "abc123456"
+}
+
+### 6. 错误测试 - 密码错误
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "ret_Ab3Xy",
+  "password": "wrongpassword"
+}
+
+### 7. 管理员登录（启动时自动创建）
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "heben",
+  "password": "heben0831"
+}
+
+### 8. 修改密码
+POST http://localhost:8080/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "abc123456",
+  "newPassword": "def654321"
+}

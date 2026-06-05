@@ -1,0 +1,80 @@
+### ==========================================================
+### 记账 + 草稿账单 + 退货
+### 先保证 {{token}} 有效，且已有商品（走 test-product.http）
+### ==========================================================
+
+### ——— 快捷记账 ———
+
+### 1. 快捷记账（combinationId 从商品列表获取）
+POST http://localhost:8080/api/sales/quick
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "buyerName": "散客",
+  "items": [
+    {
+      "combinationId": 1,
+      "quantity": 2,
+      "unitPrice": 150.00
+    }
+  ]
+}
+
+### ——— 草稿账单 ———
+
+### 2. 创建草稿账单
+POST http://localhost:8080/api/draft-bills
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 3. 草稿加商品（id 和 combinationId 换成实际值）
+POST http://localhost:8080/api/draft-bills/1/items
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1,
+  "combinationId": 2,
+  "attrsJson": "{\"颜色\":\"红色\",\"尺码\":\"L\"}",
+  "quantity": 3,
+  "unitPrice": 150.00
+}
+
+### 4. 获取草稿列表
+GET http://localhost:8080/api/draft-bills
+Authorization: Bearer {{token}}
+
+### 5. 删除草稿中的商品
+DELETE http://localhost:8080/api/draft-bills/1/items/1
+Authorization: Bearer {{token}}
+
+### 6. 提交草稿
+POST http://localhost:8080/api/draft-bills/1/submit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "buyerName": "李小姐"
+}
+
+### ——— 账单查询 ———
+
+### 7. 今日销售
+GET http://localhost:8080/api/sales/today
+Authorization: Bearer {{token}}
+
+### 8. 本月销售
+GET http://localhost:8080/api/sales/month
+Authorization: Bearer {{token}}
+
+### ——— 退货 ———
+
+### 9. 退货（saleItemId 从销售明细获取）
+POST http://localhost:8080/api/sales/return
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "saleItemId": 1
+}

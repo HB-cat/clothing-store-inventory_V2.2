@@ -1,0 +1,35 @@
+### ==========================================================
+### 属性管理 — 属性组CRUD + 属性值批量添加
+### 先保证 {{token}} 在 env 中有效
+### ==========================================================
+
+### 1. 获取属性组列表（注册后自动生成5个组，含属性值）
+GET http://localhost:8080/api/attributes/groups
+Authorization: Bearer {{token}}
+
+### 2. 新增属性组
+POST http://localhost:8080/api/attributes/groups
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "袖型"
+}
+
+### 3. 批量添加属性值（groupId 换成 #1 返回的实际ID）
+POST http://localhost:8080/api/attributes/values
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "groupId": 6,
+  "values": ["卡其色", "灰色"]
+}
+
+### 4. 删除属性组（预置组会提示不可删除）
+DELETE http://localhost:8080/api/attributes/groups/1
+Authorization: Bearer {{token}}
+
+### 5. 删除属性值（预置值会提示不可删除）
+DELETE http://localhost:8080/api/attributes/values/1
+Authorization: Bearer {{token}}

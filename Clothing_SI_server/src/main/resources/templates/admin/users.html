@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户管理 - Clothing-SI 管理后台</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/admin/users">Clothing-SI 管理后台</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link active" href="/admin/users">用户管理</a>
+            <a class="nav-link" href="/admin/data">数据查看</a>
+            <a class="nav-link" href="/admin/config">系统配置</a>
+            <a class="nav-link text-danger" href="/admin/logout">退出</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2">
+                <div class="col-auto">
+                    <input type="text" name="keyword" class="form-control" placeholder="搜索用户名..."
+                           th:value="${keyword}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-primary">搜索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">用户列表</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>角色</th>
+                    <th>店铺/昵称</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${users}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.username}"></td>
+                    <td>
+                        <span th:if="${u.role == 1}" class="badge bg-info">零售商</span>
+                        <span th:if="${u.role == 2}" class="badge bg-warning text-dark">批发商</span>
+                        <span th:if="${u.role == 3}" class="badge bg-success">买家</span>
+                    </td>
+                    <td>
+                        <span th:if="${u.shopName != null}" th:text="${u.shopName}"></span>
+                        <span th:if="${u.nickname != null}" th:text="${u.nickname}"></span>
+                        <span th:if="${u.shopName == null and u.nickname == null}">—</span>
+                    </td>
+                    <td>
+                        <span th:if="${u.status == 1}" class="text-success">正常</span>
+                        <span th:if="${u.status == 0}" class="text-danger">禁用</span>
+                    </td>
+                    <td>
+                        <form method="post" action="/admin/users/toggle" style="display:inline">
+                            <input type="hidden" name="userId" th:value="${u.id}">
+                            <button type="submit" class="btn btn-sm"
+                                    th:classappend="${u.status == 1} ? 'btn-outline-danger' : 'btn-outline-success'"
+                                    th:text="${u.status == 1} ? '禁用' : '启用'"></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">快速统计</div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-3">
+                    <div class="fs-4 fw-bold" th:text="${stats.total}"></div>
+                    <div class="text-muted small">总用户</div>
+                </div>
+                <div class="col-3">
+                    <div class="fs-4 fw-bold" th:text="${stats.retailers}"></div>
+                    <div class="text-muted small">零售商</div>
+                </div>
+                <div class="col-3">
+                    <div class="fs-4 fw-bold" th:text="${stats.wholesalers}"></div>
+                    <div class="text-muted small">批发商</div>
+                </div>
+                <div class="col-3">
+                    <div class="fs-4 fw-bold" th:text="${stats.buyers}"></div>
+                    <div class="text-muted small">买家</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

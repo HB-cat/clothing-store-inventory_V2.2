@@ -1,0 +1,111 @@
+### ==========================================================
+### 商品管理 + 共享池
+### 先保证 {{token}} 在 env 中有效
+### 先用 #1 查列表拿组合ID
+### ==========================================================
+
+### ——— 商品管理 ———
+
+### 1. 商品列表（含组合库存）
+GET http://localhost:8080/api/products
+Authorization: Bearer {{token}}
+
+### 2. 新增商品（带属性组合，categoryId 从分类接口获取）
+POST http://localhost:8080/api/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "连衣裙",
+  "categoryId": 21,
+  "purchasePrice": 80.00,
+  "sellingPrice": 150.00,
+  "imageUrl": "",
+  "combinations": [
+    { "attrsJson": "{\"颜色\":\"红色\",\"尺码\":\"M\"}", "stock": 15 },
+    { "attrsJson": "{\"颜色\":\"红色\",\"尺码\":\"L\"}", "stock": 10 },
+    { "attrsJson": "{\"颜色\":\"白色\",\"尺码\":\"M\"}", "stock": 12 }
+  ]
+}
+
+### 3. 新增商品（无属性）
+POST http://localhost:8080/api/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "纽扣",
+  "categoryId": 25,
+  "purchasePrice": 1.00,
+  "sellingPrice": 2.00,
+  "imageUrl": "",
+  "combinations": [
+    { "attrsJson": "{}", "stock": 100 }
+  ]
+}
+
+### 4. 按分类筛选
+GET http://localhost:8080/api/products?categoryId=21
+Authorization: Bearer {{token}}
+
+### 5. 按名称搜索
+GET http://localhost:8080/api/products?keyword=纽扣
+Authorization: Bearer {{token}}
+
+### 6. 编辑商品（id 替换为实际值）
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "新款连衣裙",
+  "categoryId": 21,
+  "purchasePrice": 75.00,
+  "sellingPrice": 169.00,
+  "imageUrl": "",
+  "combinations": [
+    { "attrsJson": "{\"颜色\":\"红色\",\"尺码\":\"M\"}", "stock": 20 },
+    { "attrsJson": "{\"颜色\":\"红色\",\"尺码\":\"L\"}", "stock": 8 }
+  ]
+}
+
+### 7. 删除商品（有库存会报错）
+DELETE http://localhost:8080/api/products/1
+Authorization: Bearer {{token}}
+
+### ——— 共享池（切换批发商 token 后测试） ———
+
+### 8. 批发商：新增商品
+POST http://localhost:8080/api/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "男士衬衫",
+  "categoryId": 23,
+  "purchasePrice": 60.00,
+  "sellingPrice": 120.00,
+  "imageUrl": "",
+  "combinations": [
+    { "attrsJson": "{\"颜色\":\"白色\",\"尺码\":\"L\"}", "stock": 50 },
+    { "attrsJson": "{\"颜色\":\"蓝色\",\"尺码\":\"XL\"}", "stock": 30 }
+  ]
+}
+
+### 9. 批发商：加入共享池
+POST http://localhost:8080/api/shared-products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1,
+  "sharedPrice": 100.00
+}
+
+### 10. 查看共享池列表
+GET http://localhost:8080/api/shared-products
+Authorization: Bearer {{token}}
+
+### 11. 批发商：取消共享
+DELETE http://localhost:8080/api/shared-products/1
+Authorization: Bearer {{token}}
