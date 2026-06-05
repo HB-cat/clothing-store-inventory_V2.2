@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>快速记账 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">快速记账</span>
+    <button class="action">📷</button>
+  </div>
+  <div class="content">
+    <div class="form-group"><label>选择商品</label>
+      <div class="card" style="padding:8px 12px;display:flex;align-items:center;gap:8px;cursor:default">
+        <span style="font-size:24px">👕</span>
+        <div style="flex:1"><div style="font-size:14px;font-weight:500">纯棉圆领T恤 · 白色M</div><div style="font-size:11px;color:var(--text-secondary)">库存: 23</div></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;font-size:16px">−</button>
+          <span style="font-size:16px;font-weight:600;width:24px;text-align:center">1</span>
+          <button style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;font-size:16px">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group"><label>买家</label>
+      <select class="form-input"><option selected>散客（不记名）</option><option>张先生</option><option>李女士</option><option>王小姐</option></select>
+    </div>
+    <div class="form-group"><label>实付金额（¥）</label><input class="form-input" value="65"></div>
+    <div class="form-group"><label>备注</label><input class="form-input" placeholder="选填"></div>
+    <button class="btn btn-primary btn-block btn-lg">确认记账</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+</div></div>
+</body></html>

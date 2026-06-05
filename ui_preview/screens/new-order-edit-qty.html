@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>设置数量 - 新建订单</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">设置数量</span>
+    <button class="action" onclick="history.back()">✔️</button>
+  </div>
+  <div class="content">
+    <div class="card" style="text-align:center;padding:24px">
+      <div style="font-size:56px;margin-bottom:8px">👕</div>
+      <div style="font-size:18px;font-weight:600">纯棉圆领T恤</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:2px">白色 · M</div>
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label>数量</label>
+        <div style="display:flex;align-items:center;gap:16px;justify-content:center">
+          <button style="width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:none;font-size:22px;cursor:pointer">−</button>
+          <span style="font-size:32px;font-weight:700;min-width:48px;text-align:center">2</span>
+          <button style="width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:none;font-size:22px;cursor:pointer">+</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>单价（¥）</label>
+        <input class="form-input" value="65" style="text-align:center;font-size:18px;font-weight:600">
+      </div>
+      <div style="text-align:center;padding:8px 0;font-size:14px;color:var(--text-secondary)">
+        小计: <span style="font-size:20px;font-weight:700;color:var(--primary)">¥130</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" onclick="history.back();setTimeout(()=>alert('已添加 纯棉圆领T恤 × 2 = ¥130'),100)">✅ 添加到订单</button>
+  </div>
+</div></div>
+</body></html>

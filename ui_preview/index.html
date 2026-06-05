@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clothing-SI V2.2 — UI 交互预览</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .preview-page { background: #1a1a2e; padding: 0; min-height: 100vh; }
+  .preview-header {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff; padding: 40px 24px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .preview-header h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; }
+  .preview-header h1 span { color: #E85D3A; }
+  .preview-header p { color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 6px; }
+  .preview-header .badge-group { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  .preview-header .badge-group span {
+    padding: 3px 12px; border-radius: 20px; font-size: 11px; background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+  }
+  .section-title {
+    color: #fff; font-size: 18px; font-weight: 600; padding: 24px 24px 12px; letter-spacing: 0.5px;
+  }
+  .section-title small { font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 400; margin-left: 8px; }
+  .screen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 0 24px 32px;
+  }
+  .screen-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s;
+    display: block;
+  }
+  .screen-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #E85D3A;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+  .screen-card .mockup {
+    aspect-ratio: 9/19;
+    background: #2E7D32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .screen-card .mockup .phone-border {
+    width: 70%; height: 85%;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+  .screen-card .info { padding: 10px 12px 12px; }
+  .screen-card .info .name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .screen-card .info .desc { font-size: 11px; color: rgba(255,255,255,0.35); }
+  .screen-card .tag-role { font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+  .tag-seller { background: rgba(232,93,58,0.2); color: #E85D3A; }
+  .tag-buyer { background: rgba(232,93,58,0.2); color: #E85D3A; }
+  .tag-common { background: rgba(52,152,219,0.2); color: #3498DB; }
+  .footer-links { text-align: center; padding: 24px; color: rgba(255,255,255,0.3); font-size: 12px; }
+  .footer-links a { color: #E85D3A; text-decoration: none; }
+</style>
+</head>
+<body class="preview-page">
+
+<div class="preview-header">
+  <h1>Clothing-SI <span>V2.2</span></h1>
+  <p>Interactive UI Preview — 交互式界面预览</p>
+  <div class="badge-group">
+    <span>📱 卖家端 15 页面</span>
+    <span>🛍️ 买家端 4 页面</span>
+    <span>🤖 智能体浮窗 + 快捷指令</span>
+    <span>🎨 主题色: #E85D3A 暖橙</span>
+  </div>
+</div>
+
+<!-- Seller Screens -->
+<div class="section-title">卖家端（零售商 / 批发商）<small>底部导航: 首页 · 账单 · 消息 · 我的</small></div>
+<div class="screen-grid">
+  <a class="screen-card" href="screens/login.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🔐</div></div>
+    <div class="info"><div class="name">登录</div><div class="desc">暖橙主题 · 账号密码登录</div></div>
+  </a>
+  <a class="screen-card" href="screens/register.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📝</div></div>
+    <div class="info"><div class="name">注册 <span class="tag-role tag-common">通用</span></div><div class="desc">三角色选择</div></div>
+  </a>
+  <a class="screen-card" href="screens/home.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🏠</div></div>
+    <div class="info"><div class="name">首页 <span class="tag-role tag-seller">卖家</span></div><div class="desc">快捷指令·跑马灯·推荐·待办</div></div>
+  </a>
+  <a class="screen-card" href="screens/new-order.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📋</div></div>
+    <div class="info"><div class="name">新建订单 <span class="tag-role tag-seller">卖家</span></div><div class="desc">草稿管理 · 多件商品</div></div>
+  </a>
+  <a class="screen-card" href="screens/new-order-edit.html" target="_blank">
+    <div class="mockup"><div class="phone-border">➕</div></div>
+    <div class="info"><div class="name">订单添加商品 <span class="tag-role tag-seller">卖家</span></div><div class="desc">搜索选择</div></div>
+  </a>
+  <a class="screen-card" href="screens/new-order-edit-qty.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🔢</div></div>
+    <div class="info"><div class="name">设置数量 <span class="tag-role tag-seller">卖家</span></div><div class="desc">数量 + 单价</div></div>
+  </a>
+  <a class="screen-card" href="screens/products.html" target="_blank">
+    <div class="mockup"><div class="phone-border">👕</div></div>
+    <div class="info"><div class="name">商品管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">列表 / 搜索 / 筛选</div></div>
+  </a>
+  <a class="screen-card" href="screens/product-add.html" target="_blank">
+    <div class="mockup"><div class="phone-border">➕</div></div>
+    <div class="info"><div class="name">添加商品 <span class="tag-role tag-seller">卖家</span></div><div class="desc">三步流程 + 组合库存</div></div>
+  </a>
+  <a class="screen-card" href="screens/categories.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📂</div></div>
+    <div class="info"><div class="name">分类管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">拖拽排序</div></div>
+  </a>
+  <a class="screen-card" href="screens/attributes.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🏷️</div></div>
+    <div class="info"><div class="name">属性管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">颜色 / 尺码 / 材质</div></div>
+  </a>
+  <a class="screen-card" href="screens/sale.html" target="_blank">
+    <div class="mockup"><div class="phone-border">💰</div></div>
+    <div class="info"><div class="name">快速记账 <span class="tag-role tag-seller">卖家</span></div><div class="desc">单品记一笔</div></div>
+  </a>
+  <a class="screen-card" href="screens/bills.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📋</div></div>
+    <div class="info"><div class="name">账单管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">统计卡片·流水·退货</div></div>
+  </a>
+  <a class="screen-card" href="screens/purchase.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📦</div></div>
+    <div class="info"><div class="name">进货入库 <span class="tag-role tag-seller">卖家</span></div><div class="desc">三来源Tab</div></div>
+  </a>
+  <a class="screen-card" href="screens/analytics.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📊</div></div>
+    <div class="info"><div class="name">经营分析 <span class="tag-role tag-seller">卖家</span></div><div class="desc">7模块 · inline展开 · 横屏</div></div>
+  </a>
+  <a class="screen-card" href="screens/appointments.html" target="_blank">
+    <div class="mockup"><div class="phone-border">📅</div></div>
+    <div class="info"><div class="name">预约管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">接受/拒绝</div></div>
+  </a>
+  <a class="screen-card" href="screens/data-manage.html" target="_blank">
+    <div class="mockup"><div class="phone-border">💾</div></div>
+    <div class="info"><div class="name">数据管理 <span class="tag-role tag-seller">卖家</span></div><div class="desc">导出 / 恢复 / 初始化</div></div>
+  </a>
+  <a class="screen-card" href="screens/chat-list.html" target="_blank">
+    <div class="mockup"><div class="phone-border">💬</div></div>
+    <div class="info"><div class="name">消息列表 <span class="tag-role tag-common">通用</span></div><div class="desc">聊天/预约Tab切换</div></div>
+  </a>
+  <a class="screen-card" href="screens/chat-detail.html" target="_blank">
+    <div class="mockup"><div class="phone-border">✉️</div></div>
+    <div class="info"><div class="name">聊天详情 <span class="tag-role tag-common">通用</span></div><div class="desc">文字 · 商品卡片</div></div>
+  </a>
+  <a class="screen-card" href="screens/profile.html" target="_blank">
+    <div class="mockup"><div class="phone-border">👤</div></div>
+    <div class="info"><div class="name">我的 <span class="tag-role tag-seller">卖家</span></div><div class="desc">经营分析·商品管理·设置</div></div>
+  </a>
+  <a class="screen-card" href="screens/agent-panel.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🤖</div></div>
+    <div class="info"><div class="name">智能体对话</div><div class="desc">浮窗展开 · 指令解析</div></div>
+  </a>
+</div>
+
+<!-- Buyer Screens -->
+<div class="section-title">买家端 <small>底部导航: 首页 · 消息 · 我的</small></div>
+<div class="screen-grid">
+  <a class="screen-card" href="screens/buyer-home.html" target="_blank">
+    <div class="mockup"><div class="phone-border">🛍️</div></div>
+    <div class="info"><div class="name">买家首页 <span class="tag-role tag-buyer">买家</span></div><div class="desc">搜索零售商 · 预约</div></div>
+  </a>
+  <a class="screen-card" href="screens/buyer-products.html" target="_blank">
+    <div class="mockup"><div class="phone-border">👕</div></div>
+    <div class="info"><div class="name">商品浏览 <span class="tag-role tag-buyer">买家</span></div><div class="desc">仅看售价</div></div>
+  </a>
+  <a class="screen-card" href="screens/buyer-messages.html" target="_blank">
+    <div class="mockup"><div class="phone-border">💬</div></div>
+    <div class="info"><div class="name">买家消息 <span class="tag-role tag-buyer">买家</span></div><div class="desc">预约卡片 + 聊天列表</div></div>
+  </a>
+  <a class="screen-card" href="screens/buyer-profile.html" target="_blank">
+    <div class="mockup"><div class="phone-border">👤</div></div>
+    <div class="info"><div class="name">买家我的 <span class="tag-role tag-buyer">买家</span></div><div class="desc">个人信息 · 客户信息 · 历史订单</div></div>
+  </a>
+</div>
+
+<!-- Theme Summary -->
+<div class="section-title">🎨 主题色板 (PRD 9.2)</div>
+<div style="padding:0 24px 32px;display:flex;gap:12px;flex-wrap:wrap">
+  <div style="width:60px;height:60px;border-radius:12px;background:#E85D3A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600">Primary</div>
+    <div style="width:60px;height:60px;border-radius:12px;background:#D35400;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600">Dark</div>
+    <div style="width:60px;height:60px;border-radius:12px;background:#E67E22;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600">Bright</div>
+  <div style="width:60px;height:60px;border-radius:12px;background:#FDEDEC;display:flex;align-items:center;justify-content:center;color:#D35400;font-size:10px;font-weight:600;border:1px solid #FADBD8">Light</div>
+  <div style="width:60px;height:60px;border-radius:12px;background:#F4A460;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600">Accent</div>
+  <div style="width:60px;height:60px;border-radius:12px;background:#27AE60;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600">Success</div>
+</div>
+
+<div class="footer-links">
+  <p>💡 点击卡片全屏预览 · 暖橙主题 #E85D3A · 底部导航白色</p>
+  <p>后端 API: <a href="http://localhost:8080" target="_blank">localhost:8080</a> · 管理后台: <a href="http://localhost:8080/admin/login" target="_blank">/admin/login</a></p>
+</div>
+
+</body></html>

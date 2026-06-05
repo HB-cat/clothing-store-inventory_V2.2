@@ -1,0 +1,87 @@
+package com.heben.client.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.heben.client.R;
+import com.heben.client.adapter.ProductAdapter;
+import com.heben.client.model.ApiResponse;
+import com.heben.client.model.Models.Product;
+import com.heben.client.network.ApiClient;
+import com.heben.client.network.ApiService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ProductsActivity extends AppCompatActivity {
+
+    private RecyclerView rv;
+    private ProductAdapter adapter;
+    private List<Product> list = new ArrayList<>();
+    private TextInputEditText etSearch;
+    private MaterialButton btnSearch;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_products);
+
+        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_add_product).setOnClickListener(v ->
+                startActivity(new Intent(this, ProductAddActivity.class)));
+
+        etSearch = findViewById(R.id.et_search);
+        btnSearch = findViewById(R.id.btn_search);
+        rv = findViewById(R.id.product_list);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new ProductAdapter(list, () -> loadProducts(null));
+        rv.setAdapter(adapter);
+
+        btnSearch.setOnClickListener(v -> {
+            String keyword = etSearch.getText().toString().trim();
+            loadProducts(keyword.isEmpty() ? null : keyword);
+        });
+
+        loadProducts(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadProducts(null);
+    }
+
+    private void loadProducts(String keyword) {
+        ApiService api = ApiClient.getService();
+        api.getProducts(null, keyword).enqueue(new Callback<ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    List<Product> data = response.body().getData();
+                    list.clear();
+                    if (data != null) list.addAll(data);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(ProductsActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                Toast.makeText(ProductsActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}

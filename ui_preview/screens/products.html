@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>商品管理 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">商品管理</span>
+    <button class="action" onclick="location.href='product-add.html'">➕</button>
+  </div>
+  <div class="content">
+    <div class="segment" style="margin-bottom:12px">
+      <button class="opt active">全部</button>
+      <button class="opt">在售</button>
+      <button class="opt">已下架</button>
+      <button class="opt">低库存</button>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <input class="form-input" placeholder="🔍 搜索商品名称...">
+    </div>
+
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" onclick="location.href='product-add.html'">
+        <div class="thumb">👕</div>
+        <div class="info">
+          <div class="name">纯棉圆领T恤</div>
+          <div class="desc">白色·M · 库存: 23</div>
+        </div>
+        <div class="right">
+          <div class="price">¥65</div>
+          <div class="sub">成本 ¥35</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="thumb">👗</div>
+        <div class="info">
+          <div class="name">碎花雪纺连衣裙</div>
+          <div class="desc">蓝色·S/M/L · 库存: 8</div>
+        </div>
+        <div class="right">
+          <div class="price">¥120</div>
+          <div class="sub" style="color:var(--danger)">⚠️ 低库存</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="thumb">👖</div>
+        <div class="info">
+          <div class="name">高腰阔腿牛仔裤</div>
+          <div class="desc">浅蓝·26-30 · 库存: 15</div>
+        </div>
+        <div class="right">
+          <div class="price">¥130</div>
+          <div class="sub">成本 ¥70</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="thumb">🧥</div>
+        <div class="info">
+          <div class="name">韩版毛呢大衣</div>
+          <div class="desc">卡其·M/L · 库存: 3</div>
+        </div>
+        <div class="right">
+          <div class="price">¥299</div>
+          <div class="sub" style="color:var(--danger)">⚠️ 低库存</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+</div></div>
+</body></html>

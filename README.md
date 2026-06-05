@@ -28,15 +28,15 @@ Clothing_S_I_V2.2/
 
 ## 已实现功能
 
-| Phase | 内容 | 状态 | 接口数 |
-|:-----:|------|:----:|:------:|
-| 2.1 | 注册登录 | ✅ | 3 |
-| 2.2 | 商品体系 (分类/属性/商品/共享池) | ✅ | 17 |
-| 2.3 | 记账+进货+账单+退货 | ✅ | 17 |
-| 2.4 | 聊天+预约 | ✅ | 11 |
-| 2.5 | 经营分析 | ✅ | 7 |
-| 2.6 | 智能体 (DeepSeek API 转发) | ✅ | 1 |
-| 2.7 | 管理员后台 (Thymeleaf 页面) | ✅ | 4页面 |
+| Phase | 内容                    |  状态 | 接口数 |
+| :---: | --------------------- | :-: | :-: |
+|  2.1  | 注册登录                  |  ✅  |  3  |
+|  2.2  | 商品体系 (分类/属性/商品/共享池)   |  ✅  |  17 |
+|  2.3  | 记账+进货+账单+退货           |  ✅  |  17 |
+|  2.4  | 聊天+预约                 |  ✅  |  11 |
+|  2.5  | 经营分析                  |  ✅  |  7  |
+|  2.6  | 智能体 (DeepSeek API 转发) |  ✅  |  1  |
+|  2.7  | 管理员后台 (Thymeleaf 页面)  |  ✅  | 4页面 |
 
 **总计: 45/55 个 API 接口 + 4 个管理页面**
 
@@ -85,26 +85,27 @@ deepseek.api.key=sk-你的DeepSeek API Key
 
 ## 核心设计
 
-| 要点 | 说明 |
-|------|------|
-| Token认证 | UUID, 30天有效期, 存数据库, 每次请求查库校验 |
-| 数据隔离 | 所有表含 user_id, Service 层显式 WHERE user_id = ? |
-| 属性组合 | product_attr_combination 表, attrs_json 存 JSON |
-| 乐观锁扣库存 | version 字段, UPDATE ... WHERE version = ? |
-| 响应格式 | 统一 ApiResponse {code, message, data} |
+| 要点      | 说明                                               |
+| ------- | ------------------------------------------------ |
+| Token认证 | UUID, 30天有效期, 存数据库, 每次请求查库校验                     |
+| 数据隔离    | 所有表含 user\_id, Service 层显式 WHERE user\_id = ?    |
+| 属性组合    | product\_attr\_combination 表, attrs\_json 存 JSON |
+| 乐观锁扣库存  | version 字段, UPDATE ... WHERE version = ?         |
+| 响应格式    | 统一 ApiResponse {code, message, data}             |
 
 ## 技术栈
 
-| 组件 | 版本 |
-|------|:----:|
-| JDK | 17 |
-| Spring Boot | 3.2.0 |
-| MyBatis-Plus | 3.5.7 |
-| MySQL | 8.0 |
-| Thymeleaf | 3.1.2 |
-| Lombok | 1.18.30 |
-| Bootstrap | 5.3.3 |
+| 组件           |    版本   |
+| ------------ | :-----: |
+| JDK          |    17   |
+| Spring Boot  |  3.2.0  |
+| MyBatis-Plus |  3.5.7  |
+| MySQL        |   8.0   |
+| Thymeleaf    |  3.1.2  |
+| Lombok       | 1.18.30 |
+| Bootstrap    |  5.3.3  |
 
----
+***
 
-*Clothing-SI V2.2 — HeBen_Cat*
+*Clothing-SI V2.2 — HeBen\_Cat*
+

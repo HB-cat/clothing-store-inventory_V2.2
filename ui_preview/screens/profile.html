@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>我的 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <span class="title" style="flex:1;text-align:center">我的</span>
+  </div>
+  <div class="content">
+    <!-- 头像 + 昵称（可编辑） -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;cursor:pointer" onclick="var n=prompt('修改昵称：','欣欣服装店');if(n)this.querySelector('.nick').textContent=n">
+      <div class="avatar-edit">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:28px" onclick="alert('点击更换头像')">👤</div>
+        <span class="edit-badge">✎</span>
+      </div>
+      <div>
+        <div class="nick" style="font-size:18px;font-weight:600">欣欣服装店</div>
+        <div style="font-size:12px;color:var(--text-secondary)">点击修改昵称</div>
+      </div>
+    </div>
+
+    <!-- 长按排序提示 -->
+    <div class="sort-hint">≡ 长按拖拽可排序</div>
+
+    <!-- 功能模块（单行列表，每行一个） -->
+    <div class="module-list">
+      <div class="item" onclick="location.href='analytics.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">📊</span>
+        <span class="name">经营分析</span>
+        <span class="sub">快报·趋势·画像</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="item" onclick="location.href='products.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">👕</span>
+        <span class="name">商品管理</span>
+        <span class="sub">列表·搜索·筛选</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="item" onclick="location.href='product-add.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">➕</span>
+        <span class="name">添加商品</span>
+        <span class="sub">三步流程·组合库存</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="item" onclick="location.href='purchase.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">📦</span>
+        <span class="name">库存查看</span>
+        <span class="sub">实时库存·属性组合</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="item" onclick="location.href='categories.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">📂</span>
+        <span class="name">分类管理</span>
+        <span class="sub">动态增删·拖拽排序</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="item" onclick="location.href='attributes.html'">
+        <span class="drag-handle">⠿</span>
+        <span class="icon">🏷️</span>
+        <span class="name">属性管理</span>
+        <span class="sub">颜色·尺码·材质</span>
+        <span class="arrow">›</span>
+      </div>
+    </div>
+
+    <!-- 设置 -->
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" style="cursor:default"><span style="font-size:20px">🛠️</span><span style="flex:1">程序设置</span><span style="color:var(--text-secondary)">›</span></div>
+      <div class="list-item" style="cursor:default"><span style="font-size:20px">🔔</span><span style="flex:1">通知管理</span><span style="color:var(--text-secondary)">›</span></div>
+      <div class="list-item" style="cursor:default"><span style="font-size:20px">🤖</span><span style="flex:1">智能体设置</span><span style="color:var(--text-secondary)">›</span></div>
+      <div class="list-item" onclick="location.href='data-manage.html'" style="cursor:pointer"><span style="font-size:20px">💾</span><span style="flex:1">数据管理</span><span style="color:var(--text-secondary)">›</span></div>
+    </div>
+
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" style="cursor:default"><span style="font-size:20px">📖</span><span style="flex:1">使用帮助</span><span style="color:var(--text-secondary)">›</span></div>
+      <div class="list-item" style="cursor:default"><span style="font-size:20px">ℹ️</span><span style="flex:1">关于</span><span style="color:var(--text-secondary)">›</span></div>
+    </div>
+
+    <button class="btn btn-outline btn-block" style="margin-top:8px">退出登录</button>
+    <p style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-light)">--- HeBen_Cat ---</p>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab active" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+</div></div>
+</body></html>

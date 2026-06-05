@@ -2,24 +2,52 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".ClothingSIApp"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Clothing_S_I_client"
+        android:theme="@style/Theme.ClothingSI"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+
+        <!-- Auth -->
+        <activity android:name=".activity.LoginActivity" android:exported="true" android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name=".activity.RegisterActivity" android:windowSoftInputMode="adjustResize" />
 
+        <!-- Seller Main -->
+        <activity android:name=".activity.MainActivity" android:windowSoftInputMode="adjustResize" />
+
+        <!-- Seller Screens -->
+        <activity android:name=".activity.SaleActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.NewOrderActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.NewOrderEditActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.NewOrderEditQtyActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.PurchaseActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.ProductsActivity" />
+        <activity android:name=".activity.ProductAddActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.CategoriesActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.AttributesActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.ChatDetailActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.AnalyticsActivity" />
+        <activity android:name=".activity.AppointmentsActivity" />
+        <activity android:name=".activity.DataManageActivity" />
+        <activity android:name=".activity.AgentPanelActivity" android:windowSoftInputMode="adjustResize" />
+
+        <!-- Buyer Screens -->
+        <activity android:name=".activity.BuyerHomeActivity" />
+        <activity android:name=".activity.BuyerProductsActivity" />
+        <activity android:name=".activity.BuyerMessagesActivity" />
+        <activity android:name=".activity.BuyerProfileActivity" android:windowSoftInputMode="adjustResize" />
+
+    </application>
 </manifest>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="#F5F5F5">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:background="#D35400" android:paddingHorizontal="16dp">
+        <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
+            android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
+            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="商品管理" android:textSize="17dp" android:textStyle="bold"
+            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+        <TextView android:id="@+id/btn_add_product" android:layout_width="36dp" android:layout_height="36dp"
+            android:text="+" android:textSize="20dp" android:textColor="#FFFFFF"
+            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15"
+            android:layout_alignParentEnd="true" android:clickable="true" android:focusable="true" />
+    </RelativeLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="16dp">
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginEnd="8dp">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
+                android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="搜索商品" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton android:id="@+id/btn_search"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="搜索" app:cornerRadius="12dp" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/product_list"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:paddingHorizontal="16dp" />
+</LinearLayout>

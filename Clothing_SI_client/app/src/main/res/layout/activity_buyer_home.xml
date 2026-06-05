@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#F5F5F5">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="👕" android:textSize="48dp" android:gravity="center"
+            android:layout_marginTop="20dp" android:layout_marginBottom="8dp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="欢迎光临" android:textSize="26dp" android:textStyle="bold"
+            android:gravity="center" android:textColor="#2D3436" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="批发价 · 一件起批" android:textSize="13dp"
+            android:gravity="center" android:textColor="#E85D3A"
+            android:layout_marginBottom="24dp" />
+
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
+                android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="搜索商品..." />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="🔥 热销推荐" android:textSize="16dp" android:textStyle="bold"
+            android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:id="@+id/layout_hot_products"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:weightSum="2"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButton android:id="@+id/btn_buy"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:text="逛逛全部商品" app:cornerRadius="28dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center"
+            android:layout_marginTop="24dp" android:weightSum="3">
+            <TextView android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
+                android:gravity="center" android:text="首页" android:textColor="#E85D3A"
+                android:textStyle="bold" android:textSize="13dp" />
+            <TextView android:id="@+id/bottom_messages" android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_weight="1" android:gravity="center" android:text="消息"
+                android:textColor="#95A5A6" android:textSize="13dp"
+                android:clickable="true" android:focusable="true" />
+            <TextView android:id="@+id/bottom_profile" android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_weight="1" android:gravity="center" android:text="我的"
+                android:textColor="#95A5A6" android:textSize="13dp"
+                android:clickable="true" android:focusable="true" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

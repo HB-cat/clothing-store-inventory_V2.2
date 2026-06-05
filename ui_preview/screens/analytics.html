@@ -1,0 +1,118 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>经营分析 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css">
+<style>
+  .conclusion-text { font-size: 24px; font-weight: 700; color: var(--primary); margin: 8px 0 2px; }
+  .conclusion-sub  { font-size: 13px; color: var(--text-secondary); }
+  .urgency-red   { background: #FFEBEE; color: #C62828; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .urgency-yellow { background: #FFF8E1; color: #F57F17; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+</style></head>
+<body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">经营分析</span>
+  </div>
+  <div class="content">
+
+    <!-- ===== 1. 今日快报（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">📋 今日快报</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list open">
+        <div class="conclusion-text">今天卖了 ¥2,380，比昨天忙一些</div>
+        <div class="conclusion-sub" style="margin-bottom:4px">平平淡淡也是好日子 🌿</div>
+      </div>
+    </div>
+
+    <!-- ===== 2. 补货建议（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">⚠️ 补货建议 <span style="font-size:12px;color:var(--text-secondary);font-weight:400">(2件商品库存不足)</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="item"><span class="urgency-red">紧急</span> 韩版毛呢大衣 · 仅剩 2 件</div>
+        <div class="item"><span class="urgency-yellow">提醒</span> 碎花连衣裙 · 仅剩 5 件</div>
+      </div>
+    </div>
+
+    <!-- ===== 3. 滞销提醒（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">📦 滞销提醒 <span style="font-size:12px;color:var(--text-secondary);font-weight:400">(1件商品30天未售)</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="item">👞 男士皮鞋 · 库存 6 件 · 30天销量 0</div>
+      </div>
+    </div>
+
+    <!-- ===== 4. 热销TOP8（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">🔥 热销TOP8</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="conclusion-sub" style="margin-bottom:6px;margin-top:8px">连衣裙是店里的招牌，本月卖了32件</div>
+        <button class="btn-landscape" onclick="alert('📱 横屏全屏图表')" style="margin-bottom:8px">↗ 横屏</button>
+        <div class="chart-placeholder" style="height:100px">📊 柱状图：热销TOP8 商品销量</div>
+      </div>
+    </div>
+
+    <!-- ===== 5. 近7天趋势（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">📈 近7天销售趋势</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="conclusion-sub" style="margin-bottom:6px;margin-top:8px">本周卖了 ¥12,500，周三是生意最好的一天</div>
+        <button class="btn-landscape" onclick="alert('📱 横屏全屏图表')" style="margin-bottom:8px">↗ 横屏</button>
+        <div class="chart-placeholder" style="height:100px">📈 折线图：近7天销售额趋势</div>
+      </div>
+    </div>
+
+    <!-- ===== 6. 订单高峰（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">⏰ 订单高峰</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="conclusion-sub" style="margin-bottom:6px;margin-top:8px">大家喜欢下午来逛，2-4点最热闹</div>
+        <button class="btn-landscape" onclick="alert('📱 横屏全屏图表')" style="margin-bottom:8px">↗ 横屏</button>
+        <div class="chart-placeholder" style="height:80px">📊 24小时时段分布柱状图</div>
+      </div>
+    </div>
+
+    <!-- ===== 7. 客户画像（收起/展开）===== -->
+    <div class="card">
+      <div class="inline-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span style="font-weight:600">👥 客户画像</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="inline-list">
+        <div class="conclusion-sub" style="margin-bottom:6px;margin-top:8px">你的客户偏年轻，喜欢休闲风</div>
+        <button class="btn-landscape" onclick="alert('📱 横屏全屏图表')" style="margin-bottom:8px">↗ 横屏</button>
+        <div class="chart-placeholder" style="height:80px">📊 饼图：年龄分布 / 风格偏好</div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <span class="tag" style="background:#E0F2F1;color:#00695C">女性 75%</span>
+          <span class="tag" style="background:#E3F2FD;color:#1565C0">25-35岁 60%</span>
+          <span class="tag" style="background:#FFF3E0;color:#E65100">休闲风偏好</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+</div></div>
+</body></html>

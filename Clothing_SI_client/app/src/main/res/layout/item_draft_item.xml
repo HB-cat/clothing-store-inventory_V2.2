@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:gravity="center_vertical"
+    android:paddingVertical="8dp">
+    <TextView android:id="@+id/tv_draft_item_name" android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_weight="1" android:textSize="13dp" android:textStyle="bold" />
+    <TextView android:id="@+id/tv_draft_item_qty" android:layout_width="40dp" android:layout_height="wrap_content"
+        android:gravity="center" android:textSize="13dp" android:textColor="#E85D3A"
+        android:clickable="true" android:focusable="true" />
+    <TextView android:id="@+id/tv_draft_item_price" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textSize="13dp" android:textColor="#2D3436"
+        android:layout_marginStart="12dp" />
+</LinearLayout>

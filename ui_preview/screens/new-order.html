@@ -1,0 +1,70 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>新建订单 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">新建订单</span>
+    <button class="action" onclick="if(confirm('提交此账单？'))alert('账单已提交')">✔️</button>
+  </div>
+  <div class="content">
+    <!-- 草稿列表 (最多6个) -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px">
+      <div style="flex-shrink:0;width:72px;height:72px;border-radius:12px;border:2px dashed var(--primary);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--primary-light)" onclick="location.href='new-order-edit.html'">
+        <span style="font-size:20px;color:var(--primary)">+</span>
+        <span style="font-size:10px;color:var(--primary)">新建</span>
+      </div>
+      <div style="flex-shrink:0;width:72px;height:72px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--primary)" onclick="location.href='new-order-edit.html'">
+        <span style="font-size:16px;font-weight:700;color:var(--primary)">#1</span>
+        <span style="font-size:10px;color:var(--text-secondary)">3件·¥195</span>
+      </div>
+      <div style="flex-shrink:0;width:72px;height:72px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer" onclick="location.href='new-order-edit.html'">
+        <span style="font-size:16px;font-weight:700">#2</span>
+        <span style="font-size:10px;color:var(--text-secondary)">1件·¥120</span>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">📌 草稿最多6个，每单最多30种商品。提交后生成正式销售记录。</p>
+
+    <!-- 当前草稿 #1 的商品列表 -->
+    <div class="section-header"><h3>📄 草稿 #1</h3><span style="font-size:13px;font-weight:600;color:var(--primary)">合计: ¥195</span></div>
+    <div class="card" style="padding:0 16px">
+      <div class="list-item">
+        <div class="thumb">👕</div>
+        <div class="info">
+          <div class="name">纯棉圆领T恤 · 白色M</div>
+          <div class="desc">¥65 × 2</div>
+        </div>
+        <div class="right">
+          <div class="price">¥130</div>
+          <button style="border:none;background:none;color:var(--danger);cursor:pointer;font-size:14px" onclick="if(confirm('移除此商品？'))this.closest('.list-item').remove()">✕</button>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="thumb">👗</div>
+        <div class="info">
+          <div class="name">碎花雪纺连衣裙 · 蓝色M</div>
+          <div class="desc">¥65 × 1</div>
+        </div>
+        <div class="right">
+          <div class="price">¥65</div>
+          <button style="border:none;background:none;color:var(--danger);cursor:pointer;font-size:14px" onclick="if(confirm('移除此商品？'))this.closest('.list-item').remove()">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-sm btn-outline" style="flex:1" onclick="location.href='new-order-edit.html'">➕ 添加商品</button>
+      <button class="btn btn-sm btn-outline" style="flex:1;border-color:var(--text-secondary);color:var(--text-secondary)">🧾 选择买家</button>
+    </div>
+    <button class="btn btn-primary btn-block" style="margin-top:12px" onclick="if(confirm('提交此账单？'))alert('账单已提交 ✅')">提交账单</button>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab active" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='chat-list.html'><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='profile.html'><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+</div></div>
+</body></html>

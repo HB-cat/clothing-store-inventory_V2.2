@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>消息 - 买家端</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <span class="title" style="flex:1;text-align:center;color:#fff">消息</span>
+  </div>
+  <div class="content">
+    <!-- 最近预约卡片 (PRD 5.2) -->
+    <div class="section-header"><h3>📅 最近预约</h3></div>
+    <div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 14px">
+      <span style="font-size:24px">🏪</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:500">欣欣服装店</div><div style="font-size:11px;color:var(--text-secondary)">明天 14:00-16:00</div></div>
+      <span class="badge badge-pending">待确认</span>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 14px">
+      <span style="font-size:24px">🏪</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:500">潮流前线</div><div style="font-size:11px;color:var(--text-secondary)">今天已完成</div></div>
+      <span class="badge badge-done">已完成</span>
+    </div>
+
+    <!-- 聊天列表 (PRD 5.2) -->
+    <div class="section-header" style="margin-top:6px"><h3>💬 最近聊天</h3></div>
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" onclick="location.href='chat-detail.html'">
+        <div class="thumb" style="background:#E3F2FD">🏪</div>
+        <div class="info"><div class="name">欣欣服装店</div><div class="desc">好的，明天见👋</div></div>
+        <div class="right"><div style="font-size:11px;color:var(--text-secondary)">14:32</div></div>
+      </div>
+      <div class="list-item" onclick="location.href='chat-detail.html'">
+        <div class="thumb" style="background:#FFF3E0">🏪</div>
+        <div class="info"><div class="name">潮流前线</div><div class="desc">新款到了，要来试试吗？</div></div>
+        <div class="right"><div style="font-size:11px;color:var(--text-secondary)">10:00</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='buyer-home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab active" onclick="location.href='buyer-messages.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='buyer-profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+</div></div>
+</body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>预约管理 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">预约管理</span>
+  </div>
+  <div class="content">
+    <div class="segment">
+      <button class="opt active">待确认 (2)</button>
+      <button class="opt">已确认</button>
+      <button class="opt">历史</button>
+    </div>
+
+    <div class="timeline-item" style="cursor:pointer" onclick="location.href='appointment-detail.html'">
+      <div class="time">10:00<br>12:00</div>
+      <div class="detail">
+        <div class="name">李女士</div>
+        <div class="info">已到店次数: 3 · 取消0次</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-sm btn-outline" style="border-color:var(--success);color:var(--success)" onclick="event.stopPropagation();if(confirm('接受预约？'))alert('已接受')">✓ 接受</button>
+        <button class="btn btn-sm btn-outline" style="border-color:var(--danger);color:var(--danger)" onclick="event.stopPropagation();var r=prompt('拒绝理由：');if(r)alert('已拒绝')">✗ 拒绝</button>
+      </div>
+    </div>
+
+    <div class="timeline-item" style="cursor:pointer" onclick="location.href='appointment-detail.html'">
+      <div class="time">14:00<br>16:00</div>
+      <div class="detail">
+        <div class="name">王小姐</div>
+        <div class="info">新客户 · 首次预约</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-sm btn-outline" style="border-color:var(--success);color:var(--success)" onclick="event.stopPropagation();if(confirm('接受预约？'))alert('已接受')">✓ 接受</button>
+        <button class="btn btn-sm btn-outline" style="border-color:var(--danger);color:var(--danger)" onclick="event.stopPropagation();var r=prompt('拒绝理由：');if(r)alert('已拒绝')">✗ 拒绝</button>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:8px"><h3>✅ 今日已确认</h3></div>
+    <div class="timeline-item" style="background:#E0F2F1;cursor:pointer" onclick="location.href='appointment-detail.html'">
+      <div class="time" style="color:var(--success)">16:00<br>18:00</div>
+      <div class="detail">
+        <div class="name">张先生</div>
+        <div class="info">已确认 · 预约试穿新款</div>
+      </div>
+      <div><span class="badge badge-done">已确认</span></div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab active" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+</div></div>
+</body></html>
