@@ -23,3 +23,7 @@ Thumbs.db
 # Environment
 **/application-local.properties
 **/*.env
+
+# Personal docs (not to be uploaded)
+about_me.md
+接手引导书.md
