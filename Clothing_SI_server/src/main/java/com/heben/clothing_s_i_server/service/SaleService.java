@@ -291,6 +291,23 @@ public class SaleService {
         return getSalesSummary(userId, start, end);
     }
 
+    /**
+     * 本年销售
+     */
+    public SaleSummaryVO getYearSales(Long userId) {
+        LocalDate now = LocalDate.now();
+        LocalDateTime start = now.withDayOfYear(1).atStartOfDay();
+        LocalDateTime end = now.atTime(LocalTime.MAX);
+        return getSalesSummary(userId, start, end);
+    }
+
+    /**
+     * 按日期范围查询销售统计
+     */
+    public SaleSummaryVO getSalesByDateRange(Long userId, LocalDateTime start, LocalDateTime end) {
+        return getSalesSummary(userId, start, end);
+    }
+
     // ========== 退货 ==========
 
     /**
@@ -348,14 +365,23 @@ public class SaleService {
         vo.setTotalAmount(totalAmount);
         vo.setOrderCount(records.size());
 
-        // 统计毛利
+        // 查询所有明细并分组
         List<Long> saleIds = records.stream().map(SaleRecord::getId).collect(Collectors.toList());
         List<SaleRecordItem> allItems = saleRecordItemMapper.selectList(
                 new LambdaQueryWrapper<SaleRecordItem>()
                         .in(SaleRecordItem::getSaleId, saleIds)
-                        .eq(SaleRecordItem::getIsReturned, 0)
         );
+        Map<Long, List<SaleRecordItem>> itemsBySaleId = allItems.stream()
+                .collect(Collectors.groupingBy(SaleRecordItem::getSaleId));
+
+        // 为每条记录填充明细
+        for (SaleRecord r : records) {
+            r.setSaleItems(itemsBySaleId.getOrDefault(r.getId(), new ArrayList<>()));
+        }
+
+        // 统计毛利（排除已退货）
         BigDecimal totalCost = allItems.stream()
+                .filter(i -> i.getIsReturned() == 0)
                 .map(i -> i.getPurchasePrice().multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         vo.setTotalProfit(totalAmount.subtract(totalCost));
@@ -394,6 +420,17 @@ public class SaleService {
         return buyer.getId();
     }
 
+    /**
+     * 买家历史订单
+     */
+    public List<SaleRecord> getBuyerOrders(Long buyerUserId) {
+        return saleRecordMapper.selectList(
+                new LambdaQueryWrapper<SaleRecord>()
+                        .eq(SaleRecord::getBuyerId, buyerUserId)
+                        .orderByDesc(SaleRecord::getSaleTime)
+        );
+    }
+
     // ========== 内部类 ==========
 
     @lombok.Data
@@ -424,6 +461,7 @@ public class SaleService {
     public static class SaleSummaryVO {
         private BigDecimal totalAmount;
         private BigDecimal totalProfit;
+        @com.fasterxml.jackson.annotation.JsonProperty("totalCount")
         private Integer orderCount;
         private List<SaleRecord> records;
     }

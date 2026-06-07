@@ -1,17 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" android:background="#F5F5F5">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#D35400" android:paddingHorizontal="16dp">
+        android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
             android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
-            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="商品选购" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+            android:gravity="center" android:background="@drawable/circle_bg" />
+        <TextView android:id="@+id/tv_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="商品选购" android:textSize="15dp" android:textStyle="bold"
+            android:textColor="#FFFFFF" android:layout_centerInParent="true"
+            android:maxWidth="160dp" android:ellipsize="end" android:singleLine="true" />
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_alignParentEnd="true">
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_contact_seller"
+                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:text="💬" android:textSize="12dp" app:cornerRadius="16dp"
+                android:visibility="gone" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_make_appointment"
+                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:text="📅 预约" android:textSize="11dp" app:cornerRadius="16dp"
+                android:visibility="gone" android:layout_marginStart="4dp" />
+        </LinearLayout>
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_buyer_products"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:padding="16dp" />
+
+    <!-- 分类标签 -->
+    <LinearLayout android:id="@+id/layout_categories"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center"
+        android:paddingVertical="8dp" android:paddingHorizontal="16dp"
+        android:background="#FFFFFF" android:elevation="1dp">
+        <TextView android:id="@+id/tab_all"
+            android:layout_width="wrap_content" android:layout_height="32dp"
+            android:gravity="center" android:text="全部" android:textSize="13dp"
+            android:paddingHorizontal="16dp" android:textColor="#E85D3A"
+            android:textStyle="bold" android:background="@drawable/tab_active_bg" />
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:padding="12dp">
+        <GridLayout android:id="@+id/layout_products"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:columnCount="2" android:alignmentMode="alignMargins"
+            android:horizontalSpacing="10dp" android:verticalSpacing="10dp" />
+    </ScrollView>
+
+    <!-- 底部导航 -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center"
+        android:paddingVertical="10dp" android:background="#FFFFFF"
+        android:weightSum="3" android:elevation="4dp">
+        <TextView android:id="@+id/bottom_home" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
+            android:gravity="center" android:text="首页" android:textColor="#95A5A6"
+            android:textSize="13dp" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/bottom_messages" android:layout_width="0dp" android:layout_height="40dp"
+            android:layout_weight="1" android:gravity="center" android:text="消息"
+            android:textColor="#95A5A6" android:textSize="13dp"
+            android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/bottom_profile" android:layout_width="0dp" android:layout_height="40dp"
+            android:layout_weight="1" android:gravity="center" android:text="我的"
+            android:textColor="#95A5A6" android:textSize="13dp"
+            android:clickable="true" android:focusable="true" />
+    </LinearLayout>
 </LinearLayout>

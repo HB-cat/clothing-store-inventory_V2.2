@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".ClothingSIApp"
@@ -40,7 +41,7 @@
         <activity android:name=".activity.ChatDetailActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.AnalyticsActivity" />
         <activity android:name=".activity.AppointmentsActivity" />
-        <activity android:name=".activity.DataManageActivity" />
+<!-- DataManageActivity removed, sync is now automatic via Room + DataSyncManager -->
         <activity android:name=".activity.AgentPanelActivity" android:windowSoftInputMode="adjustResize" />
 
         <!-- Buyer Screens -->
@@ -48,6 +49,17 @@
         <activity android:name=".activity.BuyerProductsActivity" />
         <activity android:name=".activity.BuyerMessagesActivity" />
         <activity android:name=".activity.BuyerProfileActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.BuyerFollowsActivity" />
+        <activity android:name=".activity.BuyerInfoEditActivity" android:windowSoftInputMode="adjustResize" />
+
+        <!-- Agent Overlay Service -->
+        <!-- AgentFloatService removed — replaced by FAB button in layouts -->
+
+        <!-- Profile Settings -->
+        <activity android:name=".activity.ProgramSettingsActivity" />
+        <activity android:name=".activity.SellerGuideActivity" />
+        <activity android:name=".activity.BuyerGuideActivity" />
+        <activity android:name=".activity.SharedProductsActivity" />
 
     </application>
 </manifest>

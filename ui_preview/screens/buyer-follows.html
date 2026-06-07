@@ -1,0 +1,60 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>我的关注 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">我的关注</span>
+  </div>
+  <div class="content">
+    <!-- 搜索 -->
+    <div class="card" style="padding:4px 16px;display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <input class="form-input" style="flex:1;border:none;padding:8px 0" placeholder="🔍 输入店铺名或关键字...">
+      <button class="btn btn-sm btn-primary" style="height:36px;padding:0 16px;border-radius:18px">搜索</button>
+    </div>
+
+    <!-- 搜索结果 -->
+    <div id="search-results" style="display:none;margin-bottom:16px">
+      <div class="section-header"><h3>🔍 搜索结果</h3></div>
+      <div class="card" style="padding:8px">
+        <div class="list-item">
+          <div class="thumb" style="background:#FFF3E0">🏪</div>
+          <div class="info"><div class="name">时尚女装店</div><div class="desc">15件商品在售 · 距您2km</div></div>
+          <button class="btn btn-sm" style="background:var(--primary);color:#fff;border-radius:18px">关注</button>
+        </div>
+        <div class="list-item">
+          <div class="thumb" style="background:#E8F8F5">🏪</div>
+          <div class="info"><div class="name">童装天地</div><div class="desc">28件商品在售 · 距您1.5km</div></div>
+          <button class="btn btn-sm" style="background:var(--primary);color:#fff;border-radius:18px">关注</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 我的关注 -->
+    <div class="section-header"><h3>❤️ 我的关注</h3></div>
+    <div class="card" style="padding:8px">
+      <div class="list-item">
+        <div class="thumb" style="background:#FFF3E0">🏪</div>
+        <div class="info"><div class="name">欣欣服装店</div><div class="desc">32件商品在售</div></div>
+        <button class="btn btn-sm btn-primary" style="border-radius:18px" onclick="location.href='buyer-products.html'">逛逛</button>
+      </div>
+      <div class="list-item">
+        <div class="thumb" style="background:#E3F2FD">🏪</div>
+        <div class="info"><div class="name">潮流前线</div><div class="desc">18件商品在售</div></div>
+        <button class="btn btn-sm btn-primary" style="border-radius:18px" onclick="location.href='buyer-products.html'">逛逛</button>
+      </div>
+      <div class="list-item">
+        <div class="thumb" style="background:#F3E5F5">🏪</div>
+        <div class="info"><div class="name">韩系衣橱</div><div class="desc">45件商品在售</div></div>
+        <button class="btn btn-sm btn-primary" style="border-radius:18px" onclick="location.href='buyer-products.html'">逛逛</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='buyer-home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab active" onclick="location.href='buyer-follows.html'"><span class="icon">❤️</span>关注</button>
+    <button class="tab" onclick="location.href='buyer-messages.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='buyer-profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+</div></div>
+</body></html>

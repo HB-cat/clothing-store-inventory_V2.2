@@ -2,9 +2,11 @@ package com.heben.clothing_s_i_server.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.heben.clothing_s_i_server.entity.Category;
+import com.heben.clothing_s_i_server.entity.OperationLog;
 import com.heben.clothing_s_i_server.entity.Product;
 import com.heben.clothing_s_i_server.entity.ProductAttrCombination;
 import com.heben.clothing_s_i_server.mapper.CategoryMapper;
+import com.heben.clothing_s_i_server.mapper.OperationLogMapper;
 import com.heben.clothing_s_i_server.mapper.ProductAttrCombinationMapper;
 import com.heben.clothing_s_i_server.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductAttrCombinationMapper combinationMapper;
     private final CategoryMapper categoryMapper;
+    private final OperationLogMapper operationLogMapper;
 
     /**
      * 商品列表（支持按分类筛选、名称搜索）
@@ -185,6 +188,45 @@ public class ProductService {
     }
 
     // ========== 内部类 ==========
+
+    /**
+     * 批量增量同步库存（离线客户端使用）
+     * 幂等：operation_id 已存在则跳过
+     */
+    @Transactional
+    public void syncStockChanges(Long userId, List<StockSyncItem> changes) {
+        for (StockSyncItem item : changes) {
+            // 幂等去重
+            Long count = operationLogMapper.selectCount(
+                    new LambdaQueryWrapper<OperationLog>()
+                            .eq(OperationLog::getOperationId, item.getOperationId())
+            );
+            if (count > 0) continue;
+
+            // 增量更新库存（原子加减）
+            if (item.getChange() > 0) {
+                combinationMapper.addStock(item.getCombinationId(), item.getChange());
+            } else if (item.getChange() < 0) {
+                combinationMapper.deductStockUnsafe(item.getCombinationId(), -item.getChange());
+            }
+
+            // 记录操作日志
+            OperationLog log = new OperationLog();
+            log.setOperationId(item.getOperationId());
+            log.setUserId(userId);
+            log.setOperationType("stock_sync");
+            log.setStatus(1);
+            log.setCreatedAt(LocalDateTime.now());
+            operationLogMapper.insert(log);
+        }
+    }
+
+    @lombok.Data
+    public static class StockSyncItem {
+        private Long combinationId;
+        private int change; // 正数=入库，负数=出库
+        private String operationId;
+    }
 
     @lombok.Data
     public static class ProductVO {

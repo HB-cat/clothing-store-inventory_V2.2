@@ -1,6 +1,7 @@
 package com.heben.client.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -14,6 +15,7 @@ import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.AttributeGroup;
 import com.heben.client.model.Models.AttributeValue;
 import com.heben.client.network.ApiClient;
+import com.heben.client.util.SoundManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

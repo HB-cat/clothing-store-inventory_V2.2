@@ -17,6 +17,7 @@ import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.DraftBill;
 import com.heben.client.model.Models.DraftBillItem;
 import com.heben.client.network.ApiClient;
+import com.heben.client.util.SoundManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -99,31 +100,25 @@ public class NewOrderEditActivity extends AppCompatActivity {
     }
 
     private void saveDraft(boolean submit) {
+        if (!submit) return;
         String buyerName = etBuyerName.getText().toString().trim();
         HashMap<String, Object> body = new HashMap<>();
-        body.put("buyerName", buyerName);
+        body.put("buyerName", buyerName.isEmpty() ? "散客" : buyerName);
 
-        ApiClient.getService().updateDraft(draftId, body).enqueue(new Callback<>() {
+        ApiClient.getService().submitDraft(draftId, body).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> resp) {
                 if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
-                    if (submit) {
-                        ApiClient.getService().submitDraft(draftId).enqueue(new Callback<>() {
-                            @Override public void onResponse(Call<ApiResponse<Void>> c, Response<ApiResponse<Void>> r) {
-                                if (r.isSuccessful() && r.body() != null && r.body().isSuccess()) {
-                                    Toast.makeText(NewOrderEditActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }
-                            @Override public void onFailure(Call<ApiResponse<Void>> c, Throwable t) {}
-                        });
-                    } else {
-                        Toast.makeText(NewOrderEditActivity.this, "已保存", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(NewOrderEditActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(NewOrderEditActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Toast.makeText(NewOrderEditActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

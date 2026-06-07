@@ -41,10 +41,22 @@ public class AuthService {
             if (request.getNickname() == null || request.getNickname().isBlank()) {
                 throw new IllegalArgumentException("买家昵称不能为空");
             }
+            // 昵称唯一性校验
+            if (sysUserMapper.selectCount(
+                    new LambdaQueryWrapper<SysUser>().eq(SysUser::getNickname, request.getNickname().trim())
+            ) > 0) {
+                throw new IllegalArgumentException("该昵称已被使用，请换一个");
+            }
         } else {
             // 零售商/批发商
             if (request.getShopName() == null || request.getShopName().isBlank()) {
                 throw new IllegalArgumentException("店铺名称不能为空");
+            }
+            // 店铺名唯一性校验
+            if (sysUserMapper.selectCount(
+                    new LambdaQueryWrapper<SysUser>().eq(SysUser::getShopName, request.getShopName().trim())
+            ) > 0) {
+                throw new IllegalArgumentException("该店铺名称已被使用，请换一个");
             }
         }
 
@@ -96,7 +108,10 @@ public class AuthService {
      */
     public LoginResponse login(LoginRequest request) {
         SysUser user = sysUserMapper.selectOne(
-                new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, request.getUsername())
+                new LambdaQueryWrapper<SysUser>()
+                        .and(w -> w.eq(SysUser::getUsername, request.getUsername())
+                                .or().eq(SysUser::getShopName, request.getUsername())
+                                .or().eq(SysUser::getNickname, request.getUsername()))
         );
 
         if (user == null) {
@@ -186,5 +201,47 @@ public class AuthService {
                 user.getRole()
         );
         return new LoginResponse(token, tokenExpire, userInfo);
+    }
+
+    /**
+     * 修改昵称/店铺名
+     */
+    @Transactional
+    public void updateProfile(Long userId, String nickname, String shopName) {
+        SysUser user = sysUserMapper.selectById(userId);
+        if (user == null) throw new IllegalArgumentException("用户不存在");
+
+        if (nickname != null && !nickname.isBlank()) {
+            // 昵称唯一校验
+            Long count = sysUserMapper.selectCount(
+                    new LambdaQueryWrapper<SysUser>()
+                            .eq(SysUser::getNickname, nickname.trim())
+                            .ne(SysUser::getId, userId)
+            );
+            if (count > 0) throw new IllegalArgumentException("昵称已被使用");
+            user.setNickname(nickname.trim());
+        }
+
+        if (shopName != null && !shopName.isBlank()) {
+            Long count = sysUserMapper.selectCount(
+                    new LambdaQueryWrapper<SysUser>()
+                            .eq(SysUser::getShopName, shopName.trim())
+                            .ne(SysUser::getId, userId)
+            );
+            if (count > 0) throw new IllegalArgumentException("店铺名已被使用");
+            user.setShopName(shopName.trim());
+        }
+
+        user.setUpdatedAt(LocalDateTime.now());
+        sysUserMapper.updateById(user);
+    }
+
+    /**
+     * 验证密码（智能体安全校验）
+     */
+    public boolean verifyPassword(Long userId, String rawPassword) {
+        SysUser user = sysUserMapper.selectById(userId);
+        if (user == null) return false;
+        return passwordEncoder.matches(rawPassword, user.getPassword());
     }
 }

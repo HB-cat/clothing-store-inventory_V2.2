@@ -1,11 +1,11 @@
 package com.heben.client.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.heben.client.R;
 import com.heben.client.model.ApiResponse;
@@ -13,6 +13,7 @@ import com.heben.client.model.Models.Category;
 import com.heben.client.model.Models.Product;
 import com.heben.client.network.ApiClient;
 import com.heben.client.network.ApiService;
+import com.heben.client.util.SoundManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,6 @@ import retrofit2.Response;
 public class ProductAddActivity extends AppCompatActivity {
 
     private TextInputEditText etName, etPurchasePrice, etSellingPrice;
-    private MaterialButton btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,12 @@ public class ProductAddActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
+        // 顶栏 ✔️ 按钮（保存逻辑）
+        findViewById(R.id.btn_save_top).setOnClickListener(v -> saveProduct());
+
         etName = findViewById(R.id.et_product_name);
         etPurchasePrice = findViewById(R.id.et_purchase_price);
         etSellingPrice = findViewById(R.id.et_selling_price);
-        btnSave = findViewById(R.id.btn_save_product);
-
-        btnSave.setOnClickListener(v -> saveProduct());
     }
 
     private void saveProduct() {
@@ -62,8 +62,6 @@ public class ProductAddActivity extends AppCompatActivity {
 
         double purchasePrice = Double.parseDouble(purchaseStr);
         double sellingPrice = Double.parseDouble(sellingStr);
-
-        btnSave.setEnabled(false);
 
         // Get first category id to assign
         ApiService api = ApiClient.getService();
@@ -98,7 +96,6 @@ public class ProductAddActivity extends AppCompatActivity {
         api.addProduct(body).enqueue(new Callback<ApiResponse<Product>>() {
             @Override
             public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
-                btnSave.setEnabled(true);
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     Toast.makeText(ProductAddActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
                     finish();
@@ -110,7 +107,6 @@ public class ProductAddActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
-                btnSave.setEnabled(true);
                 Toast.makeText(ProductAddActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_default">
+        <item>上装</item>
+        <item>下装</item>
+        <item>上衣</item>
+        <item>外套</item>
+        <item>配饰</item>
+    </string-array>
+    <string-array name="buyer_options">
+        <item>散客（不记名）</item>
+        <item>张先生</item>
+        <item>李女士</item>
+        <item>王小姐</item>
+    </string-array>
+</resources>

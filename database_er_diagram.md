@@ -1,33 +1,37 @@
 # Clothing-SI V2.2 数据库ER图
 
-> 版本：V2.2 | 日期：2026-06-04 | 对应PRD：功能梳理确认版
+> 版本：V2.2 | 日期：2026-06-06 | 对应PRD：功能梳理确认版
 
 ---
 
-## 一、表清单（共20张表）
+## 一、表清单（共22张MySQL表）
 
 | 编号 | 表名 | 说明 | 所属模块 |
 |:---:|------|------|---------|
 | 1 | `sys_user` | 用户表（零售商/批发商/买家/管理员） | 注册登录 |
 | 2 | `buyer_info` | 买家个人信息（年龄/身高/体重/三围/偏好） | 买家端 |
-| 3 | `category` | 商品分类 | 商品体系 |
-| 4 | `attribute_group` | 属性组（颜色/尺码/风格/面料/季节） | 商品体系 |
-| 5 | `attribute_value` | 属性值（红色/M/休闲/棉/春） | 商品体系 |
-| 6 | `product` | 商品主表 | 商品体系 |
-| 7 | `product_attr_combination` | 商品属性组合库存表 | 商品体系 |
-| 8 | `draft_bill` | 草稿账单 | 记账 |
-| 9 | `draft_bill_item` | 草稿账单明细 | 记账 |
-| 10 | `sale_record` | 销售记录主表 | 记账 |
-| 11 | `sale_record_item` | 销售记录明细 | 记账 |
-| 12 | `purchase_record` | 进货记录主表 | 进货 |
-| 13 | `purchase_record_item` | 进货记录明细 | 进货 |
-| 14 | `wholesale_transaction` | 批零交易记录 | 批零交易 |
-| 15 | `appointment` | 预约表 | 预约管理 |
-| 16 | `chat_session` | 聊天会话 | 聊天 |
-| 17 | `chat_message` | 聊天消息 | 聊天 |
-| 18 | `shared_product_pool` | 批发商共享商品池 | 商品共享 |
-| 19 | `habit_log` | 智能体习惯学习日志 | 智能体 |
-| 20 | `notification_setting` | 通知设置 | 系统设置 |
+| 3 | `buyer_crm` | 卖家CRM记录的买家信息（经buyer_info同步） | 卖家CRM |
+| 4 | `buyer_follow` | 买家关注关系（buyer关注seller） | 买家端 |
+| 5 | `category` | 商品分类 | 商品体系 |
+| 6 | `attribute_group` | 属性组（颜色/尺码/风格/面料/季节） | 商品体系 |
+| 7 | `attribute_value` | 属性值（红色/M/休闲/棉/春） | 商品体系 |
+| 8 | `product` | 商品主表 | 商品体系 |
+| 9 | `product_attr_combination` | 商品属性组合库存表 | 商品体系 |
+| 10 | `draft_bill` | 草稿账单 | 记账 |
+| 11 | `draft_bill_item` | 草稿账单明细 | 记账 |
+| 12 | `sale_record` | 销售记录主表 | 记账 |
+| 13 | `sale_record_item` | 销售记录明细 | 记账 |
+| 14 | `purchase_record` | 进货记录主表 | 进货 |
+| 15 | `purchase_record_item` | 进货记录明细 | 进货 |
+| 16 | `wholesale_transaction` | 批零交易记录 | 批零交易 |
+| 17 | `appointment` | 预约表 | 预约管理 |
+| 18 | `chat_session` | 聊天会话 | 聊天 |
+| 19 | `chat_message` | 聊天消息 | 聊天 |
+| 20 | `shared_product_pool` | 批发商共享商品池 | 商品共享 |
+| 21 | `notification_setting` | 通知设置 | 系统设置 |
+| 22 | `operation_log` | 操作幂等日志（离线同步去重） | 系统 |
+
+> `habit_log`（智能体习惯学习日志）仅存在于 Android Room 本地缓存，不在 MySQL 服务端，故不计入。详见 init.sql。
 
 ---
 
@@ -70,7 +74,32 @@
 | created_at | DATETIME | NOT NULL | |
 | updated_at | DATETIME | NOT NULL | |
 
-### 2.3 `category` — 商品分类表
+### 2.3 `buyer_crm` — 卖家CRM买家记录表
+
+> 此表映射BuyerInfo实体（`@TableName("buyer_crm")`），与`buyer_info`表分离。前者是卖家端的CRM记录，后者是买家端的个人信息表。
+
+| 字段 | 类型 | 约束 | 说明 |
+|------|------|------|------|
+| id | BIGINT | PK, AUTO_INCREMENT | |
+| user_id | BIGINT | FK→sys_user.id | 买家用户ID |
+| source | TINYINT | DEFAULT 1 | 来源：1=手动创建, 2=买家关联 |
+| created_at | DATETIME | NOT NULL | |
+| updated_at | DATETIME | NOT NULL | |
+
+**索引**：`idx_user`(user_id)
+
+### 2.4 `buyer_follow` — 买家关注关系表
+
+| 字段 | 类型 | 约束 | 说明 |
+|------|------|------|------|
+| id | BIGINT | PK, AUTO_INCREMENT | |
+| buyer_id | BIGINT | FK→sys_user.id | 买家ID |
+| seller_id | BIGINT | FK→sys_user.id | 卖家ID |
+| created_at | DATETIME | NOT NULL | |
+
+**索引**：`uk_buyer_seller`(buyer_id, seller_id, UNIQUE)
+
+### 2.5 `category` — 商品分类表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -85,7 +114,7 @@
 **索引**：`idx_user_sort`(user_id, sort_order)
 **预置数据**：连衣裙类、T恤类、衬衫类、裤子类、外套类（每个新卖家注册时自动插入）
 
-### 2.4 `attribute_group` — 属性组表
+### 2.6 `attribute_group` — 属性组表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -98,7 +127,7 @@
 
 **预置数据**：风格、面料、颜色、尺码、季节（每个新卖家注册时自动插入）
 
-### 2.5 `attribute_value` — 属性值表
+### 2.7 `attribute_value` — 属性值表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -110,7 +139,7 @@
 
 **索引**：`idx_group`(group_id)
 
-### 2.6 `product` — 商品主表
+### 2.8 `product` — 商品主表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -122,6 +151,7 @@
 | selling_price | DECIMAL(10,2) | NOT NULL | 售价 |
 | image_url | VARCHAR(255) | DEFAULT NULL | 商品图片URL |
 | has_attributes | TINYINT | DEFAULT 0 | 是否有属性组合：0=无属性, 1=有属性 |
+| status | TINYINT | DEFAULT 1 | 状态：1=上架, 0=下架 |
 | source | TINYINT | DEFAULT 1 | 来源：1=自主创建, 2=从批发商导入 |
 | source_tx_id | BIGINT | DEFAULT NULL | 来源交易ID（批零交易时关联wholesale_transaction.id） |
 | is_deleted | TINYINT | DEFAULT 0 | 软删除标记 |
@@ -130,7 +160,7 @@
 
 **索引**：`idx_user`(user_id), `idx_category`(category_id), `idx_user_name`(user_id, name)
 
-### 2.7 `product_attr_combination` — 商品属性组合库存表
+### 2.9 `product_attr_combination` — 商品属性组合库存表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -145,7 +175,7 @@
 **索引**：`idx_product`(product_id)
 **说明**：一个商品有多少个属性组合，这里就有多少条记录。无属性商品只生成1条记录（attrs_json为`{}`）。
 
-### 2.8 `draft_bill` — 草稿账单表
+### 2.10 `draft_bill` — 草稿账单表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -160,7 +190,7 @@
 
 **索引**：`idx_user_status`(user_id, status)
 
-### 2.9 `draft_bill_item` — 草稿账单明细表
+### 2.11 `draft_bill_item` — 草稿账单明细表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -168,6 +198,7 @@
 | bill_id | BIGINT | FK→draft_bill.id | 所属草稿账单 |
 | product_id | BIGINT | FK→product.id | 商品 |
 | combination_id | BIGINT | FK→product_attr_combination.id | 属性组合（可选，无属性商品为NULL） |
+| attrs_json | VARCHAR(500) | DEFAULT NULL | 属性组合JSON冗余 |
 | quantity | INT | NOT NULL | 数量 |
 | unit_price | DECIMAL(10,2) | NOT NULL | 单价 |
 | created_at | DATETIME | NOT NULL | |
@@ -175,7 +206,7 @@
 **索引**：`idx_bill`(bill_id)
 **约束**：每个账单最多30条明细
 
-### 2.10 `sale_record` — 销售记录主表
+### 2.12 `sale_record` — 销售记录主表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -192,7 +223,7 @@
 
 **索引**：`idx_user_time`(user_id, sale_time), `idx_buyer`(buyer_id)
 
-### 2.11 `sale_record_item` — 销售记录明细表
+### 2.13 `sale_record_item` — 销售记录明细表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -201,7 +232,7 @@
 | product_id | BIGINT | FK→product.id | 商品 |
 | combination_id | BIGINT | FK→product_attr_combination.id | 属性组合（可选） |
 | product_name | VARCHAR(100) | NOT NULL | 商品名称冗余（退货时即使商品被删也能显示） |
-| attrs_desc | VARCHAR(200) | DEFAULT NULL | 属性描述冗余（如"红色-M码"） |
+| attrs_json | VARCHAR(500) | DEFAULT NULL | 属性组合JSON（如 `{"颜色":"红色","尺码":"M"}`） |
 | quantity | INT | NOT NULL | 数量 |
 | unit_price | DECIMAL(10,2) | NOT NULL | 售价 |
 | purchase_price | DECIMAL(10,2) | NOT NULL | 进价（用于毛利计算，记录当时价格） |
@@ -211,7 +242,7 @@
 
 **索引**：`idx_sale`(sale_id), `idx_product_return`(product_id, is_returned)
 
-### 2.12 `purchase_record` — 进货记录主表
+### 2.14 `purchase_record` — 进货记录主表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -224,7 +255,7 @@
 
 **索引**：`idx_user`(user_id), `idx_source`(source)
 
-### 2.13 `purchase_record_item` — 进货记录明细表
+### 2.15 `purchase_record_item` — 进货记录明细表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -236,7 +267,7 @@
 | unit_price | DECIMAL(10,2) | NOT NULL | 进价 |
 | created_at | DATETIME | NOT NULL | |
 
-### 2.14 `wholesale_transaction` — 批零交易记录表
+### 2.16 `wholesale_transaction` — 批零交易记录表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -254,7 +285,7 @@
 
 **索引**：`idx_wholesaler`(wholesaler_id), `idx_retailer`(retailer_id), `idx_status`(status)
 
-### 2.15 `appointment` — 预约表
+### 2.17 `appointment` — 预约表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -271,7 +302,7 @@
 
 **索引**：`idx_buyer`(buyer_id), `idx_seller_status`(seller_id, status), `idx_date`(appointment_date)
 
-### 2.16 `chat_session` — 聊天会话表
+### 2.18 `chat_session` — 聊天会话表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -287,7 +318,7 @@
 
 **索引**：`idx_participants`(participant_a, participant_b, UNIQUE)
 
-### 2.17 `chat_message` — 聊天消息表
+### 2.19 `chat_message` — 聊天消息表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -301,7 +332,7 @@
 
 **索引**：`idx_session`(session_id), `idx_sender`(sender_id)
 
-### 2.18 `shared_product_pool` — 批发商共享商品池表
+### 2.20 `shared_product_pool` — 批发商共享商品池表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -329,7 +360,7 @@
 **索引**：`idx_user_action`(user_id, action_type), `idx_time`(action_time)
 **说明**：此表主要存在客户端Room，云端可选同步做备份分析。
 
-### 2.20 `notification_setting` — 通知设置表
+### 2.21 `notification_setting` — 通知设置表
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -344,6 +375,17 @@
 | wholesale_confirm | TINYINT | DEFAULT 1 | 批零进货确认 |
 | created_at | DATETIME | NOT NULL | |
 | updated_at | DATETIME | NOT NULL | |
+
+### 2.22 `operation_log` — 操作幂等日志表
+
+| 字段 | 类型 | 约束 | 说明 |
+|------|------|------|------|
+| id | BIGINT | PK, AUTO_INCREMENT | |
+| operation_id | VARCHAR(64) | UNIQUE, NOT NULL | 客户端生成的唯一操作ID |
+| user_id | BIGINT | FK→sys_user.id | 操作用户 |
+| operation_type | VARCHAR(32) | NOT NULL | 操作类型：stock_sync/sale_create/purchase_create |
+| status | TINYINT | DEFAULT 1 | 状态：1=成功 |
+| created_at | DATETIME | NOT NULL | |
 
 ---
 
@@ -380,6 +422,8 @@ chat_session ──> sys_user (participant_b)    # 会话参与方B
 
 sys_user (1) ──> (1) buyer_info              # 一个买家有一条个人信息
 sys_user (1) ──> (1) notification_setting    # 一个用户有一份通知设置
+sys_user (buyer) (1) ──< (n) buyer_follow (as follower)  # 买家关注多个卖家
+sys_user (seller) (1) ──< (n) buyer_follow (as followed) # 卖家被多个买家关注
 ```
 
 ---

@@ -21,13 +21,15 @@ Clothing_S_I_V2.2/
 │   └── test-*.http              # API 测试文件
 ├── Clothing_SI_client/          # Android 客户端 (已完成)
 │   └── app/src/main/
-│       ├── java/.../activity/   # 21个 Activity + 4个 Fragment
+│       ├── java/.../activity/   # 25个 Activity + 4个 Fragment
 │       ├── java/.../adapter/    # 8个 RecyclerView Adapter
 │       ├── java/.../model/      # 全部数据模型
+│       ├── java/.../util/       # SoundManager(音效) + TokenManager + AppContext
 │       ├── java/.../network/    # ApiClient + ApiService (46+接口)
-│       └── res/layout/          # 24个布局文件
+│       └── res/layout/          # 50个布局文件（含ui_preview全面改造）
+├── ui_preview/                  # 17个HTML设计稿（暖橙主题标准）
 ├── Clothing_SI_database/        # 数据库脚本
-│   ├── init.sql                 # 建表 (18张表)
+│   ├── init.sql                 # 建表 (19张表)
 │   └── seed_data.sql            # 种子数据
 └── *.md                         # 项目文档
 ```
@@ -38,8 +40,9 @@ Clothing_S_I_V2.2/
 |:----:|:----:|------|
 | 后端 API (45+接口) | ✅ 100% | 注册登录/商品/销售/进货/分析/聊天/预约/智能体 |
 | 管理员后台 (4页面) | ✅ 100% | Thymeleaf 页面，管理员账号 heben/heben0831 |
-| Android 客户端 | ✅ 100% | 65个文件，BUILD SUCCESSFUL，含完整业务逻辑 |
-| 集成测试 | 🔄 进行中 | 详见 [后续测试工作流程图.md](后续测试工作流程图.md) |
+| Android 客户端 | ✅ 100% | 65+文件，50个布局，BUILD SUCCESSFUL，ui_preview 全面改造 |
+| UI 布局改造 | ✅ 100% | 4批次约30页面对齐暖橙主题，含FAB+音效+分段控件 |
+| 集成测试 | 🔄 待开始 | 详见 [接手引导书.md](接手引导书.md) |
 
 ## Android 客户端功能概览
 
@@ -58,8 +61,11 @@ Clothing_S_I_V2.2/
 | 聊天 | ChatDetailActivity | 2 |
 | 预约 | AppointmentsActivity | 3 |
 | 智能体 | AgentPanelActivity | 1 |
-| 买家端 | BuyerHome/Products/Messages/Profile | 2 |
+| 买家端 | BuyerHome/Products/Follows/Messages/Profile | 2 |
 | 数据管理 | DataManageActivity | （留接口）|
+| UI 改造 | 30+页面（暖橙主题）| FAB+音效+分段控件 |
+
+> 详细接手说明见 [接手引导书.md](接手引导书.md)
 
 ## 快速启动
 

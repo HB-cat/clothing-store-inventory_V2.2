@@ -16,4 +16,8 @@ public interface ProductAttrCombinationMapper extends BaseMapper<ProductAttrComb
     @Update("UPDATE product_attr_combination SET stock = stock + #{quantity}, version = version + 1, updated_at = NOW() " +
             "WHERE id = #{id}")
     int addStock(@Param("id") Long id, @Param("quantity") int quantity);
+
+    @Update("UPDATE product_attr_combination SET stock = stock - #{quantity}, version = version + 1, updated_at = NOW() " +
+            "WHERE id = #{id} AND stock >= #{quantity}")
+    int deductStockUnsafe(@Param("id") Long id, @Param("quantity") int quantity);
 }

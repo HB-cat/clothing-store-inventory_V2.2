@@ -1,22 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#D35400" android:paddingHorizontal="16dp">
-        <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
-            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="新建订单" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
-    </RelativeLayout>
-    <com.google.android.material.button.MaterialButton android:id="@+id/btn_create_draft"
-        android:layout_width="match_parent" android:layout_height="48dp"
-        android:layout_margin="16dp" android:text="+ 创建草稿账单"
-        app:cornerRadius="24dp" android:layout_marginBottom="0dp" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_drafts"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:paddingHorizontal="16dp" android:paddingBottom="16dp" />
-</LinearLayout>
+    android:background="#F5F5F5">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+            android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
+            <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
+                android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
+                android:gravity="center" android:background="@drawable/circle_bg" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="新建订单" android:textSize="17dp" android:textStyle="bold"
+                android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+            <TextView android:id="@+id/btn_submit_top" android:layout_width="36dp" android:layout_height="36dp"
+                android:text="✔️" android:textSize="16dp" android:textColor="#FFFFFF"
+                android:gravity="center" android:background="@drawable/circle_bg"
+                android:layout_alignParentEnd="true" android:clickable="true" android:focusable="true" />
+        </RelativeLayout>
+
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:padding="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 草稿卡片横向滚动 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📄 草稿账单" android:textSize="15dp" android:textStyle="bold"
+                    android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+                <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp">
+                    <LinearLayout android:id="@+id/layout_draft_cards"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical" />
+                </HorizontalScrollView>
+
+                <!-- 提示 -->
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="📌 草稿最多6个，每单最多30种商品。提交后生成正式销售记录。"
+                    android:textSize="12dp" android:textColor="#95A5A6"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 当前草稿详情 -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <TextView android:id="@+id/tv_draft_title"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="📄 草稿 #1" android:textSize="15dp" android:textStyle="bold"
+                        android:textColor="#2D3436" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <TextView android:id="@+id/tv_draft_total"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="合计: ¥0" android:textSize="13dp" android:textStyle="bold"
+                        android:textColor="#E85D3A" />
+                </LinearLayout>
+
+                <!-- 草稿商品列表 -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:cardCornerRadius="20dp" app:cardElevation="2dp"
+                    android:layout_marginBottom="8dp">
+                    <LinearLayout android:id="@+id/layout_draft_items"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:paddingVertical="4dp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 买家显示 -->
+                <LinearLayout android:id="@+id/layout_buyer_display"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingVertical="8dp" android:paddingHorizontal="4dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🧾" android:textSize="14dp" android:layout_marginEnd="6dp" />
+                    <TextView android:id="@+id/tv_selected_buyer"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:textSize="13dp"
+                        android:textColor="#E85D3A" android:textStyle="bold" />
+                    <TextView android:id="@+id/btn_clear_buyer"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="✕" android:textSize="14dp" android:textColor="#95A5A6"
+                        android:padding="4dp" android:clickable="true" android:focusable="true" />
+                </LinearLayout>
+
+                <!-- 操作按钮 -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="2"
+                    android:layout_marginTop="4dp" android:layout_marginBottom="12dp">
+                    <com.google.android.material.button.MaterialButton android:id="@+id/btn_add_item"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:text="➕ 添加商品" android:textSize="13dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:cornerRadius="22dp" app:strokeColor="#E85D3A"
+                        android:textColor="#E85D3A" android:layout_marginEnd="6dp" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/btn_select_buyer"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:text="🧾 选择买家" android:textSize="13dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:cornerRadius="22dp" app:strokeColor="#95A5A6"
+                        android:textColor="#95A5A6" android:layout_marginStart="6dp" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton android:id="@+id/btn_submit_order"
+                    android:layout_width="match_parent" android:layout_height="56dp"
+                    android:text="提交账单" android:textSize="16dp" app:cornerRadius="28dp"
+                    android:backgroundTint="#E85D3A" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

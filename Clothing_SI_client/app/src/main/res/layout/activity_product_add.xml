@@ -1,44 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#D35400" android:paddingHorizontal="16dp">
-        <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
-            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="添加商品" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
-    </RelativeLayout>
-    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_product_name"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="商品名称" />
-            </com.google.android.material.textfield.TextInputLayout>
+    android:background="#F5F5F5">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+            android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
+            <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
+                android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
+                android:gravity="center" android:background="@drawable/circle_bg" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="添加商品" android:textSize="17dp" android:textStyle="bold"
+                android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+            <TextView android:id="@+id/btn_save_top" android:layout_width="36dp" android:layout_height="36dp"
+                android:text="✔️" android:textSize="16dp" android:textColor="#FFFFFF"
+                android:gravity="center" android:background="@drawable/circle_bg"
+                android:layout_alignParentEnd="true" android:clickable="true" android:focusable="true" />
+        </RelativeLayout>
+
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:padding="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:weightSum="2">
-                <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginEnd="6dp">
-                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_purchase_price"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="进价" android:inputType="numberDecimal" />
+                android:orientation="vertical">
+
+                <!-- 商品名称 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="商品名称" android:textSize="13dp" android:textStyle="bold"
+                    android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="如：纯棉圆领T恤" android:layout_marginBottom="12dp">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_product_name"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="6dp">
-                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_selling_price"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="售价" android:inputType="numberDecimal" />
-                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 分类 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="分类" android:textSize="13dp" android:textStyle="bold"
+                    android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spinner_category"
+                        android:layout_width="match_parent" android:layout_height="48dp"
+                        android:background="@drawable/segment_bg"
+                        android:paddingHorizontal="12dp"
+                        android:entries="@array/category_default" />
+                </LinearLayout>
+
+                <!-- 售价 + 成本价 -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="2"
+                    android:layout_marginTop="12dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical"
+                        android:layout_marginEnd="6dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="售价（¥）" android:textSize="13dp" android:textStyle="bold"
+                            android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_selling_price"
+                                android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:hint="¥" android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical"
+                        android:layout_marginStart="6dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="成本价（¥）" android:textSize="13dp" android:textStyle="bold"
+                            android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_purchase_price"
+                                android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:hint="¥" android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 属性组合库存 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🎨 属性组合库存" android:textSize="15dp" android:textStyle="bold"
+                    android:textColor="#2D3436" android:layout_marginTop="8dp" android:layout_marginBottom="4dp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="选择颜色和尺码组合，设置各组合库存" android:textSize="12dp" android:textColor="#95A5A6" android:layout_marginBottom="10dp" />
+
+                <!-- 颜色 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="颜色" android:textSize="13dp" android:textStyle="bold"
+                    android:textColor="#95A5A6" android:layout_marginBottom="6dp" />
+                <LinearLayout android:id="@+id/layout_color_chips"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="4"
+                    android:layout_marginBottom="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="白色"
+                        android:textSize="12dp" android:layout_marginEnd="4dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="黑色"
+                        android:textSize="12dp" android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="蓝色"
+                        android:textSize="12dp" android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="红色"
+                        android:textSize="12dp" android:layout_marginStart="4dp"
+                        android:background="@drawable/segment_bg" />
+                </LinearLayout>
+
+                <!-- 尺码 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="尺码" android:textSize="13dp" android:textStyle="bold"
+                    android:textColor="#95A5A6" android:layout_marginBottom="6dp" />
+                <LinearLayout android:id="@+id/layout_size_chips"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="5"
+                    android:layout_marginBottom="16dp">
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="S"
+                        android:textSize="12dp" android:layout_marginEnd="3dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="M"
+                        android:textSize="12dp" android:layout_marginHorizontal="3dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="L"
+                        android:textSize="12dp" android:layout_marginHorizontal="3dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="XL"
+                        android:textSize="12dp" android:layout_marginHorizontal="3dp"
+                        android:background="@drawable/segment_bg" />
+                    <TextView android:layout_width="0dp" android:layout_height="36dp"
+                        android:layout_weight="1" android:gravity="center" android:text="XXL"
+                        android:textSize="12dp" android:layout_marginStart="3dp"
+                        android:background="@drawable/segment_bg" />
+                </LinearLayout>
+
+                <!-- 库存组合表预览 -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp" android:layout_marginBottom="16dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="12dp">
+                        <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:stretchColumns="*">
+                            <TableRow android:paddingVertical="8dp">
+                                <TextView android:text="颜色" android:textStyle="bold" android:textSize="13dp" android:textColor="#95A5A6" />
+                                <TextView android:text="尺码" android:textStyle="bold" android:textSize="13dp" android:textColor="#95A5A6" />
+                                <TextView android:text="库存" android:textStyle="bold" android:textSize="13dp" android:textColor="#95A5A6" />
+                                <TextView android:text="售价" android:textStyle="bold" android:textSize="13dp" android:textColor="#95A5A6" />
+                            </TableRow>
+                            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E8EAED" />
+                            <TableRow android:paddingVertical="10dp">
+                                <TextView android:text="白色" android:textSize="13dp" />
+                                <TextView android:text="M" android:textSize="13dp" />
+                                <TextView android:text="23" android:textSize="13dp" />
+                                <TextView android:text="¥65" android:textSize="13dp" />
+                            </TableRow>
+                            <TableRow android:paddingVertical="10dp">
+                                <TextView android:text="黑色" android:textSize="13dp" />
+                                <TextView android:text="M" android:textSize="13dp" />
+                                <TextView android:text="15" android:textSize="13dp" />
+                                <TextView android:text="¥65" android:textSize="13dp" />
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
-            <com.google.android.material.button.MaterialButton android:id="@+id/btn_save_product"
-                android:layout_width="match_parent" android:layout_height="56dp" android:text="保存商品"
-                android:textSize="16dp" app:cornerRadius="28dp"
-                android:layout_marginTop="24dp" />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

@@ -33,6 +33,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.onRefresh = onRefresh;
     }
 
+    public void updateList(List<Category> newList) {
+        list.clear();
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -4,6 +4,7 @@ import com.heben.clothing_s_i_server.dto.ApiResponse;
 import com.heben.clothing_s_i_server.entity.Product;
 import com.heben.clothing_s_i_server.entity.SharedProductPool;
 import com.heben.clothing_s_i_server.service.ProductService;
+import com.heben.clothing_s_i_server.service.ProductService.StockSyncItem;
 import com.heben.clothing_s_i_server.service.SharedProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +78,22 @@ public class ProductController {
             return ApiResponse.success("删除成功", null);
         } catch (IllegalArgumentException e) {
             return ApiResponse.badRequest(e.getMessage());
+        }
+    }
+
+    /**
+     * 批量增量同步库存（离线客户端使用，幂等）
+     * POST /api/products/stock-sync
+     */
+    @PostMapping("/stock-sync")
+    public ApiResponse<Void> syncStockChanges(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestBody Map<String, List<StockSyncItem>> body) {
+        try {
+            productService.syncStockChanges(userId, body.get("changes"));
+            return ApiResponse.success("库存同步完成", null);
+        } catch (Exception e) {
+            return ApiResponse.badRequest("库存同步失败: " + e.getMessage());
         }
     }
 }

@@ -1,109 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#D35400" android:paddingHorizontal="16dp">
-        <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
-            android:gravity="center" android:background="@drawable/circle_bg" android:alpha="0.15" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="经营分析" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
-    </RelativeLayout>
+    android:background="#F5F5F5">
 
-    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- 今日快报 -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+            android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
+            <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
+                android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
+                android:gravity="center" android:background="@drawable/circle_bg" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="📋 今日快报" android:textSize="16dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-            <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:padding="16dp">
-                    <TextView android:id="@+id/tv_today_conclusion" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="加载中..."
-                        android:textSize="24dp" android:textStyle="bold" android:textColor="#E85D3A" />
-                    <TextView android:id="@+id/tv_today_detail" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text=""
-                        android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginTop="4dp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:text="经营分析" android:textSize="17dp" android:textStyle="bold"
+                android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+        </RelativeLayout>
 
-            <!-- 补货建议 -->
-            <TextView android:id="@+id/tv_low_stock_title" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="⚠️ 补货建议"
-                android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436"
-                android:layout_marginBottom="8dp" />
-            <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                android:layout_height="wrap_content" app:cardCornerRadius="20dp"
-                app:cardElevation="2dp" android:layout_marginBottom="12dp">
-                <LinearLayout android:id="@+id/layout_low_stock" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="vertical"
-                    android:padding="16dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- 滞销提醒 -->
-            <TextView android:id="@+id/tv_slow_moving_title" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="📦 滞销提醒"
-                android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436"
-                android:layout_marginBottom="8dp" />
-            <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                android:layout_height="wrap_content" app:cardCornerRadius="20dp"
-                app:cardElevation="2dp" android:layout_marginBottom="12dp">
-                <LinearLayout android:id="@+id/layout_slow_moving" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="vertical"
-                    android:padding="16dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- 热销TOP -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🔥 热销排行" android:textSize="16dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-            <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                android:layout_height="wrap_content" app:cardCornerRadius="20dp"
-                app:cardElevation="2dp" android:layout_marginBottom="12dp">
-                <LinearLayout android:id="@+id/layout_top_products" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="vertical"
-                    android:padding="16dp" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- 趋势 + 高峰 -->
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:weightSum="2">
-                <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginEnd="6dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:padding="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="📈 近7日趋势" android:textSize="14dp" android:textStyle="bold"
-                            android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-                        <TextView android:id="@+id/tv_trend" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="加载中..."
-                            android:textSize="12dp" android:textColor="#95A5A6" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginStart="6dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:padding="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="🕐 高峰时段" android:textSize="14dp" android:textStyle="bold"
-                            android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-                        <TextView android:id="@+id/tv_peak_hours" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="加载中..."
-                            android:textSize="12dp" android:textColor="#95A5A6" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                <!-- 1. 今日快报 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📋 今日快报" android:textSize="16dp" android:textStyle="bold"
+                    android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+                <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <TextView android:id="@+id/tv_today_conclusion" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="加载中..."
+                            android:textSize="24dp" android:textStyle="bold" android:textColor="#E85D3A" />
+                        <TextView android:id="@+id/tv_today_detail" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text=""
+                            android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 2. 补货建议 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_low_stock" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:id="@+id/tv_low_stock_title" android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="⚠️ 补货建议" android:textSize="16dp" android:textStyle="bold"
+                        android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_low_stock_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_low_stock"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:id="@+id/layout_low_stock" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:padding="16dp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 3. 滞销提醒 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_slow_moving" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:id="@+id/tv_slow_moving_title" android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="📦 滞销提醒" android:textSize="16dp" android:textStyle="bold"
+                        android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_slow_moving_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_slow_moving"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:id="@+id/layout_slow_moving" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:padding="16dp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 4. 热销TOP8 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_top_products" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="🔥 热销TOP8"
+                        android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_top_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_top_products"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <TextView android:id="@+id/tv_top_conclusion" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="加载中..."
+                            android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginBottom="8dp" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btn_landscape_top8"
+                            android:layout_width="wrap_content" android:layout_height="32dp" android:text="↗ 横屏"
+                            app:cornerRadius="16dp" style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_marginBottom="8dp" />
+                        <TextView android:id="@+id/layout_top_products" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:text="📊 柱状图：热销TOP8 商品销量"
+                            android:textSize="13dp" android:textColor="#95A5A6" android:gravity="center"
+                            android:padding="20dp" android:background="@drawable/chart_bg" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 5. 近7天趋势 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_trend" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="📈 近7天销售趋势"
+                        android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_trend_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_trend"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <TextView android:id="@+id/tv_trend_conclusion" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="加载中..."
+                            android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginBottom="8dp" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btn_landscape_trend"
+                            android:layout_width="wrap_content" android:layout_height="32dp" android:text="↗ 横屏"
+                            app:cornerRadius="16dp" style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_marginBottom="8dp" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="📈 折线图：近7天销售额趋势" android:textSize="13dp" android:textColor="#95A5A6"
+                            android:gravity="center" android:padding="20dp" android:background="#FAFAFA" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 6. 订单高峰 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_peak" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="⏰ 订单高峰"
+                        android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_peak_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_peak"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <TextView android:id="@+id/tv_peak_conclusion" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="加载中..."
+                            android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginBottom="8dp" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btn_landscape_peak"
+                            android:layout_width="wrap_content" android:layout_height="32dp" android:text="↗ 横屏"
+                            app:cornerRadius="16dp" style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_marginBottom="8dp" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="📊 24小时时段分布柱状图" android:textSize="13dp" android:textColor="#95A5A6"
+                            android:gravity="center" android:padding="20dp" android:background="#FAFAFA" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 7. 客户画像 (折叠) -->
+                <LinearLayout android:id="@+id/toggle_profile" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical" android:clickable="true" android:focusable="true"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="👥 客户画像"
+                        android:textSize="16dp" android:textStyle="bold" android:textColor="#2D3436" />
+                    <TextView android:id="@+id/iv_profile_arrow" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="▼" android:textSize="14dp"
+                        android:textColor="#BDC3C7" />
+                </LinearLayout>
+                <androidx.cardview.widget.CardView android:id="@+id/card_profile"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <TextView android:id="@+id/tv_profile_conclusion" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="加载中..."
+                            android:textSize="13dp" android:textColor="#95A5A6" android:layout_marginBottom="8dp" />
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btn_landscape_profile"
+                            android:layout_width="wrap_content" android:layout_height="32dp" android:text="↗ 横屏"
+                            app:cornerRadius="16dp" style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_marginBottom="8dp" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="📊 饼图：年龄分布 / 风格偏好" android:textSize="13dp" android:textColor="#95A5A6"
+                            android:gravity="center" android:padding="20dp" android:background="#FAFAFA" />
+                        <LinearLayout android:id="@+id/layout_customer_profile"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:gravity="center"
+                            android:layout_marginTop="8dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

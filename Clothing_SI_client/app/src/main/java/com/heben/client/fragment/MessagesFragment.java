@@ -32,11 +32,13 @@ import retrofit2.Response;
 public class MessagesFragment extends Fragment {
 
     private View tabChat, tabAppt, chatContent, apptContent;
-    private RecyclerView rvSessions, rvAppts;
+    private RecyclerView rvSessions;
+    private RecyclerView rvApptsPending, rvApptsConfirmed;
     private ChatSessionAdapter sessionAdapter;
-    private AppointmentAdapter apptAdapter;
+    private AppointmentAdapter pendingAdapter, confirmedAdapter;
     private List<ChatSession> sessions = new ArrayList<>();
-    private List<Appointment> appointments = new ArrayList<>();
+    private List<Appointment> pendingAppts = new ArrayList<>();
+    private List<Appointment> confirmedAppts = new ArrayList<>();
 
     @Nullable
     @Override
@@ -58,12 +60,13 @@ public class MessagesFragment extends Fragment {
         });
         rvSessions.setAdapter(sessionAdapter);
 
-        rvAppts = v.findViewById(R.id.rv_appointments);
-        rvAppts.setLayoutManager(new LinearLayoutManager(getActivity()));
-        apptAdapter = new AppointmentAdapter(appointments, new AppointmentAdapter.OnAction() {
+        // Pending appointments
+        rvApptsPending = v.findViewById(R.id.rv_appointments_pending);
+        rvApptsPending.setLayoutManager(new LinearLayoutManager(getActivity()));
+        pendingAdapter = new AppointmentAdapter(pendingAppts, new AppointmentAdapter.OnAction() {
             @Override
             public void onConfirm(int pos) {
-                Appointment a = appointments.get(pos);
+                Appointment a = pendingAppts.get(pos);
                 ApiClient.getService().confirmAppointment(a.id).enqueue(new Callback<ApiResponse<Void>>() {
                     @Override public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> resp) { loadAppointments(); }
                     @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
@@ -72,7 +75,7 @@ public class MessagesFragment extends Fragment {
 
             @Override
             public void onReject(int pos) {
-                Appointment a = appointments.get(pos);
+                Appointment a = pendingAppts.get(pos);
                 HashMap<String, String> body = new HashMap<>();
                 body.put("reason", "商家拒绝");
                 ApiClient.getService().rejectAppointment(a.id, body).enqueue(new Callback<ApiResponse<Void>>() {
@@ -80,11 +83,18 @@ public class MessagesFragment extends Fragment {
                     @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
                 });
             }
-        });
-        rvAppts.setAdapter(apptAdapter);
+        }, true);
+        rvApptsPending.setAdapter(pendingAdapter);
+
+        // Confirmed appointments
+        rvApptsConfirmed = v.findViewById(R.id.rv_appointments_confirmed);
+        rvApptsConfirmed.setLayoutManager(new LinearLayoutManager(getActivity()));
+        confirmedAdapter = new AppointmentAdapter(confirmedAppts, null, false, "已确认");
+        rvApptsConfirmed.setAdapter(confirmedAdapter);
 
         tabChat.setOnClickListener(x -> switchTab("chat"));
         tabAppt.setOnClickListener(x -> switchTab("appt"));
+        tabChat.setSelected(true);
 
         switchTab("chat");
         return v;
@@ -123,14 +133,30 @@ public class MessagesFragment extends Fragment {
     }
 
     private void loadAppointments() {
+        // Pending
         ApiClient.getService().getAppointments("pending").enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Appointment>>> call, Response<ApiResponse<List<Appointment>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    appointments.clear();
+                    pendingAppts.clear();
                     List<Appointment> data = response.body().getData();
-                    if (data != null) appointments.addAll(data);
-                    apptAdapter.notifyDataSetChanged();
+                    if (data != null) pendingAppts.addAll(data);
+                    pendingAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResponse<List<Appointment>>> call, Throwable t) {}
+        });
+
+        // Confirmed
+        ApiClient.getService().getAppointments("confirmed").enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Appointment>>> call, Response<ApiResponse<List<Appointment>>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    confirmedAppts.clear();
+                    List<Appointment> data = response.body().getData();
+                    if (data != null) confirmedAppts.addAll(data);
+                    confirmedAdapter.notifyDataSetChanged();
                 }
             }
             @Override

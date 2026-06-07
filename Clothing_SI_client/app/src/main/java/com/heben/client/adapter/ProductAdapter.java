@@ -11,10 +11,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.heben.client.R;
+import com.heben.client.local.sync.NetworkUtil;
+import com.heben.client.local.sync.OfflineHelper;
 import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.Product;
+import com.heben.client.model.Models.ProductAttrCombination;
 import com.heben.client.network.ApiClient;
 import com.heben.client.network.ApiService;
+import com.heben.client.util.TokenManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,8 +51,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(v.getContext())
                     .setTitle("删除商品")
-                    .setMessage("确定删除「" + item.name + "」？")
-                    .setPositiveButton("删除", (dialog, which) -> deleteProduct(v, item.id))
+                    .setMessage("确定删除「" + item.name + "」？如有库存将清空")
+                    .setPositiveButton("删除", (dialog, which) -> deleteProduct(v, item))
                     .setNegativeButton("取消", null)
                     .show();
         });
@@ -59,9 +63,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return list.size();
     }
 
-    private void deleteProduct(View v, long id) {
+    private void deleteProduct(View v, Product product) {
+        if (!NetworkUtil.isConnected(v.getContext())) {
+            Toast.makeText(v.getContext(), "离线模式暂不支持删除商品，请联网后操作", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // 先记录库存变动（如有组合库存）
+        if (product.combinations != null && !product.combinations.isEmpty()) {
+            OfflineHelper helper = new OfflineHelper(v.getContext());
+            Long userId = TokenManager.getUserId();
+            if (userId != null) {
+                for (ProductAttrCombination combo : product.combinations) {
+                    if (combo.stock > 0) {
+                        helper.saveStockChangeOffline(userId, combo.id, -combo.stock);
+                    }
+                }
+            }
+        }
+
         ApiService api = ApiClient.getService();
-        api.deleteProduct(id).enqueue(new Callback<ApiResponse<Void>>() {
+        api.deleteProduct(product.id).enqueue(new Callback<ApiResponse<Void>>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {

@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -54,6 +56,42 @@ public class AuthController {
             return ApiResponse.success("密码修改成功", null);
         } catch (IllegalArgumentException e) {
             return ApiResponse.badRequest(e.getMessage());
+        }
+    }
+
+    /**
+     * 修改昵称/店铺名
+     * PUT /api/auth/profile
+     */
+    @PutMapping("/profile")
+    public ApiResponse<Void> updateProfile(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestBody UpdateProfileRequest request) {
+        try {
+            authService.updateProfile(userId, request.getNickname(), request.getShopName());
+            return ApiResponse.success("修改成功", null);
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.badRequest(e.getMessage());
+        }
+    }
+
+    /**
+     * 验证密码（智能体敏感操作安全确认）
+     * POST /api/auth/verify-password
+     */
+    @PostMapping("/verify-password")
+    public ApiResponse<Void> verifyPassword(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestBody Map<String, String> body) {
+        String password = body.get("password");
+        if (password == null || password.isBlank()) {
+            return ApiResponse.badRequest("密码不能为空");
+        }
+        boolean ok = authService.verifyPassword(userId, password);
+        if (ok) {
+            return ApiResponse.success("验证成功", null);
+        } else {
+            return ApiResponse.badRequest("密码错误");
         }
     }
 }

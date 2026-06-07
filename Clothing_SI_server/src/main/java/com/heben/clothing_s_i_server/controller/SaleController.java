@@ -6,8 +6,12 @@ import com.heben.clothing_s_i_server.entity.DraftBillItem;
 import com.heben.clothing_s_i_server.entity.SaleRecord;
 import com.heben.clothing_s_i_server.service.SaleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -142,6 +146,30 @@ public class SaleController {
         return ApiResponse.success(saleService.getMonthSales(userId));
     }
 
+    /**
+     * 本年销售
+     * GET /api/sales/year
+     */
+    @GetMapping("/sales/year")
+    public ApiResponse<SaleService.SaleSummaryVO> getYearSales(
+            @RequestAttribute("currentUserId") Long userId) {
+        return ApiResponse.success(saleService.getYearSales(userId));
+    }
+
+    /**
+     * 按日期范围查询销售统计
+     * GET /api/sales/summary?startDate=2026-01-01&endDate=2026-01-31
+     */
+    @GetMapping("/sales/summary")
+    public ApiResponse<SaleService.SaleSummaryVO> getSalesSummary(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        LocalDateTime start = startDate.atStartOfDay();
+        LocalDateTime end = endDate.atTime(LocalTime.MAX);
+        return ApiResponse.success(saleService.getSalesByDateRange(userId, start, end));
+    }
+
     // ========== 退货 ==========
 
     /**
@@ -162,5 +190,15 @@ public class SaleController {
         } catch (IllegalArgumentException e) {
             return ApiResponse.badRequest(e.getMessage());
         }
+    }
+
+    // ========== 买家订单 ==========
+
+    @GetMapping("/sales/buyer-orders")
+    public ApiResponse<List<SaleRecord>> getBuyerOrders(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestAttribute("currentUserRole") Integer role) {
+        if (role != 3) return ApiResponse.forbidden("仅买家可访问");
+        return ApiResponse.success(saleService.getBuyerOrders(userId));
     }
 }

@@ -1,7 +1,7 @@
 -- ============================================================
--- Clothing-SI V2.2 - 数据库初始化脚本（仅建表）
--- 说明：请先在 HeidiSQL 中手动创建 clothing_si_db 数据库
---       然后选中该数据库，再执行此文件
+-- Clothing-SI V2.2 - 数据库初始化脚本
+-- 完整建表（22张表）
+-- 使用方式：先 CREATE DATABASE clothing_si_db; 然后 USE 后执行
 -- ============================================================
 
 -- 1. 用户表
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS sys_user (
     updated_at DATETIME NOT NULL COMMENT '更新时间',
     INDEX idx_username (username),
     INDEX idx_role (role)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表（4角色：零售商/批发商/买家/管理员）';
 
 -- 2. 买家个人信息表
 CREATE TABLE IF NOT EXISTS buyer_info (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS buyer_info (
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='买家个人信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='买家个人信息表（年龄/三围/风格偏好等）';
 
 -- 3. 商品分类表
 CREATE TABLE IF NOT EXISTS category (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS category (
     updated_at DATETIME NOT NULL,
     INDEX idx_user_sort (user_id, sort_order),
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表（每个卖家独立分类）';
 
 -- 4. 属性组表
 CREATE TABLE IF NOT EXISTS attribute_group (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS attribute_group (
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='属性组表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='属性组表（颜色/尺码/面料等）';
 
 -- 5. 属性值表
 CREATE TABLE IF NOT EXISTS attribute_value (
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS attribute_value (
     created_at DATETIME NOT NULL,
     INDEX idx_group (group_id),
     FOREIGN KEY (group_id) REFERENCES attribute_group(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='属性值表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='属性值表（如红色/M/棉等具体值）';
 
 -- 6. 商品主表
 CREATE TABLE IF NOT EXISTS product (
@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS product (
     selling_price DECIMAL(10,2) NOT NULL COMMENT '售价',
     image_url VARCHAR(255) DEFAULT NULL COMMENT '商品图片URL',
     has_attributes TINYINT DEFAULT 0 COMMENT '是否有属性组合',
+    status TINYINT DEFAULT 1 COMMENT '状态：1=上架, 0=下架',
     source TINYINT DEFAULT 1 COMMENT '来源：1=自主创建, 2=从批发商导入',
     source_tx_id BIGINT DEFAULT NULL COMMENT '来源交易ID',
     is_deleted TINYINT DEFAULT 0 COMMENT '软删除标记',
@@ -101,14 +102,14 @@ CREATE TABLE IF NOT EXISTS product (
 CREATE TABLE IF NOT EXISTS product_attr_combination (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     product_id BIGINT NOT NULL COMMENT '所属商品',
-    attrs_json VARCHAR(500) NOT NULL COMMENT '属性组合JSON',
+    attrs_json VARCHAR(500) NOT NULL COMMENT '属性组合JSON（如{"颜色":"红色","尺码":"M"}）',
     stock INT DEFAULT 0 COMMENT '当前库存数量',
     version INT DEFAULT 0 COMMENT '乐观锁版本号',
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
     INDEX idx_product (product_id),
     FOREIGN KEY (product_id) REFERENCES product(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品属性组合库存表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品属性组合库存表（含乐观锁version）';
 
 -- 8. 草稿账单表
 CREATE TABLE IF NOT EXISTS draft_bill (
@@ -122,7 +123,7 @@ CREATE TABLE IF NOT EXISTS draft_bill (
     updated_at DATETIME NOT NULL,
     INDEX idx_user_status (user_id, status),
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='草稿账单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='草稿账单表（最多6份/用户, 每份30种商品）';
 
 -- 9. 草稿账单明细表
 CREATE TABLE IF NOT EXISTS draft_bill_item (
@@ -130,6 +131,7 @@ CREATE TABLE IF NOT EXISTS draft_bill_item (
     bill_id BIGINT NOT NULL COMMENT '所属草稿账单',
     product_id BIGINT NOT NULL COMMENT '商品',
     combination_id BIGINT DEFAULT NULL COMMENT '属性组合',
+    attrs_json VARCHAR(500) DEFAULT NULL COMMENT '属性组合描述',
     quantity INT NOT NULL COMMENT '数量',
     unit_price DECIMAL(10,2) NOT NULL COMMENT '单价',
     created_at DATETIME NOT NULL,
@@ -147,8 +149,9 @@ CREATE TABLE IF NOT EXISTS sale_record (
     buyer_name VARCHAR(50) DEFAULT '散客' COMMENT '买家名称冗余',
     source TINYINT DEFAULT 1 COMMENT '来源：1=快捷指令, 2=新建账单提交',
     total_amount DECIMAL(10,2) NOT NULL COMMENT '总金额',
-    total_profit DECIMAL(10,2) NOT NULL COMMENT '总毛利',
+    total_profit DECIMAL(10,2) DEFAULT 0 COMMENT '总毛利',
     item_count INT NOT NULL COMMENT '商品种类数',
+    draft_bill_id BIGINT DEFAULT NULL COMMENT '关联草稿账单ID（来源为草稿时）',
     sale_time DATETIME NOT NULL COMMENT '销售时间',
     created_at DATETIME NOT NULL,
     INDEX idx_user_time (user_id, sale_time),
@@ -164,7 +167,7 @@ CREATE TABLE IF NOT EXISTS sale_record_item (
     product_id BIGINT NOT NULL COMMENT '商品',
     combination_id BIGINT DEFAULT NULL COMMENT '属性组合',
     product_name VARCHAR(100) NOT NULL COMMENT '商品名称冗余',
-    attrs_desc VARCHAR(200) DEFAULT NULL COMMENT '属性描述冗余',
+    attrs_json VARCHAR(500) DEFAULT NULL COMMENT '属性组合JSON（冗余）',
     quantity INT NOT NULL COMMENT '数量',
     unit_price DECIMAL(10,2) NOT NULL COMMENT '售价',
     purchase_price DECIMAL(10,2) NOT NULL COMMENT '进价',
@@ -182,14 +185,14 @@ CREATE TABLE IF NOT EXISTS sale_record_item (
 CREATE TABLE IF NOT EXISTS purchase_record (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL COMMENT '进货方用户ID',
-    source TINYINT NOT NULL COMMENT '来源：1=我的商品,2=新建并入库,3=批发商共享库',
+    source TINYINT NOT NULL COMMENT '来源：1=我的商品, 2=新建并入库, 3=批发商共享库',
     total_amount DECIMAL(10,2) NOT NULL COMMENT '总金额',
     supplier_name VARCHAR(100) DEFAULT NULL COMMENT '供应商名称',
     created_at DATETIME NOT NULL,
     INDEX idx_user (user_id),
     INDEX idx_source (source),
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='进货记录主表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='进货记录主表（3种来源）';
 
 -- 13. 进货记录明细表
 CREATE TABLE IF NOT EXISTS purchase_record_item (
@@ -216,7 +219,7 @@ CREATE TABLE IF NOT EXISTS wholesale_transaction (
     quantity INT NOT NULL COMMENT '数量',
     unit_price DECIMAL(10,2) NOT NULL COMMENT '交易单价',
     total_amount DECIMAL(10,2) NOT NULL COMMENT '总金额',
-    status TINYINT DEFAULT 0 COMMENT '状态：0=待确认,1=已确认,2=已拒绝,3=已取消',
+    status TINYINT DEFAULT 0 COMMENT '状态：0=待确认, 1=已确认, 2=已拒绝, 3=已取消',
     created_at DATETIME NOT NULL,
     confirmed_at DATETIME DEFAULT NULL COMMENT '确认时间',
     INDEX idx_wholesaler (wholesaler_id),
@@ -226,7 +229,7 @@ CREATE TABLE IF NOT EXISTS wholesale_transaction (
     FOREIGN KEY (retailer_id) REFERENCES sys_user(id),
     FOREIGN KEY (product_id) REFERENCES product(id),
     FOREIGN KEY (combination_id) REFERENCES product_attr_combination(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批零交易记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批零交易记录表（批发商→零售商）';
 
 -- 15. 预约表
 CREATE TABLE IF NOT EXISTS appointment (
@@ -234,8 +237,8 @@ CREATE TABLE IF NOT EXISTS appointment (
     buyer_id BIGINT NOT NULL COMMENT '买家ID',
     seller_id BIGINT NOT NULL COMMENT '卖家ID',
     appointment_date DATE NOT NULL COMMENT '预约日期',
-    time_slot VARCHAR(20) NOT NULL COMMENT '时段',
-    status TINYINT DEFAULT 0 COMMENT '状态：0=待确认,1=已确认,2=已完成,3=已拒绝,4=已取消,5=毁约',
+    time_slot VARCHAR(20) NOT NULL COMMENT '时段（如 9-11, 14-16）',
+    status TINYINT DEFAULT 0 COMMENT '状态：0=待确认, 1=已确认, 2=已完成, 3=已拒绝, 4=已取消, 5=毁约',
     reject_reason VARCHAR(200) DEFAULT NULL COMMENT '拒绝理由',
     reminder_sent TINYINT DEFAULT 0 COMMENT '到店提醒是否已发送',
     created_at DATETIME NOT NULL,
@@ -245,7 +248,7 @@ CREATE TABLE IF NOT EXISTS appointment (
     INDEX idx_date (appointment_date),
     FOREIGN KEY (buyer_id) REFERENCES sys_user(id),
     FOREIGN KEY (seller_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预约表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预约表（买家预约到店）';
 
 -- 16. 聊天会话表
 CREATE TABLE IF NOT EXISTS chat_session (
@@ -261,16 +264,16 @@ CREATE TABLE IF NOT EXISTS chat_session (
     UNIQUE KEY uk_participants (participant_a, participant_b),
     FOREIGN KEY (participant_a) REFERENCES sys_user(id),
     FOREIGN KEY (participant_b) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='聊天会话表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='聊天会话表（两两之间唯一会话）';
 
 -- 17. 聊天消息表
 CREATE TABLE IF NOT EXISTS chat_message (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     session_id BIGINT NOT NULL COMMENT '所属会话',
     sender_id BIGINT NOT NULL COMMENT '发送方',
-    message_type TINYINT NOT NULL COMMENT '类型：1=文本,2=图片,3=商品卡片,4=商品单推荐',
+    message_type TINYINT NOT NULL COMMENT '类型：1=文本, 2=图片, 3=商品卡片, 4=商品单推荐',
     content TEXT DEFAULT NULL COMMENT '文本内容',
-    ref_id BIGINT DEFAULT NULL COMMENT '引用ID',
+    ref_id BIGINT DEFAULT NULL COMMENT '引用ID（商品ID等）',
     created_at DATETIME NOT NULL,
     INDEX idx_session (session_id),
     INDEX idx_sender (sender_id),
@@ -307,8 +310,49 @@ CREATE TABLE IF NOT EXISTS notification_setting (
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='通知设置表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='通知设置表（各类型通知独立开关）';
+
+-- 20. 卖家CRM记录表（卖家端跟踪买家）
+CREATE TABLE IF NOT EXISTS buyer_crm (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    seller_id BIGINT NOT NULL COMMENT '卖家用户ID',
+    buyer_user_id BIGINT DEFAULT NULL COMMENT '买家用户ID',
+    buyer_name VARCHAR(50) DEFAULT NULL COMMENT '买家名称',
+    phone VARCHAR(20) DEFAULT NULL COMMENT '电话',
+    remark VARCHAR(200) DEFAULT NULL COMMENT '备注',
+    visit_count INT DEFAULT 0 COMMENT '到店次数',
+    last_visit_time DATETIME DEFAULT NULL COMMENT '最近到店时间',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    INDEX idx_seller (seller_id),
+    FOREIGN KEY (seller_id) REFERENCES sys_user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='卖家CRM记录（跟踪买家来访/消费记录）';
+
+-- 21. 买家关注表
+CREATE TABLE IF NOT EXISTS buyer_follow (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    buyer_id BIGINT NOT NULL COMMENT '买家用户ID',
+    seller_id BIGINT NOT NULL COMMENT '被关注卖家ID',
+    created_at DATETIME NOT NULL,
+    INDEX idx_buyer (buyer_id),
+    UNIQUE KEY uk_buyer_seller (buyer_id, seller_id),
+    FOREIGN KEY (buyer_id) REFERENCES sys_user(id),
+    FOREIGN KEY (seller_id) REFERENCES sys_user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='买家关注卖家表';
+
+-- 22. 操作幂等日志表（离线同步去重）
+CREATE TABLE IF NOT EXISTS operation_log (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    operation_id VARCHAR(64) NOT NULL COMMENT '客户端生成的唯一操作ID',
+    user_id BIGINT NOT NULL COMMENT '操作用户',
+    operation_type VARCHAR(32) NOT NULL COMMENT '操作类型：stock_sync/sale_create/purchase_create',
+    status TINYINT DEFAULT 1 COMMENT '状态：1=成功',
+    created_at DATETIME NOT NULL,
+    UNIQUE KEY uk_operation_id (operation_id),
+    INDEX idx_user (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作幂等日志（离线同步时防止重复提交）';
 
 -- ============================================================
--- 建表完成
+-- 建表完成（共22张表）
+-- 执行成功后运行 seed_data.sql 插入测试数据
 -- ============================================================

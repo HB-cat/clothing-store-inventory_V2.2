@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("buyer_info")
+@TableName("buyer_crm")
 public class BuyerInfo {
     @TableId(type = IdType.AUTO)
     private Long id;

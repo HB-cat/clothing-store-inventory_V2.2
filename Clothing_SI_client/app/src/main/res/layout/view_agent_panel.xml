@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:elevation="8dp"
+    android:padding="12dp">
+    <!-- 标题栏 -->
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="36dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="智能体" android:textSize="14dp" android:textStyle="bold"
+            android:textColor="#2D3436" android:layout_centerVertical="true" />
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true" android:layout_centerVertical="true">
+            <TextView android:id="@+id/btn_agent_full" android:layout_width="28dp" android:layout_height="28dp"
+                android:text="⤢" android:textSize="14dp" android:gravity="center"
+                android:clickable="true" android:focusable="true" />
+            <TextView android:id="@+id/btn_agent_close" android:layout_width="28dp" android:layout_height="28dp"
+                android:text="✕" android:textSize="14dp" android:gravity="center"
+                android:clickable="true" android:focusable="true"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 输入行 -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="4dp">
+        <EditText android:id="@+id/et_agent_input" android:layout_width="0dp" android:layout_height="40dp"
+            android:layout_weight="1" android:hint="输入指令..." android:textSize="13dp"
+            android:paddingStart="12dp" android:paddingEnd="12dp"
+            android:background="@drawable/card_bg" android:imeOptions="actionSend" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/btn_agent_send"
+            android:layout_width="36dp" android:layout_height="36dp" android:text="➤"
+            app:cornerRadius="18dp" android:layout_marginStart="6dp" />
+    </LinearLayout>
+</LinearLayout>

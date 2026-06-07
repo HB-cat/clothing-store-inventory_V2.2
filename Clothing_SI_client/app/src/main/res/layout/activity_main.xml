@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:background="#F5F5F5">
 
-    <FrameLayout android:id="@+id/fragment_container"
-        android:layout_width="match_parent" android:layout_height="0dp"
-        android:layout_weight="1" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout android:id="@+id/fragment_container"
+            android:layout_width="match_parent" android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#FFFFFF"
-        app:menu="@menu/bottom_nav"
-        app:itemIconTint="@color/primary"
-        app:itemTextColor="@color/primary"
-        app:labelVisibilityMode="labeled" />
+        <!-- 自定义底部导航（5 tab，🤖 居中） -->
+        <LinearLayout android:id="@+id/bottom_nav"
+            android:layout_width="match_parent" android:layout_height="64dp"
+            android:orientation="horizontal" android:gravity="center"
+            android:background="#FFFFFF"
+            android:paddingTop="6dp" android:paddingBottom="6dp"
+            android:elevation="8dp"
+            android:baselineAligned="false">
 
-</LinearLayout>
+            <!-- Tab 1: 首页 -->
+            <LinearLayout android:id="@+id/nav_home"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:gravity="center"
+                android:orientation="vertical" android:clickable="true" android:focusable="true"
+                android:paddingVertical="4dp" android:maxWidth="80dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🏠" android:textSize="20dp" android:lineSpacingExtra="0dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="首页" android:textSize="11dp" android:textColor="#E85D3A"
+                    android:includeFontPadding="false" android:lines="1" />
+            </LinearLayout>
+
+            <!-- Tab 2: 账单 -->
+            <LinearLayout android:id="@+id/nav_bills"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:gravity="center"
+                android:orientation="vertical" android:clickable="true" android:focusable="true"
+                android:paddingVertical="4dp" android:maxWidth="80dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📋" android:textSize="20dp" android:lineSpacingExtra="0dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="账单" android:textSize="11dp" android:textColor="#95A5A6"
+                    android:includeFontPadding="false" android:lines="1" />
+            </LinearLayout>
+
+            <!-- Tab 3: 智能体（居中圆形背景，不切换 fragment） -->
+            <LinearLayout android:id="@+id/nav_agent"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:gravity="center"
+                android:orientation="vertical" android:clickable="true" android:focusable="true"
+                android:paddingVertical="4dp" android:maxWidth="80dp">
+                <TextView android:layout_width="44dp" android:layout_height="44dp"
+                    android:text="AI" android:textSize="16dp" android:gravity="center"
+                    android:textStyle="bold"
+                    android:background="@drawable/circle_agent_bg"
+                    android:layout_marginBottom="2dp" />
+            </LinearLayout>
+
+            <!-- Tab 4: 消息 -->
+            <LinearLayout android:id="@+id/nav_messages"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:gravity="center"
+                android:orientation="vertical" android:clickable="true" android:focusable="true"
+                android:paddingVertical="4dp" android:maxWidth="80dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="💬" android:textSize="20dp" android:lineSpacingExtra="0dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="消息" android:textSize="11dp" android:textColor="#95A5A6"
+                    android:includeFontPadding="false" android:lines="1" />
+            </LinearLayout>
+
+            <!-- Tab 5: 我的 -->
+            <LinearLayout android:id="@+id/nav_profile"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1" android:gravity="center"
+                android:orientation="vertical" android:clickable="true" android:focusable="true"
+                android:paddingVertical="4dp" android:maxWidth="80dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="👤" android:textSize="20dp" android:lineSpacingExtra="0dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="我的" android:textSize="11dp" android:textColor="#95A5A6"
+                    android:includeFontPadding="false" android:lines="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

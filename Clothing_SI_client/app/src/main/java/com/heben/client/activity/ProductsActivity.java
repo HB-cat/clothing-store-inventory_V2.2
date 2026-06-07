@@ -2,13 +2,13 @@ package com.heben.client.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.heben.client.R;
 import com.heben.client.adapter.ProductAdapter;
@@ -16,6 +16,7 @@ import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.Product;
 import com.heben.client.network.ApiClient;
 import com.heben.client.network.ApiService;
+import com.heben.client.util.SoundManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ public class ProductsActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private List<Product> list = new ArrayList<>();
     private TextInputEditText etSearch;
-    private MaterialButton btnSearch;
+    private View tabAll, tabOnsale, tabOffline, tabLowStock;
+    private String currentFilter = "all";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +43,52 @@ public class ProductsActivity extends AppCompatActivity {
         findViewById(R.id.btn_add_product).setOnClickListener(v ->
                 startActivity(new Intent(this, ProductAddActivity.class)));
 
+        // Segment
+        tabAll = findViewById(R.id.tab_all);
+        tabOnsale = findViewById(R.id.tab_onsale);
+        tabOffline = findViewById(R.id.tab_offline);
+        tabLowStock = findViewById(R.id.tab_low_stock);
+
+        tabAll.setOnClickListener(v -> switchTab("all"));
+        tabOnsale.setOnClickListener(v -> switchTab("onsale"));
+        tabOffline.setOnClickListener(v -> switchTab("offline"));
+        tabLowStock.setOnClickListener(v -> switchTab("low_stock"));
+
         etSearch = findViewById(R.id.et_search);
-        btnSearch = findViewById(R.id.btn_search);
         rv = findViewById(R.id.product_list);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ProductAdapter(list, () -> loadProducts(null));
+        adapter = new ProductAdapter(list, () -> loadProducts(currentFilter));
         rv.setAdapter(adapter);
 
-        btnSearch.setOnClickListener(v -> {
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
             String keyword = etSearch.getText().toString().trim();
-            loadProducts(keyword.isEmpty() ? null : keyword);
+            loadProducts(currentFilter);
+            return true;
         });
 
-        loadProducts(null);
+        switchTab("all");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadProducts(null);
+        loadProducts(currentFilter);
     }
 
-    private void loadProducts(String keyword) {
+    private void switchTab(String tab) {
+        currentFilter = tab;
+        tabAll.setSelected("all".equals(tab));
+        tabOnsale.setSelected("onsale".equals(tab));
+        tabOffline.setSelected("offline".equals(tab));
+        tabLowStock.setSelected("low_stock".equals(tab));
+        loadProducts(tab);
+    }
+
+    private void loadProducts(String filter) {
+        String keyword = etSearch.getText().toString().trim();
+        if (keyword.isEmpty()) keyword = null;
+
         ApiService api = ApiClient.getService();
         api.getProducts(null, keyword).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
@@ -73,14 +98,11 @@ public class ProductsActivity extends AppCompatActivity {
                     list.clear();
                     if (data != null) list.addAll(data);
                     adapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(ProductsActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
-                Toast.makeText(ProductsActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductsActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
         });
     }

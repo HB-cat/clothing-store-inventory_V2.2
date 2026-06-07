@@ -1,5 +1,7 @@
 package com.heben.client.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,14 +14,20 @@ public class Models {
     }
 
     public static class RegisterRequest {
-        public String username, password, shopName, nickname;
+        public String password, shopName, nickname;
         public int role;
     }
 
     public static class LoginResponse {
-        public String token, username, shopName, nickname;
-        public Long userId;
-        public int role;
+        public String token;
+        public UserInfo user;
+
+        // 嵌套用户信息，与后端 LoginResponse.UserInfo 对应
+        public static class UserInfo {
+            public Long id;
+            public String username, shopName, nickname;
+            public int role;
+        }
     }
 
     public static class ChangePasswordRequest {
@@ -80,14 +88,17 @@ public class Models {
         public double totalAmount;
         public int itemCount;
         public String saleTime;
+        @SerializedName("saleItems")
         public List<SaleRecordItem> items;
     }
 
     public static class SaleRecordItem {
-        public Long id, saleRecordId, combinationId;
-        public String productName, attrsDisplay;
+        public Long id;
+        public String productName;
         public int quantity;
-        public double unitPrice, subtotal;
+        public double unitPrice;
+        @SerializedName("isReturned")
+        public int returned;
     }
 
     public static class SalesSummary {
@@ -100,6 +111,7 @@ public class Models {
     public static class DraftBill {
         public Long id;
         public String draftNo;
+        public String buyerName;
         public double totalAmount;
         public int itemCount;
         public String createdAt;
@@ -151,10 +163,12 @@ public class Models {
 
     // ===== Appointment =====
     public static class Appointment {
-        public Long id, buyerId;
-        public String buyerName, productName;
-        public String timeSlot, status;
-        public int visitCount, cancelCount;
+        public Long id, buyerId, sellerId;
+        public String buyerName, sellerName;
+        public String productName, attrsDisplay;
+        public String appointmentDate, timeSlot;
+        public String status, rejectReason;
+        public String createdAt, updatedAt;
     }
 
     // ===== Analytics =====
@@ -192,8 +206,11 @@ public class Models {
     }
 
     public static class CustomerProfile {
-        public String summary;
-        public List<TagItem> tags;
+        public String buyerName;
+        public int orderCount;
+        public double totalAmount;
+        public double avgAmount;
+        public String lastBuyDate;
     }
 
     public static class TagItem {

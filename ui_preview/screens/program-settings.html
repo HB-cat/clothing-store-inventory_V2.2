@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>程序设置 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<div class="phone-wrapper"><div class="phone">
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav">
+    <button class="back" onclick="history.back()">←</button>
+    <span class="title">程序设置</span>
+  </div>
+  <div class="content">
+    <!-- 通知与音效 -->
+    <div style="font-size:13px;color:#95A5A6;margin-bottom:6px;margin-left:4px">通知与音效</div>
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" style="cursor:default"><span style="flex:1;font-size:14px">操作音效</span><span style="color:var(--primary);font-size:13px">已开启</span></div>
+      <div class="list-item" style="cursor:default"><span style="flex:1;font-size:14px">智能体建议</span><span style="color:var(--primary);font-size:13px">已开启</span></div>
+      <div class="list-item" style="cursor:default"><span style="flex:1;font-size:14px">预约通知</span><span style="color:var(--text-secondary);font-size:13px">已关闭</span></div>
+      <div class="list-item" style="cursor:default"><span style="flex:1;font-size:14px">聊天通知</span><span style="color:var(--primary);font-size:13px">已开启</span></div>
+    </div>
+
+    <!-- 系统工具 -->
+    <div style="font-size:13px;color:#95A5A6;margin-bottom:6px;margin-left:4px;margin-top:14px">系统工具</div>
+    <div class="card" style="padding:0 16px">
+      <div class="list-item" style="cursor:pointer" onclick="location.href='data-manage.html'"><span style="flex:1;font-size:14px">运行测试</span><span style="color:var(--text-light)">›</span></div>
+      <div class="list-item" style="cursor:pointer" onclick="if(confirm('确定要初始化系统？'))alert('已重置')"><span style="flex:1;font-size:14px;color:var(--primary)">初始化系统</span><span style="color:var(--text-light)">›</span></div>
+    </div>
+  </div>
+</div></div>
+</body></html>

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @TableName("sale_record")
@@ -28,4 +29,7 @@ public class SaleRecord {
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
+
+    @TableField(exist = false)
+    private List<SaleRecordItem> saleItems;
 }
