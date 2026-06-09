@@ -12,6 +12,7 @@ Clothing_SI_client/gradle/wrapper/gradle-wrapper.jar
 # IDE
 .idea/
 .vscode/
+.trae/
 *.iml
 *.ipr
 *.iws
