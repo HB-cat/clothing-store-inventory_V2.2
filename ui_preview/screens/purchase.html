@@ -1,32 +1,39 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>进货入库 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>进货 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <button class="back" onclick="history.back()">←</button>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='home.html'">‹</span>
     <span class="title">进货入库</span>
+    <span class="action" onclick="alert('📦 新增进货')">+</span>
   </div>
   <div class="content">
-    <div class="segment">
-      <button class="opt active">我的商品</button>
-      <button class="opt">新建并入库</button>
-      <button class="opt">批发商共享库</button>
+    <div class="segment" id="srcSegment">
+      <button class="opt active" onclick="toggleSeg(this)">全部</button>
+      <button class="opt" onclick="toggleSeg(this)">供应商</button>
+      <button class="opt" onclick="toggleSeg(this)">共享池</button>
     </div>
-    <div class="form-group" style="margin-bottom:12px"><input class="form-input" placeholder="🔍 搜索商品..."></div>
-
     <div class="card" style="padding:0 16px">
       <div class="list-item">
-        <div class="thumb">👕</div>
-        <div class="info"><div class="name">纯棉圆领T恤</div><div class="desc">白色·M · 库存: 23</div></div>
-        <div class="right"><button class="btn btn-sm btn-outline">补货</button></div>
+        <div class="thumb">📦</div>
+        <div class="info"><div class="name">纯棉圆领T恤 · 批50件</div><div class="desc">供应商: 广州服装厂 · 09:00</div></div>
+        <div class="right"><div class="price">¥1,950</div><div class="sub" style="color:var(--success)">已完成</div></div>
       </div>
       <div class="list-item">
-        <div class="thumb">👗</div>
-        <div class="info"><div class="name">碎花雪纺连衣裙</div><div class="desc">蓝色·M · 库存: 8 ⚠️</div></div>
-        <div class="right"><button class="btn btn-sm btn-primary">补货</button></div>
+        <div class="thumb">📦</div>
+        <div class="info"><div class="name">高腰阔腿牛仔裤 · 批30件</div><div class="desc">供应商: 杭州牛仔 · 昨天</div></div>
+        <div class="right"><div class="price">¥2,100</div><div class="sub" style="color:var(--text-light)">待入库</div></div>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--text-secondary);text-align:center;margin-top:8px">⬆️ 切换到「批发商共享库」可从上游导入商品</p>
   </div>
-  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
+<script>
+  function toggleSeg(el) { el.parentElement.querySelectorAll('.opt').forEach(function(b){b.classList.remove('active')}); el.classList.add('active'); }
+</script>
 </body></html>

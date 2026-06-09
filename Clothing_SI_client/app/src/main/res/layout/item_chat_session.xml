@@ -7,7 +7,7 @@
     android:clickable="true" android:focusable="true">
     <TextView android:id="@+id/tv_avatar"
         android:layout_width="48dp" android:layout_height="48dp"
-        android:gravity="center" android:textSize="24dp" android:background="#FDEDEC" />
+        android:gravity="center" android:textSize="24dp" android:background="@color/primary_light" />
     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"

@@ -1,63 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="@drawable/header_bar_bg" android:gravity="center_vertical"
-        android:paddingHorizontal="16dp">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="消息" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
-    </RelativeLayout>
+    android:id="@+id/swipe_refresh"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center"
-        android:layout_margin="16dp" android:weightSum="2"
-        android:background="@drawable/segment_container_bg" android:padding="3dp">
-        <TextView android:id="@+id/tab_chat" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="聊天"
-            android:textSize="13dp" android:background="@drawable/segment_tab_bg"
-            android:textColor="#95A5A6" />
-        <TextView android:id="@+id/tab_appt" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="预约"
-            android:textSize="13dp" android:background="@drawable/segment_tab_bg"
-            android:textColor="#95A5A6" />
-    </LinearLayout>
-
-    <!-- 聊天内容 -->
-    <FrameLayout android:id="@+id/chat_content" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:visibility="visible"
-        android:paddingHorizontal="16dp">
-        <androidx.cardview.widget.CardView android:layout_width="match_parent"
-            android:layout_height="match_parent" app:cardCornerRadius="20dp"
-            app:cardElevation="2dp" android:paddingStart="8dp" android:paddingEnd="8dp">
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_chat_sessions"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
-    </FrameLayout>
-
-    <!-- 预约内容 -->
-    <FrameLayout android:id="@+id/appt_content" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:visibility="gone"
-        android:paddingHorizontal="16dp">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!-- 待确认 -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:background="@color/bg">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+            android:background="@drawable/header_bar_bg" android:gravity="center_vertical"
+            android:paddingHorizontal="16dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="待确认" android:textSize="16dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="10dp" />
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_appointments_pending"
-                android:layout_width="match_parent" android:layout_height="0dp"
-                android:layout_weight="1" android:layout_marginBottom="12dp" />
+                android:text="消息" android:textSize="17dp" android:textStyle="bold"
+                android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+        </RelativeLayout>
 
-            <!-- 今日已确认 -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="今日已确认" android:textSize="16dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="10dp" />
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_appointments_confirmed"
-                android:layout_width="match_parent" android:layout_height="0dp"
-                android:layout_weight="1" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center"
+            android:layout_margin="16dp" android:weightSum="2"
+            android:background="@drawable/segment_container_bg" android:padding="3dp">
+            <TextView android:id="@+id/tab_chat" android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_weight="1" android:gravity="center" android:text="聊天"
+                android:textSize="13dp" android:background="@drawable/segment_tab_bg"
+                android:textColor="#95A5A6" />
+            <TextView android:id="@+id/tab_appt" android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_weight="1" android:gravity="center" android:text="预约"
+                android:textSize="13dp" android:background="@drawable/segment_tab_bg"
+                android:textColor="#95A5A6" />
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+
+        <!-- 聊天内容 -->
+        <FrameLayout android:id="@+id/chat_content" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="visible"
+            android:paddingHorizontal="16dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="match_parent" app:cardCornerRadius="20dp"
+                app:cardElevation="2dp" android:paddingStart="8dp" android:paddingEnd="8dp">
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_chat_sessions"
+                    android:layout_width="match_parent" android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+        <!-- 预约内容 -->
+        <FrameLayout android:id="@+id/appt_content" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone"
+            android:paddingHorizontal="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!-- 待确认 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="待确认" android:textSize="16dp" android:textStyle="bold"
+                    android:textColor="@color/text_primary" android:layout_marginBottom="10dp" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_appointments_pending"
+                    android:layout_width="match_parent" android:layout_height="0dp"
+                    android:layout_weight="1" android:layout_marginBottom="12dp" />
+
+                <!-- 今日已确认 -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="今日已确认" android:textSize="16dp" android:textStyle="bold"
+                    android:textColor="#2D3436" android:layout_marginBottom="10dp" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_appointments_confirmed"
+                    android:layout_width="match_parent" android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

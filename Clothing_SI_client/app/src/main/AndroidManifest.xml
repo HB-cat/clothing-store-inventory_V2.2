@@ -40,9 +40,8 @@
         <activity android:name=".activity.AttributesActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.ChatDetailActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.AnalyticsActivity" />
-        <activity android:name=".activity.AppointmentsActivity" />
-<!-- DataManageActivity removed, sync is now automatic via Room + DataSyncManager -->
-        <activity android:name=".activity.AgentPanelActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.FullScreenChartActivity" />
+        <activity android:name=".activity.AppointmentsActivity" android:windowSoftInputMode="adjustResize" />
 
         <!-- Buyer Screens -->
         <activity android:name=".activity.BuyerHomeActivity" />

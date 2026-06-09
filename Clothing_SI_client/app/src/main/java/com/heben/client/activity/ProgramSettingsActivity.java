@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 import com.heben.client.R;
 import com.heben.client.local.sync.NetworkUtil;
 import com.heben.client.local.sync.SyncEngine;
@@ -18,7 +19,12 @@ public class ProgramSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program_settings);
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_back).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            finish();
+        });
+
+        SharedPreferences prefs = getSharedPreferences("profile_prefs", Context.MODE_PRIVATE);
 
         // 同步数据到云端
         findViewById(R.id.settings_sync).setOnClickListener(v -> {
@@ -37,7 +43,19 @@ public class ProgramSettingsActivity extends AppCompatActivity {
             }).start();
         });
 
-        SharedPreferences prefs = getSharedPreferences("profile_prefs", Context.MODE_PRIVATE);
+        // 首页状态文字
+        TextInputEditText etHomeStatus = findViewById(R.id.et_home_status);
+        etHomeStatus.setText(prefs.getString("home_status_text", "🎵 天天发财 · 客似云来 · 生意兴隆"));
+        findViewById(R.id.btn_save_home_status).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            String text = etHomeStatus.getText().toString().trim();
+            if (text.isEmpty()) {
+                Toast.makeText(this, "文字不能为空", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            prefs.edit().putString("home_status_text", text).apply();
+            Toast.makeText(this, "已保存，返回首页即可看到效果", Toast.LENGTH_SHORT).show();
+        });
 
         // 操作音效开关
         SwitchMaterial switchSound = findViewById(R.id.switch_sound);

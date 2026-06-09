@@ -41,8 +41,14 @@ public class NewOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
-        findViewById(R.id.btn_submit_top).setOnClickListener(v -> submitDraft());
+        findViewById(R.id.btn_back).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            finish();
+        });
+        findViewById(R.id.btn_submit_top).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            submitDraft();
+        });
 
         layoutDraftCards = findViewById(R.id.layout_draft_cards);
         layoutDraftItems = findViewById(R.id.layout_draft_items);
@@ -53,20 +59,36 @@ public class NewOrderActivity extends AppCompatActivity {
 
         // Segment control
         // 添加商品 → 弹出商品选择器（直接加，不进页面）
-        findViewById(R.id.btn_add_item).setOnClickListener(v -> showProductPicker());
+        findViewById(R.id.btn_add_item).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            showProductPicker();
+        });
+
+        // 新建草稿
+        findViewById(R.id.btn_new_draft).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            createNewDraft();
+        });
 
         // 选择买家
-        findViewById(R.id.btn_select_buyer).setOnClickListener(v -> showBuyerPicker());
+        findViewById(R.id.btn_select_buyer).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            showBuyerPicker();
+        });
 
         // 清除买家
         findViewById(R.id.btn_clear_buyer).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
             selectedBuyerName = "";
             layoutBuyerDisplay.setVisibility(View.GONE);
             renderCurrentDraft();
         });
 
         // 提交
-        findViewById(R.id.btn_submit_order).setOnClickListener(v -> submitDraft());
+        findViewById(R.id.btn_submit_order).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            submitDraft();
+        });
 
         loadDrafts();
     }
@@ -117,6 +139,28 @@ public class NewOrderActivity extends AppCompatActivity {
         });
     }
 
+    private void createNewDraft() {
+        if (!NetworkUtil.isConnected(this)) {
+            Toast.makeText(this, "离线模式不可创建草稿", Toast.LENGTH_LONG).show();
+            return;
+        }
+        ApiClient.getService().createDraft().enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<ApiResponse<DraftBill>> call, Response<ApiResponse<DraftBill>> resp) {
+                if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
+                    Toast.makeText(NewOrderActivity.this, "草稿已新建", Toast.LENGTH_SHORT).show();
+                    loadDrafts();
+                } else {
+                    Toast.makeText(NewOrderActivity.this, "创建草稿失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResponse<DraftBill>> call, Throwable t) {
+                Toast.makeText(NewOrderActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private String buyerSuffix() {
         if (!selectedBuyerName.isEmpty()) return " - " + selectedBuyerName;
         if (currentDraft != null && currentDraft.buyerName != null
@@ -130,7 +174,7 @@ public class NewOrderActivity extends AppCompatActivity {
         layoutDraftCards.removeAllViews();
         for (DraftBill d : draftList) {
             View card = LayoutInflater.from(this).inflate(R.layout.item_draft_card, layoutDraftCards, false);
-            String cardTitle = "#" + d.draftNo;
+            String cardTitle = "#" + d.billIndex;
             if (d.buyerName != null && !d.buyerName.isEmpty() && !"散客".equals(d.buyerName)) {
                 cardTitle += " - " + d.buyerName;
             }
@@ -139,6 +183,7 @@ public class NewOrderActivity extends AppCompatActivity {
             ((TextView) card.findViewById(android.R.id.text2)).setText(info);
             card.setSelected(d.id.equals(currentDraft != null ? currentDraft.id : 0));
             card.setOnClickListener(v -> {
+                SoundManager.getInstance(this).playClick();
                 currentDraft = d;
                 // 同步本地买家名
                 if (d.buyerName != null && !d.buyerName.isEmpty() && !"散客".equals(d.buyerName)) {
@@ -160,7 +205,7 @@ public class NewOrderActivity extends AppCompatActivity {
             layoutDraftItems.removeAllViews();
             return;
         }
-        tvDraftTitle.setText("📄 草稿 #" + currentDraft.draftNo + buyerSuffix());
+        tvDraftTitle.setText("📄 草稿 #" + currentDraft.billIndex + buyerSuffix());
         tvDraftTotal.setText("合计: ¥" + String.format("%.0f", currentDraft.totalAmount));
 
         layoutDraftItems.removeAllViews();

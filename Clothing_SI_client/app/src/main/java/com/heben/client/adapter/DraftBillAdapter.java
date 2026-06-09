@@ -35,7 +35,7 @@ public class DraftBillAdapter extends RecyclerView.Adapter<DraftBillAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DraftBill d = list.get(position);
-        holder.tvNo.setText(d.draftNo != null ? d.draftNo : "草稿 #" + d.id);
+        holder.tvNo.setText("草稿 #" + d.billIndex);
         holder.tvInfo.setText(d.itemCount + "件商品 · ¥" + String.format("%.2f", d.totalAmount));
         int pos = position;
         holder.itemView.setOnClickListener(v -> listener.onEdit(pos));

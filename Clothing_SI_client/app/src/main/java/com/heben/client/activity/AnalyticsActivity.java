@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.heben.client.R;
+import com.heben.client.local.sync.ChartDataHolder;
 import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.*;
 import com.heben.client.network.ApiClient;
@@ -38,7 +39,10 @@ public class AnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
 
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_back).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            finish();
+        });
 
         // 今日快报
         tvConclusion = findViewById(R.id.tv_today_conclusion);
@@ -50,7 +54,10 @@ public class AnalyticsActivity extends AppCompatActivity {
         layoutLowStock = findViewById(R.id.layout_low_stock);
         tvLowStockTitle = findViewById(R.id.tv_low_stock_title);
         ivLowStockArrow = findViewById(R.id.iv_low_stock_arrow);
-        toggleLowStock.setOnClickListener(v -> toggleFold("low_stock"));
+        toggleLowStock.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("low_stock");
+        });
 
         // 滞销
         toggleSlowMoving = findViewById(R.id.toggle_slow_moving);
@@ -58,7 +65,10 @@ public class AnalyticsActivity extends AppCompatActivity {
         layoutSlowMoving = findViewById(R.id.layout_slow_moving);
         tvSlowMovingTitle = findViewById(R.id.tv_slow_moving_title);
         ivSlowMovingArrow = findViewById(R.id.iv_slow_moving_arrow);
-        toggleSlowMoving.setOnClickListener(v -> toggleFold("slow_moving"));
+        toggleSlowMoving.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("slow_moving");
+        });
 
         // 热销TOP8
         toggleTopProducts = findViewById(R.id.toggle_top_products);
@@ -66,24 +76,59 @@ public class AnalyticsActivity extends AppCompatActivity {
         tvTopConclusion = findViewById(R.id.tv_top_conclusion);
         layoutTopProducts = findViewById(R.id.layout_top_products);
         ivTopArrow = findViewById(R.id.iv_top_arrow);
-        toggleTopProducts.setOnClickListener(v -> toggleFold("top"));
-        findViewById(R.id.btn_landscape_top8).setOnClickListener(v -> toast("📱 横屏全屏图表（开发中）"));
+        toggleTopProducts.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("top");
+        });
+        cardTopProducts.setOnClickListener(v -> {
+            if (ChartDataHolder.topProducts != null && !ChartDataHolder.topProducts.isEmpty()) {
+                startActivity(new Intent(this, FullScreenChartActivity.class)
+                        .putExtra(FullScreenChartActivity.EXTRA_CHART_TYPE, "top8")
+                        .putExtra(FullScreenChartActivity.EXTRA_TITLE, "🔥 热销TOP8"));
+            } else {
+                toast("数据加载中，请稍后");
+            }
+        });
 
         // 趋势
         toggleTrend = findViewById(R.id.toggle_trend);
         cardTrend = findViewById(R.id.card_trend);
         tvTrendConclusion = findViewById(R.id.tv_trend_conclusion);
         ivTrendArrow = findViewById(R.id.iv_trend_arrow);
-        toggleTrend.setOnClickListener(v -> toggleFold("trend"));
-        findViewById(R.id.btn_landscape_trend).setOnClickListener(v -> toast("📱 横屏全屏图表（开发中）"));
+        toggleTrend.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("trend");
+        });
+        cardTrend.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            if (ChartDataHolder.dailyTrends != null && !ChartDataHolder.dailyTrends.isEmpty()) {
+                startActivity(new Intent(this, FullScreenChartActivity.class)
+                        .putExtra(FullScreenChartActivity.EXTRA_CHART_TYPE, "trend")
+                        .putExtra(FullScreenChartActivity.EXTRA_TITLE, "📈 近7天销售趋势"));
+            } else {
+                toast("数据加载中，请稍后");
+            }
+        });
 
         // 高峰
         togglePeak = findViewById(R.id.toggle_peak);
         cardPeak = findViewById(R.id.card_peak);
         tvPeakConclusion = findViewById(R.id.tv_peak_conclusion);
         ivPeakArrow = findViewById(R.id.iv_peak_arrow);
-        togglePeak.setOnClickListener(v -> toggleFold("peak"));
-        findViewById(R.id.btn_landscape_peak).setOnClickListener(v -> toast("📱 横屏全屏图表（开发中）"));
+        togglePeak.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("peak");
+        });
+        cardPeak.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            if (ChartDataHolder.peakHours != null && !ChartDataHolder.peakHours.isEmpty()) {
+                startActivity(new Intent(this, FullScreenChartActivity.class)
+                        .putExtra(FullScreenChartActivity.EXTRA_CHART_TYPE, "peak")
+                        .putExtra(FullScreenChartActivity.EXTRA_TITLE, "⏰ 订单高峰分布"));
+            } else {
+                toast("数据加载中，请稍后");
+            }
+        });
 
         // 画像
         toggleProfile = findViewById(R.id.toggle_profile);
@@ -91,8 +136,20 @@ public class AnalyticsActivity extends AppCompatActivity {
         tvProfileConclusion = findViewById(R.id.tv_profile_conclusion);
         layoutCustomerProfile = findViewById(R.id.layout_customer_profile);
         ivProfileArrow = findViewById(R.id.iv_profile_arrow);
-        toggleProfile.setOnClickListener(v -> toggleFold("profile"));
-        findViewById(R.id.btn_landscape_profile).setOnClickListener(v -> toast("📱 横屏全屏图表（开发中）"));
+        toggleProfile.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            toggleFold("profile");
+        });
+        cardProfile.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            if (ChartDataHolder.customerProfiles != null && !ChartDataHolder.customerProfiles.isEmpty()) {
+                startActivity(new Intent(this, FullScreenChartActivity.class)
+                        .putExtra(FullScreenChartActivity.EXTRA_CHART_TYPE, "profile")
+                        .putExtra(FullScreenChartActivity.EXTRA_TITLE, "👥 客户画像"));
+            } else {
+                toast("数据加载中，请稍后");
+            }
+        });
 
         loadData();
     }
@@ -201,6 +258,7 @@ public class AnalyticsActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<List<TopProduct>>> call, Response<ApiResponse<List<TopProduct>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<TopProduct> list = response.body().getData();
+                    ChartDataHolder.topProducts = list;
                     if (list != null && !list.isEmpty()) {
                         TopProduct first = list.get(0);
                         tvTopConclusion.setText(first.productName + "是店里的招牌，本月卖了" + first.salesCount + "件");
@@ -229,6 +287,7 @@ public class AnalyticsActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<List<DailyTrend>>> call, Response<ApiResponse<List<DailyTrend>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<DailyTrend> list = response.body().getData();
+                    ChartDataHolder.dailyTrends = list;
                     if (list != null && !list.isEmpty()) {
                         double total = 0;
                         for (DailyTrend d : list) total += d.amount;
@@ -247,6 +306,7 @@ public class AnalyticsActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<List<PeakHour>>> call, Response<ApiResponse<List<PeakHour>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<PeakHour> list = response.body().getData();
+                    ChartDataHolder.peakHours = list;
                     if (list != null && !list.isEmpty()) {
                         tvPeakConclusion.setText("大家喜欢下午来逛，" + list.get(0).hour + "-" + (list.get(0).hour + 1) + "点最热闹");
                     }
@@ -264,6 +324,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 layoutCustomerProfile.removeAllViews();
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<CustomerProfile> list = response.body().getData();
+                    ChartDataHolder.customerProfiles = list;
                     if (list != null && !list.isEmpty()) {
                         tvProfileConclusion.setText("你的客户偏年轻，喜欢休闲风");
                         // Add tag chips

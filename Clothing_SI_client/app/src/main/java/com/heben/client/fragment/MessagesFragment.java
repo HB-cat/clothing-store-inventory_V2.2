@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.heben.client.R;
 import com.heben.client.activity.ChatDetailActivity;
@@ -39,11 +40,21 @@ public class MessagesFragment extends Fragment {
     private List<ChatSession> sessions = new ArrayList<>();
     private List<Appointment> pendingAppts = new ArrayList<>();
     private List<Appointment> confirmedAppts = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_messages, container, false);
+
+        swipeRefresh = v.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnRefreshListener(() -> {
+            loadSessions();
+            loadAppointments();
+            swipeRefresh.postDelayed(() -> {
+                if (swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);
+            }, 2000);
+        });
 
         tabChat = v.findViewById(R.id.tab_chat);
         tabAppt = v.findViewById(R.id.tab_appt);

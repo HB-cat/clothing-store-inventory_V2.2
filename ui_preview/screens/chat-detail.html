@@ -1,38 +1,30 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>聊天 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <button class="back" onclick="history.back()">←</button>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='chat-list.html'">‹</span>
     <span class="title">李女士</span>
-    <button class="action">📞</button>
+    <span class="action" onclick="alert('更多')">⋮</span>
   </div>
-  <div class="content" style="display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:8px">
-    <div class="chat-bubble">
-      <div class="avatar">👩</div>
-      <div class="bubble incoming">老板，碎花连衣裙有蓝色的吗？</div>
-    </div>
-    <div class="chat-bubble mine">
-      <div class="avatar">👤</div>
-      <div class="bubble outgoing">有的，蓝色S/M/L都有货，¥120</div>
-    </div>
-    <div class="chat-bubble">
-      <div class="avatar">👩</div>
-      <div class="bubble incoming">好的，我明天过来看看方便吗？</div>
-    </div>
-    <div class="chat-bubble mine">
-      <div class="avatar">👤</div>
-      <div class="bubble outgoing">可以的，上午10点开门，到了给我发消息</div>
-    </div>
-    <div class="chat-bubble">
-      <div class="avatar">👩</div>
-      <div class="bubble incoming">👌 好的</div>
-    </div>
+  <div class="content" style="display:flex;flex-direction:column;justify-content:flex-end">
+    <div class="chat-bubble"><div class="avatar">👤</div><div class="bubble incoming">你好，我想看看连衣裙</div></div>
+    <div class="chat-bubble mine"><div class="avatar">👤</div><div class="bubble outgoing">好的，有碎花雪纺连衣裙 ¥120，蓝色M码有货</div></div>
+    <div class="chat-bubble"><div class="avatar">👤</div><div class="bubble incoming">可以的话我下午过来试一下</div></div>
+    <div class="chat-bubble"><div class="avatar">👤</div><div class="bubble incoming">大概14:30到</div></div>
+    <div class="chat-bubble mine"><div class="avatar">👤</div><div class="bubble outgoing">好的，那我下午过来看货</div></div>
   </div>
   <div class="chat-input">
-    <span style="cursor:default">📎</span>
-    <input placeholder="输入消息...">
-    <span style="cursor:default;font-size:20px">😊</span>
-    <button>➤</button>
+    <input placeholder="输入消息..." id="msgInput" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button onclick="sendMsg()">➤</button>
   </div>
 </div></div>
+<script>
+  function sendMsg() {
+    var input=document.getElementById('msgInput');
+    var msg=input.value.trim();
+    if(!msg) return;
+    document.querySelector('.phone .content').insertAdjacentHTML('beforeend','<div class="chat-bubble mine"><div class="avatar">👤</div><div class="bubble outgoing">'+msg+'</div></div>');
+    input.value='';
+  }
+</script>
 </body></html>

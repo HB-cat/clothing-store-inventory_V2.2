@@ -1,9 +1,9 @@
 package com.heben.client.activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +18,7 @@ import com.heben.client.network.ApiClient;
 import com.heben.client.util.SoundManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,9 +51,16 @@ public class AttributesActivity extends AppCompatActivity {
                         .setPositiveButton("删除", (d, w) ->
                                 ApiClient.getService().deleteAttributeGroup(g.id).enqueue(new Callback<>() {
                                     @Override public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> resp) {
-                                        if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) load();
+                                        if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
+                                            Toast.makeText(AttributesActivity.this, "✅ 已删除", Toast.LENGTH_SHORT).show();
+                                            load();
+                                        } else {
+                                            Toast.makeText(AttributesActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                    @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
+                                    @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                                        Toast.makeText(AttributesActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                                    }
                                 })
                         ).setNegativeButton("取消", null).show();
             }
@@ -61,20 +69,30 @@ public class AttributesActivity extends AppCompatActivity {
             public void onAddValue(int position) {
                 AttributeGroup g = list.get(position);
                 EditText input = new EditText(AttributesActivity.this);
+                input.setHint("输入属性值");
                 new AlertDialog.Builder(AttributesActivity.this)
                         .setTitle("添加属性值 - " + g.name)
                         .setView(input)
                         .setPositiveButton("添加", (d, w) -> {
                             String val = input.getText().toString().trim();
                             if (val.isEmpty()) return;
+                            // 后端要求 values 为数组
                             HashMap<String, Object> body = new HashMap<>();
                             body.put("groupId", g.id);
-                            body.put("value", val);
-                            ApiClient.getService().addAttributeValue(body).enqueue(new Callback<ApiResponse<AttributeValue>>() {
-                                @Override public void onResponse(Call<ApiResponse<AttributeValue>> call, Response<ApiResponse<AttributeValue>> resp) {
-                                    if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) load();
+                            body.put("values", Collections.singletonList(val));
+                            ApiClient.getService().addAttributeValue(body).enqueue(new Callback<>() {
+                                @Override public void onResponse(Call<ApiResponse<List<AttributeValue>>> call, Response<ApiResponse<List<AttributeValue>>> resp) {
+                                    if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
+                                        Toast.makeText(AttributesActivity.this, "✅ 添加成功", Toast.LENGTH_SHORT).show();
+                                        load();
+                                    } else {
+                                        String msg = resp.body() != null ? resp.body().getMessage() : "添加失败";
+                                        Toast.makeText(AttributesActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                @Override public void onFailure(Call<ApiResponse<AttributeValue>> call, Throwable t) {}
+                                @Override public void onFailure(Call<ApiResponse<List<AttributeValue>>> call, Throwable t) {
+                                    Toast.makeText(AttributesActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                                }
                             });
                         }).setNegativeButton("取消", null).show();
             }
@@ -84,9 +102,16 @@ public class AttributesActivity extends AppCompatActivity {
                 AttributeValue av = list.get(groupPos).values.get(valuePos);
                 ApiClient.getService().deleteAttributeValue(av.id).enqueue(new Callback<>() {
                     @Override public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> resp) {
-                        if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) load();
+                        if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
+                            Toast.makeText(AttributesActivity.this, "✅ 已删除", Toast.LENGTH_SHORT).show();
+                            load();
+                        } else {
+                            Toast.makeText(AttributesActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
+                    @Override public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                        Toast.makeText(AttributesActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
         });
@@ -95,6 +120,7 @@ public class AttributesActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_add_group).setOnClickListener(v -> {
             EditText input = new EditText(this);
+            input.setHint("属性组名称（如：颜色、尺码）");
             new AlertDialog.Builder(this)
                     .setTitle("新建属性组")
                     .setView(input)
@@ -105,9 +131,17 @@ public class AttributesActivity extends AppCompatActivity {
                         body.put("name", name);
                         ApiClient.getService().addAttributeGroup(body).enqueue(new Callback<>() {
                             @Override public void onResponse(Call<ApiResponse<AttributeGroup>> call, Response<ApiResponse<AttributeGroup>> resp) {
-                                if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) load();
+                                if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
+                                    Toast.makeText(AttributesActivity.this, "✅ 创建成功", Toast.LENGTH_SHORT).show();
+                                    load();
+                                } else {
+                                    String msg = resp.body() != null ? resp.body().getMessage() : "创建失败";
+                                    Toast.makeText(AttributesActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            @Override public void onFailure(Call<ApiResponse<AttributeGroup>> call, Throwable t) {}
+                            @Override public void onFailure(Call<ApiResponse<AttributeGroup>> call, Throwable t) {
+                                Toast.makeText(AttributesActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                            }
                         });
                     }).setNegativeButton("取消", null).show();
         });
@@ -125,7 +159,9 @@ public class AttributesActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<ApiResponse<List<AttributeGroup>>> call, Throwable t) {}
+            public void onFailure(Call<ApiResponse<List<AttributeGroup>>> call, Throwable t) {
+                Toast.makeText(AttributesActivity.this, "网络错误，无法加载属性", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

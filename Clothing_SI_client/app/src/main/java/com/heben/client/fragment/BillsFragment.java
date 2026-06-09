@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.heben.client.R;
 import com.heben.client.activity.NewOrderActivity;
@@ -51,11 +52,20 @@ public class BillsFragment extends Fragment {
 
     private LocalDate selectedDate;
     private String activePreset = "today"; // "today" | "month" | "year" | "custom"
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bills, container, false);
+
+        swipeRefresh = v.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnRefreshListener(() -> {
+            loadData();
+            swipeRefresh.postDelayed(() -> {
+                if (swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);
+            }, 2000);
+        });
 
         tvAmount = v.findViewById(R.id.tv_sales_amount);
         tvProfit = v.findViewById(R.id.tv_sales_profit);
@@ -230,7 +240,7 @@ public class BillsFragment extends Fragment {
                     List<com.heben.client.model.Models.DraftBill> drafts = response.body().getData();
                     if (drafts != null && !drafts.isEmpty()) {
                         com.heben.client.model.Models.DraftBill d = drafts.get(0);
-                        tvDraftTitle.setText("📄 草稿账单 #" + d.draftNo);
+                        tvDraftTitle.setText("📄 草稿账单 #" + d.billIndex);
                         tvDraftSubtitle.setText(d.itemCount + "件商品 · ¥" + String.format("%.2f", d.totalAmount));
                         cardDraft.setVisibility(View.VISIBLE);
                     } else {

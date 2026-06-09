@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.heben.client.R;
-import com.heben.client.activity.AgentPanelActivity;
 import com.heben.client.agent.AgentRuleEngine;
 import com.heben.client.agent.AgentSuggestionManager;
 import com.heben.client.util.TokenManager;
@@ -198,10 +197,7 @@ public class AgentFloatService extends Service {
         });
 
         btnFull.setOnClickListener(v -> {
-            // 打开完整面板Activity
-            Intent intent = new Intent(this, AgentPanelActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            // 打开完整面板（已迁移到底部弹窗，此入口废弃）
             hidePanel();
         });
 
@@ -349,11 +345,7 @@ public class AgentFloatService extends Service {
                 break;
             }
             default:
-                // 其他操作跳转到AgentPanelActivity完整处理
-                Intent i = new Intent(this, AgentPanelActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("agent_command", result.action);
-                startActivity(i);
+                // 其他操作已迁移到底部弹窗，悬浮窗不再处理
                 break;
         }
     }

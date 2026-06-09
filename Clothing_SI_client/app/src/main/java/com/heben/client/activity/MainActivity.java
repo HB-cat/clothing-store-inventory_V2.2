@@ -15,6 +15,7 @@ import com.heben.client.fragment.HomeFragment;
 import com.heben.client.fragment.MessagesFragment;
 import com.heben.client.fragment.ProfileFragment;
 import com.heben.client.local.DataSyncManager;
+import com.heben.client.util.SoundManager;
 import com.heben.client.widget.AgentBottomSheetDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,13 +36,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 自定义底部导航点击
-        findViewById(R.id.nav_home).setOnClickListener(v -> switchTab(new HomeFragment(), R.id.nav_home));
-        findViewById(R.id.nav_bills).setOnClickListener(v -> switchTab(new BillsFragment(), R.id.nav_bills));
-        findViewById(R.id.nav_messages).setOnClickListener(v -> switchTab(new MessagesFragment(), R.id.nav_messages));
-        findViewById(R.id.nav_profile).setOnClickListener(v -> switchTab(new ProfileFragment(), R.id.nav_profile));
+        findViewById(R.id.nav_home).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab(new HomeFragment(), R.id.nav_home);
+        });
+        findViewById(R.id.nav_bills).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab(new BillsFragment(), R.id.nav_bills);
+        });
+        findViewById(R.id.nav_messages).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab(new MessagesFragment(), R.id.nav_messages);
+        });
+        findViewById(R.id.nav_profile).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab(new ProfileFragment(), R.id.nav_profile);
+        });
 
         // 导航栏居中 🤖 → 弹出智能体卡片弹窗
         findViewById(R.id.nav_agent).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
             new AgentBottomSheetDialog().show(getSupportFragmentManager(), "agent_sheet");
         });
     }
@@ -58,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             if (tab instanceof android.widget.LinearLayout) {
                 android.widget.LinearLayout ll = (android.widget.LinearLayout) tab;
                 if (ll.getChildCount() > 1 && ll.getChildAt(1) instanceof TextView) {
-                    ((TextView) ll.getChildAt(1)).setTextColor(id == tabId ? 0xFFE85D3A : 0xFF95A5A6);
+                    ((TextView) ll.getChildAt(1)).setTextColor(id == tabId ? 0xFF2E7D32 : 0xFF5D6D7E);
                 }
             }
         }

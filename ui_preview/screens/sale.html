@@ -1,30 +1,40 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>快速记账 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <button class="back" onclick="history.back()">←</button>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='home.html'">‹</span>
     <span class="title">快速记账</span>
-    <button class="action">📷</button>
+    <span class="action" onclick="alert('已提交')">✓</span>
   </div>
   <div class="content">
-    <div class="form-group"><label>选择商品</label>
-      <div class="card" style="padding:8px 12px;display:flex;align-items:center;gap:8px;cursor:default">
-        <span style="font-size:24px">👕</span>
-        <div style="flex:1"><div style="font-size:14px;font-weight:500">纯棉圆领T恤 · 白色M</div><div style="font-size:11px;color:var(--text-secondary)">库存: 23</div></div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <button style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;font-size:16px">−</button>
-          <span style="font-size:16px;font-weight:600;width:24px;text-align:center">1</span>
-          <button style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;font-size:16px">+</button>
-        </div>
+    <div class="form-group"><label>商品</label>
+      <select class="form-input" style="appearance:auto"><option>纯棉圆领T恤 · 白色M · ¥65</option><option>碎花雪纺连衣裙 · 蓝色M · ¥120</option><option>高腰阔腿牛仔裤 · 浅蓝27 · ¥130</option></select>
+    </div>
+    <div class="form-group"><label>数量</label>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn btn-sm btn-outline" onclick="adjustQty(-1)" style="width:40px">−</button>
+        <span id="qtyDisplay" style="font-size:24px;font-weight:800;min-width:40px;text-align:center">1</span>
+        <button class="btn btn-sm btn-outline" onclick="adjustQty(1)" style="width:40px">+</button>
       </div>
     </div>
-    <div class="form-group"><label>买家</label>
-      <select class="form-input"><option selected>散客（不记名）</option><option>张先生</option><option>李女士</option><option>王小姐</option></select>
+    <div class="form-group"><label>客户（选填）</label><input class="form-input" placeholder="输入客户名称"></div>
+    <div class="form-group"><label>备注</label><input class="form-input" placeholder="选填备注" value="散客"></div>
+    <div style="text-align:right;padding:8px 0">
+      <span style="color:var(--text-secondary);font-size:14px">合计 </span>
+      <span style="font-size:28px;font-weight:800;color:var(--danger)" id="totalPrice">¥65</span>
     </div>
-    <div class="form-group"><label>实付金额（¥）</label><input class="form-input" value="65"></div>
-    <div class="form-group"><label>备注</label><input class="form-input" placeholder="选填"></div>
-    <button class="btn btn-primary btn-block btn-lg">确认记账</button>
+    <button class="btn btn-primary btn-block btn-lg" onclick="alert('✅ 已保存账单')">确认记账</button>
   </div>
-  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+  <div class="bottom-nav">
+    <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
+<script>
+  var qty=1;
+  function adjustQty(d) { qty=Math.max(1,qty+d); document.getElementById('qtyDisplay').textContent=qty; document.getElementById('totalPrice').textContent='¥'+(qty*65); }
+</script>
 </body></html>

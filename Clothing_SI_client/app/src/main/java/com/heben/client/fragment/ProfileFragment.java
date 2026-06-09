@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.heben.client.R;
 import com.heben.client.activity.*;
@@ -33,6 +34,7 @@ public class ProfileFragment extends Fragment {
     private ModuleAdapter adapter;
     private int currentRole;
     private TextView tvSortHint;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
@@ -40,6 +42,13 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         prefs = getActivity().getSharedPreferences("profile_prefs", Context.MODE_PRIVATE);
         currentRole = TokenManager.getRole();
+
+        swipeRefresh = v.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnRefreshListener(() -> {
+            swipeRefresh.postDelayed(() -> {
+                if (swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);
+            }, 500);
+        });
 
         // 店铺信息
         TextView tvNick = v.findViewById(R.id.tv_nickname);

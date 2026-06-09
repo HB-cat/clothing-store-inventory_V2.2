@@ -2,7 +2,13 @@ package com.heben.client.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -19,6 +25,24 @@ public class ApiClient {
         if (retrofit == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .registerTypeAdapter(LocalDateTime.class, new TypeAdapter<LocalDateTime>() {
+                        private static final String ISO_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+                        private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ISO_PATTERN);
+
+                        @Override
+                        public void write(JsonWriter out, LocalDateTime value) throws IOException {
+                            out.value(value != null ? value.format(formatter) : null);
+                        }
+
+                        @Override
+                        public LocalDateTime read(JsonReader in) throws IOException {
+                            String str = in.nextString();
+                            if (str == null || str.isEmpty()) return null;
+                            // 兼容结尾带 Z 或 +08:00 的情况
+                            if (str.length() > 19) str = str.substring(0, 19);
+                            return LocalDateTime.parse(str, formatter);
+                        }
+                    })
                     .setLenient()
                     .create();
 

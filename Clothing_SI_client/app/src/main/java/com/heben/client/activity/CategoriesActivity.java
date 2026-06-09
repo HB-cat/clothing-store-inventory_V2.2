@@ -3,7 +3,6 @@ package com.heben.client.activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,10 +39,13 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_back).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            finish();
+        });
 
-        // Top + button
         findViewById(R.id.btn_add_category).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
             builder.setTitle("添加分类");
             final android.widget.EditText input = new android.widget.EditText(this);
@@ -74,7 +76,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void loadCategories() {
-        // 1. 先从本地 Room 加载（后台线程，不阻塞 UI）
+        // 先从本地 Room 加载
         Long uid = TokenManager.getUserId();
         if (uid != null) {
             new Thread(() -> {
@@ -86,7 +88,7 @@ public class CategoriesActivity extends AppCompatActivity {
                         c.id = lc.id;
                         c.name = lc.name;
                         c.sortOrder = lc.sortOrder;
-                        c.isPreset = lc.isPreset;
+                        c.isPreset = lc.isPreset ? 1 : 0;
                         cats.add(c);
                     }
                     runOnUiThread(() -> {
@@ -98,7 +100,7 @@ public class CategoriesActivity extends AppCompatActivity {
             }).start();
         }
 
-        // 2. 后台尝试从网络刷新
+        // 从网络刷新
         ApiService api = ApiClient.getService();
         api.getCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
             @Override
@@ -112,7 +114,10 @@ public class CategoriesActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
-                // 已从本地加载，网络失败不提示
+                // 仅在本地无数据时提示网络错误
+                if (fullList.isEmpty()) {
+                    Toast.makeText(CategoriesActivity.this, "加载失败: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -136,15 +141,16 @@ public class CategoriesActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<Category>> call, Response<ApiResponse<Category>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     SoundManager.getInstance(CategoriesActivity.this).playClick();
-                    Toast.makeText(CategoriesActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoriesActivity.this, "✅ 添加成功", Toast.LENGTH_SHORT).show();
                     loadCategories();
                 } else {
-                    Toast.makeText(CategoriesActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
+                    String msg = response.body() != null ? response.body().getMessage() : "添加失败";
+                    Toast.makeText(CategoriesActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<ApiResponse<Category>> call, Throwable t) {
-                Toast.makeText(CategoriesActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CategoriesActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

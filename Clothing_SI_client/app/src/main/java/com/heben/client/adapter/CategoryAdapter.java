@@ -50,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Category item = list.get(position);
         holder.tvName.setText(item.name);
-        if (item.isPreset) {
+        if (item.isPreset != 0) {
             holder.btnDelete.setVisibility(View.GONE);
         } else {
             holder.btnDelete.setVisibility(View.VISIBLE);

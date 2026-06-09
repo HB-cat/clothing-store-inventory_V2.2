@@ -1,49 +1,24 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>卖家使用指南 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>卖家引导 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <button class="back" onclick="history.back()">←</button>
-    <span class="title">卖家使用指南</span>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='home.html'">‹</span>
+    <span class="title">新手指引</span>
+    <span class="action" onclick="alert('跳过')">跳过</span>
   </div>
-  <div class="content">
-    <!-- 快速上手 -->
-    <div class="card" style="padding:16px">
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">📋 快速上手</div>
-      <div style="font-size:13px;color:#636E72;line-height:1.8">
-        1. 添加商品：填写名称、进价/售价、选择分类，可选属性组合库存<br>
-        2. 销售记账：点击「新建账单」或使用智能体输入「卖了...」<br>
-        3. 进货入库：可从已有商品/新建/批发商共享库三个来源<br>
-        4. 查看经营分析：热销TOP8、趋势图、客户画像
-      </div>
-    </div>
-
-    <!-- 智能体指令 -->
-    <div class="card" style="padding:16px">
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">🤖 智能体指令</div>
-      <div style="font-size:13px;color:#636E72;line-height:1.8">
-        • "卖了2件M码白T恤" — 快速记账<br>
-        • "进货牛仔裤10条" — 快捷入库<br>
-        • "查询本月销售额" — 经营查询<br>
-        • "把商品管理放到第一位" — 模块排序<br>
-        • "关闭提示音" — 系统设置
-      </div>
-    </div>
-
-    <!-- 批零交易 -->
-    <div class="card" style="padding:16px">
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">📦 批零交易</div>
-      <div style="font-size:13px;color:#636E72;line-height:1.8">
-        • 零售商：从「商品导入」进入批发商共享库，选择商品发起进货请求<br>
-        • 批发商：确认售出后，商品+库存自动联动<br>
-        • 聊天中可收发商品单推荐，一键导入
-      </div>
-    </div>
-
-    <!-- 联系开发者 -->
-    <div class="card" style="padding:16px">
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">📞 联系开发者</div>
-      <div style="font-size:13px;color:#636E72">邮箱：2330521417@qq.com</div>
-    </div>
+  <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px">
+    <div style="font-size:64px">🏪</div>
+    <h2 style="font-size:22px;font-weight:700;margin-top:16px">欢迎使用服装进销存</h2>
+    <p style="color:var(--text-secondary);text-align:center;margin:12px 0 24px;line-height:1.6">三步快速上手：<br>① 添加商品 → ② 记账销售 → ③ 查看经营分析</p>
+    <button class="btn btn-primary btn-block" onclick="location.href='product-add.html'" style="max-width:240px">开始添加商品</button>
+    <button class="btn btn-outline btn-block" onclick="location.href='home.html'" style="max-width:240px;margin-top:8px">稍后再说</button>
   </div>
+  <div class="bottom-nav">
+    <button class="tab active" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
+    <button class="tab" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
+    <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
+  </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
 </body></html>

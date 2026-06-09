@@ -39,9 +39,14 @@ public class ProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
-        findViewById(R.id.btn_add_product).setOnClickListener(v ->
-                startActivity(new Intent(this, ProductAddActivity.class)));
+        findViewById(R.id.btn_back).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            finish();
+        });
+        findViewById(R.id.btn_add_product).setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            startActivity(new Intent(this, ProductAddActivity.class));
+        });
 
         // Segment
         tabAll = findViewById(R.id.tab_all);
@@ -49,10 +54,22 @@ public class ProductsActivity extends AppCompatActivity {
         tabOffline = findViewById(R.id.tab_offline);
         tabLowStock = findViewById(R.id.tab_low_stock);
 
-        tabAll.setOnClickListener(v -> switchTab("all"));
-        tabOnsale.setOnClickListener(v -> switchTab("onsale"));
-        tabOffline.setOnClickListener(v -> switchTab("offline"));
-        tabLowStock.setOnClickListener(v -> switchTab("low_stock"));
+        tabAll.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab("all");
+        });
+        tabOnsale.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab("onsale");
+        });
+        tabOffline.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab("offline");
+        });
+        tabLowStock.setOnClickListener(v -> {
+            SoundManager.getInstance(this).playClick();
+            switchTab("low_stock");
+        });
 
         etSearch = findViewById(R.id.et_search);
         rv = findViewById(R.id.product_list);

@@ -45,14 +45,14 @@ public class Models {
         public Long id;
         public String name;
         public int sortOrder;
-        public boolean isPreset;
+        public int isPreset; // 0=否 1=是（后端 Integer）
     }
 
     // ===== Attribute =====
     public static class AttributeGroup {
         public Long id;
         public String name;
-        public boolean isPreset;
+        public int isPreset; // 0=否 1=是（后端 Integer）
         public List<AttributeValue> values;
     }
 
@@ -110,7 +110,7 @@ public class Models {
     // ===== Draft Bill =====
     public static class DraftBill {
         public Long id;
-        public String draftNo;
+        public Integer billIndex;
         public String buyerName;
         public double totalAmount;
         public int itemCount;
@@ -219,8 +219,55 @@ public class Models {
 
     // ===== Agent =====
     public static class AgentParseResponse {
-        public String action, confidence;
-        public Map<String, Object> params;
+        public String action;
         public String displayText;
+        public Map<String, Object> params;
+        public double confidence;
+        public String rawText;
+        public String errorMessage;
+    }
+
+    /** 智能体经营简报 */
+    public static class AgentSummaryResponse {
+        public TodayBrief todayBrief;
+        public List<StockWarning> stockWarnings;
+        public List<HotProduct> hotProducts;
+        public String suggestion;
+    }
+
+    public static class TodayBrief {
+        public double totalAmount;
+        public double totalProfit;
+        public int orderCount;
+        public String summary;
+    }
+
+    public static class StockWarning {
+        public String productName;
+        public String attrs;
+        public int stock;
+    }
+
+    public static class HotProduct {
+        public String productName;
+        public int salesCount;
+        public double salesAmount;
+    }
+
+    /** 智能体问答响应 */
+    public static class AgentChatResponse {
+        public String reply;
+        public String replyType;
+        public boolean showDataCard;
+    }
+
+    /** 智能体聊天消息（持久化） */
+    public static class AgentChatMessage {
+        public Long id;
+        public Long userId;
+        public String role;    // user / agent
+        public String content;
+        public String msgType; // text / rich
+        public String createdAt;
     }
 }

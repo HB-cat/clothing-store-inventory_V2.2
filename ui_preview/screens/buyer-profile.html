@@ -1,60 +1,25 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>我的 - 买家端</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>买家我的 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <span class="title" style="flex:1;text-align:center;color:#fff">我的</span>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='buyer-home.html'">‹</span>
+    <span class="title">我的</span>
+    <span class="action" onclick="alert('设置')">⚙</span>
   </div>
   <div class="content">
-    <!-- 个人信息 (PRD 5.3) -->
-    <div class="card" style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:28px">👩</div>
-      <div>
-        <div style="font-size:18px;font-weight:600">小雅</div>
-        <div style="font-size:13px;color:var(--text-secondary)">buy_Ab3Xy · 买家</div>
-        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">✏️ 修改头像 / 昵称</div>
-      </div>
+    <div class="card" style="display:flex;align-items:center;gap:16px;padding:20px">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:26px">👤</div>
+      <div><div style="font-size:18px;font-weight:700">小美</div><div style="font-size:13px;color:var(--text-secondary)">买家 · 注册于 2025-12</div></div>
     </div>
-
-    <!-- 客户信息 (PRD 5.3) -->
-    <div class="section-header"><h3>👤 客户信息</h3><span class="more">✏️ 编辑</span></div>
-    <div class="card" style="padding:12px 16px">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:13px">
-        <div><span style="color:var(--text-secondary)">年龄</span><br>28岁</div>
-        <div><span style="color:var(--text-secondary)">身高</span><br>165cm</div>
-        <div><span style="color:var(--text-secondary)">体重</span><br>55kg</div>
-        <div><span style="color:var(--text-secondary)">胸围</span><br>88cm</div>
-        <div><span style="color:var(--text-secondary)">腰围</span><br>68cm</div>
-        <div><span style="color:var(--text-secondary)">臀围</span><br>90cm</div>
-      </div>
-      <div style="margin-top:8px;font-size:12px">
-        <span style="color:var(--text-secondary)">穿衣风格偏好：</span>
-        <span class="tag" style="background:var(--primary-light);color:var(--primary);padding:2px 8px;font-size:11px">休闲风</span>
-        <span class="tag" style="background:var(--primary-light);color:var(--primary);padding:2px 8px;font-size:11px">甜美系</span>
-      </div>
-    </div>
-
-    <!-- 历史订单 (PRD 5.3) -->
-    <div class="section-header"><h3>📋 历史订单</h3></div>
-    <div class="card" style="padding:0 16px">
-      <div class="list-item">
-        <div class="thumb">👗</div>
-        <div class="info">
-          <div class="name">碎花雪纺连衣裙 · 蓝色M</div>
-          <div class="desc">欣欣服装店 · 2026-06-03 · ¥120</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="thumb">👕</div>
-        <div class="info">
-          <div class="name">纯棉圆领T恤 · 白色S</div>
-          <div class="desc">欣欣服装店 · 2026-05-28 · ¥65</div>
-        </div>
-      </div>
+    <div class="module-list">
+      <div class="item" onclick="alert('我的订单')"><span class="icon">📋</span><span class="name">我的订单</span><span class="arrow">›</span></div>
+      <div class="item" onclick="alert('我的预约')"><span class="icon">📅</span><span class="name">我的预约</span><span class="arrow">›</span></div>
+      <div class="item" onclick="alert('收藏店铺')"><span class="icon">❤️</span><span class="name">收藏店铺</span><span class="arrow">›</span></div>
+      <div class="item" onclick="location.href='login.html'" style="color:var(--danger)"><span class="icon">🚪</span><span class="name">退出登录</span><span class="arrow">›</span></div>
     </div>
   </div>
-
   <div class="bottom-nav">
-    <button class="tab" onclick="location.href='buyer-home.html'"><span class="icon">🏠</span>首页</button>
+    <button class="tab" onclick="location.href='buyer-home.html'"><span class="icon">🛍️</span>逛逛</button>
     <button class="tab" onclick="location.href='buyer-messages.html'"><span class="icon">💬</span>消息</button>
     <button class="tab active" onclick="location.href='buyer-profile.html'"><span class="icon">👤</span>我的</button>
   </div>

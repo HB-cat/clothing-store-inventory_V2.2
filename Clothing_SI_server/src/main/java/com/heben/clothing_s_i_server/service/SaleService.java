@@ -176,6 +176,21 @@ public class SaleService {
     }
 
     /**
+     * 删除草稿账单及其商品
+     */
+    @Transactional
+    public void deleteDraftBill(Long userId, Long billId) {
+        DraftBill bill = draftBillMapper.selectById(billId);
+        if (bill == null || !bill.getUserId().equals(userId)) {
+            throw new IllegalArgumentException("草稿账单不存在");
+        }
+        draftBillItemMapper.delete(
+                new LambdaQueryWrapper<DraftBillItem>().eq(DraftBillItem::getBillId, billId)
+        );
+        draftBillMapper.deleteById(billId);
+    }
+
+    /**
      * 草稿删商品
      */
     @Transactional
@@ -418,6 +433,33 @@ public class SaleService {
             buyerInfoMapper.updateById(buyer);
         }
         return buyer.getId();
+    }
+
+    /**
+     * 按日期范围查询销售流水明细（含明细商品）
+     */
+    public List<SaleRecord> getSalesRecords(Long userId, LocalDateTime start, LocalDateTime end) {
+        List<SaleRecord> records = saleRecordMapper.selectList(
+                new LambdaQueryWrapper<SaleRecord>()
+                        .eq(SaleRecord::getUserId, userId)
+                        .ge(SaleRecord::getSaleTime, start)
+                        .le(SaleRecord::getSaleTime, end)
+                        .orderByDesc(SaleRecord::getSaleTime)
+        );
+        if (records.isEmpty()) return records;
+
+        List<Long> saleIds = records.stream().map(SaleRecord::getId).collect(Collectors.toList());
+        List<SaleRecordItem> allItems = saleRecordItemMapper.selectList(
+                new LambdaQueryWrapper<SaleRecordItem>()
+                        .in(SaleRecordItem::getSaleId, saleIds)
+        );
+        Map<Long, List<SaleRecordItem>> itemsBySaleId = allItems.stream()
+                .collect(Collectors.groupingBy(SaleRecordItem::getSaleId));
+
+        for (SaleRecord r : records) {
+            r.setSaleItems(itemsBySaleId.getOrDefault(r.getId(), new ArrayList<>()));
+        }
+        return records;
     }
 
     /**

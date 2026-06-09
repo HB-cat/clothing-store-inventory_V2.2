@@ -1,109 +1,38 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>消息 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css">
-<style>
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  .appt-inline .timeline-item { margin-bottom: 6px; }
-</style>
-</head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>消息 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <span class="title" style="flex:1;text-align:center">消息</span>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='home.html'">‹</span>
+    <span class="title">消息</span>
+    <span class="action" onclick="alert('搜索')">🔍</span>
   </div>
   <div class="content">
-    <!-- Segment: 聊天 / 预约，点击切换内容区 -->
-    <div class="segment">
-      <button class="opt active" onclick="switchTab('chat')">聊天</button>
-      <button class="opt" onclick="switchTab('appt')">预约</button>
+    <div class="segment" id="msgSeg">
+      <button class="opt active" onclick="toggleSeg(this)">聊天</button>
+      <button class="opt" onclick="toggleSeg(this)">预约</button>
     </div>
-
-    <!-- 聊天内容 -->
-    <div id="tab-chat" class="tab-content active">
-      <div class="card" style="padding:0 16px">
-        <div class="list-item" onclick="location.href='chat-detail.html'">
-          <div class="thumb" style="background:#FDEDEC">👩</div>
-          <div class="info"><div class="name">李女士</div><div class="desc">好的，我明天过来看看</div></div>
-          <div class="right"><div style="font-size:11px;color:var(--text-secondary)">14:32</div></div>
-        </div>
-        <div class="list-item" onclick="location.href='chat-detail.html'">
-          <div class="thumb" style="background:#FFF3E0">👨</div>
-          <div class="info"><div class="name">张先生</div><div class="desc">这款有蓝色XL吗？</div></div>
-          <div class="right"><div style="font-size:11px;color:var(--text-secondary)">12:15</div></div>
-        </div>
-        <div class="list-item">
-          <div class="thumb" style="background:#F3E5F5">🏭</div>
-          <div class="info"><div class="name">广州服装批发</div><div class="desc">[商品单] 3件商品推荐</div></div>
-          <div class="right"><div style="font-size:11px;color:var(--text-secondary)">10:00</div></div>
-        </div>
-        <div class="list-item" onclick="location.href='chat-detail.html'">
-          <div class="thumb" style="background:#E8F8F5">👩‍🦰</div>
-          <div class="info"><div class="name">王小姐</div><div class="desc">👋 你好，请问有新款吗</div></div>
-          <div class="right"><div style="font-size:11px;color:var(--text-secondary)">昨天</div></div>
-        </div>
+    <div class="card" style="padding:0 16px;cursor:pointer" onclick="location.href='chat-detail.html'">
+      <div class="list-item">
+        <div class="thumb">👤</div>
+        <div class="info"><div class="name">李女士</div><div class="desc">好的，那我下午过来看货</div></div>
+        <div class="right"><span class="badge badge-done" style="background:var(--primary);color:#fff">3</span></div>
       </div>
-    </div>
-
-    <!-- 预约内容（内嵌，不跳转详情页） -->
-    <div id="tab-appt" class="tab-content appt-inline">
-      <!-- 待确认 -->
-      <div class="section-header"><h3>待确认</h3></div>
-      <div class="timeline-item">
-        <div class="time">10:00<br>12:00</div>
-        <div class="detail">
-          <div class="name">李女士</div>
-          <div class="info">已到店3次 · 取消0次</div>
-        </div>
-        <div class="actions">
-          <button class="btn btn-sm btn-outline" style="border-color:var(--success);color:var(--success)" onclick="if(confirm('接受预约？'))alert('已接受')">✓</button>
-          <button class="btn btn-sm btn-outline" style="border-color:var(--danger);color:var(--danger)" onclick="var r=prompt('拒绝理由：');if(r)alert('已拒绝')">✗</button>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="time">14:00<br>16:00</div>
-        <div class="detail">
-          <div class="name">王小姐</div>
-          <div class="info">新客户 · 首次预约</div>
-        </div>
-        <div class="actions">
-          <button class="btn btn-sm btn-outline" style="border-color:var(--success);color:var(--success)" onclick="if(confirm('接受预约？'))alert('已接受')">✓</button>
-          <button class="btn btn-sm btn-outline" style="border-color:var(--danger);color:var(--danger)" onclick="var r=prompt('拒绝理由：');if(r)alert('已拒绝')">✗</button>
-        </div>
-      </div>
-
-      <!-- 已确认 -->
-      <div class="section-header" style="margin-top:12px"><h3>今日已确认</h3></div>
-      <div class="timeline-item" style="background:#E8F8F5">
-        <div class="time" style="color:var(--success)">16:00<br>18:00</div>
-        <div class="detail">
-          <div class="name">张先生</div>
-          <div class="info">已确认 · 预约试穿新款</div>
-        </div>
-        <div><span class="badge badge-done">已确认</span></div>
+      <div class="list-item" onclick="event.stopPropagation();location.href='chat-detail.html'">
+        <div class="thumb">👤</div>
+        <div class="info"><div class="name">王先生</div><div class="desc">T恤还有白色M码吗？</div></div>
+        <div class="right"><span class="badge badge-done" style="background:var(--primary);color:#fff">1</span></div>
       </div>
     </div>
   </div>
-
   <div class="bottom-nav">
     <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
     <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
-    <button class="tab active" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
     <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
   </div>
-  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
 <script>
-  function switchTab(name) {
-    var opts = document.querySelectorAll('.segment .opt');
-    var contents = document.querySelectorAll('.tab-content');
-    opts.forEach(function(o) { o.classList.remove('active'); });
-    contents.forEach(function(c) { c.classList.remove('active'); });
-    if (name === 'chat') {
-      opts[0].classList.add('active');
-      document.getElementById('tab-chat').classList.add('active');
-    } else {
-      opts[1].classList.add('active');
-      document.getElementById('tab-appt').classList.add('active');
-    }
-  }
+  function toggleSeg(el) { el.parentElement.querySelectorAll('.opt').forEach(function(b){b.classList.remove('active')}); el.classList.add('active'); }
 </script>
 </body></html>

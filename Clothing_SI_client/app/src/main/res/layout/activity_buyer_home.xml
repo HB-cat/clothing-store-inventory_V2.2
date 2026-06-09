@@ -2,67 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:orientation="vertical" android:background="@color/bg">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:background="@drawable/header_bar_bg">
+        <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
+            android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+            android:gravity="center" android:background="@drawable/circle_bg" android:visibility="gone" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="逛逛" android:textSize="17dp" android:textStyle="bold"
+            android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+    </RelativeLayout>
     <ScrollView android:layout_width="match_parent" android:layout_height="0dp"
         android:layout_weight="1">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
-            <!-- 欢迎头 -->
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="🛍️ 欢迎" android:textSize="22dp" android:textStyle="bold"
-                android:gravity="center" android:textColor="#2D3436"
-                android:layout_marginTop="12dp" />
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="买家端 · 搜索关注零售商" android:textSize="13dp"
-                android:gravity="center" android:textColor="#E85D3A"
-                android:layout_marginBottom="20dp" />
-
-            <!-- 搜索零售商 -->
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:hint="🔍 搜索零售商名称..." />
+                    android:hint="🔍 搜索零售商或商品..." android:focusable="false"
+                    android:cursorVisible="false" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- 已关注商家 -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="已关注商家" android:textSize="16dp" android:textStyle="bold"
+                android:text="🏪 推荐店铺" android:textSize="15dp" android:textStyle="bold"
                 android:textColor="#2D3436" android:layout_marginBottom="8dp" />
             <LinearLayout android:id="@+id/layout_followed_stores"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginBottom="16dp" />
-
-            <!-- 我的预约 -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="📋 我的预约" android:textSize="16dp" android:textStyle="bold"
+                android:text="📋 我的预约" android:textSize="15dp" android:textStyle="bold"
                 android:textColor="#2D3436" android:layout_marginBottom="8dp" />
             <LinearLayout android:id="@+id/layout_appointments"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginBottom="16dp" />
-
             <com.google.android.material.button.MaterialButton android:id="@+id/btn_buy"
                 android:layout_width="match_parent" android:layout_height="48dp"
                 android:text="逛逛全部商品" app:cornerRadius="24dp" />
         </LinearLayout>
     </ScrollView>
-
-    <!-- 底部导航 -->
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center"
-        android:paddingVertical="10dp" android:background="#FFFFFF"
-        android:weightSum="3" android:elevation="4dp">
-        <TextView android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
-            android:gravity="center" android:text="首页" android:textColor="#E85D3A"
-            android:textStyle="bold" android:textSize="13dp" />
-        <TextView android:id="@+id/bottom_messages" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="消息"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-        <TextView android:id="@+id/bottom_profile" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="我的"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-    </LinearLayout>
+    <include layout="@layout/include_buyer_bottom" />
 </LinearLayout>

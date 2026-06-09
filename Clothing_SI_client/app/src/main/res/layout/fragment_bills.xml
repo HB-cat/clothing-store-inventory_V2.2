@@ -1,140 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:id="@+id/swipe_refresh"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <!-- Top bar (与消息/我的统一：无负边距，纯 RelativeLayout + #D35400） -->
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="@drawable/header_bar_bg" android:gravity="center_vertical"
-        android:paddingHorizontal="16dp">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="账单" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
-        <TextView android:layout_width="36dp" android:layout_height="36dp"
-            android:text="+" android:textSize="20dp" android:textColor="#FFFFFF"
-            android:gravity="center" android:background="@drawable/circle_bg"
-            android:layout_alignParentEnd="true" android:clickable="true"
-            android:id="@+id/fab_add_sale" />
-    </RelativeLayout>
-
-    <!-- 内容区域 -->
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical" android:padding="16dp">
+        android:orientation="vertical" android:background="@color/bg">
 
-        <!-- Time filter - click to pick date -->
-        <LinearLayout android:id="@+id/date_selector"
-            android:layout_width="match_parent" android:layout_height="46dp"
-            android:orientation="horizontal" android:gravity="center_vertical"
-            android:background="@drawable/segment_container_bg" android:paddingHorizontal="14dp"
-            android:clickable="true" android:focusable="true"
-            android:layout_marginBottom="8dp">
-            <TextView android:id="@+id/tv_date_label" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1"
-                android:text="📅 今日" android:textSize="14dp" android:textColor="#2D3436"
-                android:textStyle="bold" />
+        <!-- Top bar -->
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+            android:background="@drawable/header_bar_bg" android:gravity="center_vertical"
+            android:paddingHorizontal="16dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▼" android:textSize="11dp" android:textColor="#95A5A6"
-                android:id="@+id/tv_date_arrow" />
-        </LinearLayout>
+                android:text="账单" android:textSize="17dp" android:textStyle="bold"
+                android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+            <TextView android:layout_width="36dp" android:layout_height="36dp"
+                android:text="+" android:textSize="20dp" android:textColor="@color/text_primary"
+                android:gravity="center" android:background="@drawable/circle_bg"
+                android:layout_alignParentEnd="true" android:clickable="true"
+                android:id="@+id/fab_add_sale" />
+        </RelativeLayout>
 
-        <!-- Quick presets -->
-        <LinearLayout android:id="@+id/preset_row"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center"
-            android:layout_marginBottom="10dp">
-            <TextView android:id="@+id/chip_today" android:layout_width="0dp"
-                android:layout_height="32dp" android:layout_weight="1"
-                android:gravity="center" android:text="今日" android:textSize="12dp"
-                android:background="@drawable/segment_tab_bg"
-                android:textColor="#E85D3A" android:layout_marginEnd="4dp" />
-            <TextView android:id="@+id/chip_month" android:layout_width="0dp"
-                android:layout_height="32dp" android:layout_weight="1"
-                android:gravity="center" android:text="本月" android:textSize="12dp"
-                android:background="@drawable/segment_tab_bg"
-                android:textColor="#95A5A6" android:layout_marginHorizontal="4dp" />
-            <TextView android:id="@+id/chip_year" android:layout_width="0dp"
-                android:layout_height="32dp" android:layout_weight="1"
-                android:gravity="center" android:text="本年" android:textSize="12dp"
-                android:background="@drawable/segment_tab_bg"
-                android:textColor="#95A5A6" android:layout_marginStart="4dp" />
-        </LinearLayout>
-
-        <!-- Stats Cards -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center"
-            android:layout_marginBottom="14dp" android:weightSum="3">
-            <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:layout_marginEnd="5dp"
-                app:cardCornerRadius="20dp" app:cardElevation="2dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
-                    <TextView android:id="@+id/tv_sales_amount" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="¥0" android:textSize="20dp" android:textStyle="bold"
-                        android:textColor="#E85D3A" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="销售额" android:textSize="11dp" android:textColor="#95A5A6" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:layout_marginHorizontal="5dp"
-                app:cardCornerRadius="20dp" app:cardElevation="2dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
-                    <TextView android:id="@+id/tv_sales_profit" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="¥0" android:textSize="20dp" android:textStyle="bold"
-                        android:textColor="#E85D3A" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="毛利" android:textSize="11dp" android:textColor="#95A5A6" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:layout_marginStart="5dp"
-                app:cardCornerRadius="20dp" app:cardElevation="2dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
-                    <TextView android:id="@+id/tv_sales_count" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="0" android:textSize="20dp" android:textStyle="bold"
-                        android:textColor="#E85D3A" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="笔数" android:textSize="11dp" android:textColor="#95A5A6" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-        <!-- Draft bill -->
-        <androidx.cardview.widget.CardView android:id="@+id/card_draft"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="10dp"
-            android:visibility="gone">
+        <!-- 内容区域 -->
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:gravity="center_vertical">
-                <View android:layout_width="3dp" android:layout_height="match_parent"
-                    android:background="#F39C12" android:layout_marginEnd="12dp" />
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:id="@+id/tv_draft_title" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textSize="15dp" android:textStyle="bold" />
-                    <TextView android:id="@+id/tv_draft_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textSize="12dp" android:textColor="#95A5A6" />
+                android:orientation="vertical" android:padding="16dp">
+
+                <!-- Time filter - click to pick date -->
+                <LinearLayout android:id="@+id/date_selector"
+                    android:layout_width="match_parent" android:layout_height="46dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:background="@drawable/segment_container_bg" android:paddingHorizontal="14dp"
+                    android:clickable="true" android:focusable="true"
+                    android:layout_marginBottom="8dp">
+                    <TextView android:id="@+id/tv_date_label" android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="📅 今日" android:textSize="14dp" android:textColor="@color/text_primary"
+                        android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="▼" android:textSize="11dp" android:textColor="@color/text_secondary"
+                        android:id="@+id/tv_date_arrow" />
                 </LinearLayout>
-                <TextView android:id="@+id/tv_draft_status" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="未提交" android:background="#FFF3E0" android:paddingTop="2dp" android:paddingBottom="2dp" android:paddingStart="8dp" android:paddingEnd="8dp"
-                    android:textColor="#E65100" android:textSize="11dp" />
+
+                <!-- Quick presets -->
+                <LinearLayout android:id="@+id/preset_row"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center"
+                    android:layout_marginBottom="10dp">
+                    <TextView android:id="@+id/chip_today" android:layout_width="0dp"
+                        android:layout_height="32dp" android:layout_weight="1"
+                        android:gravity="center" android:text="今日" android:textSize="12dp"
+                        android:background="@drawable/segment_tab_bg"
+                        android:textColor="@color/primary" android:layout_marginEnd="4dp" />
+                    <TextView android:id="@+id/chip_month" android:layout_width="0dp"
+                        android:layout_height="32dp" android:layout_weight="1"
+                        android:gravity="center" android:text="本月" android:textSize="12dp"
+                        android:background="@drawable/segment_tab_bg"
+                        android:textColor="#95A5A6" android:layout_marginHorizontal="4dp" />
+                    <TextView android:id="@+id/chip_year" android:layout_width="0dp"
+                        android:layout_height="32dp" android:layout_weight="1"
+                        android:gravity="center" android:text="本年" android:textSize="12dp"
+                        android:background="@drawable/segment_tab_bg"
+                        android:textColor="#95A5A6" android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Stats Cards -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center"
+                    android:layout_marginBottom="14dp" android:weightSum="3">
+                    <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginEnd="5dp"
+                        app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
+                            <TextView android:id="@+id/tv_sales_amount" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="¥0" android:textSize="20dp" android:textStyle="bold"
+                                android:textColor="@color/primary" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="销售额" android:textSize="11dp" android:textColor="#95A5A6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
+                            <TextView android:id="@+id/tv_sales_profit" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="¥0" android:textSize="20dp" android:textStyle="bold"
+                                android:textColor="@color/primary" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="毛利" android:textSize="11dp" android:textColor="#95A5A6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="5dp"
+                        app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:gravity="center" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="8dp" android:paddingEnd="8dp">
+                            <TextView android:id="@+id/tv_sales_count" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="0" android:textSize="20dp" android:textStyle="bold"
+                                android:textColor="@color/primary" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="笔数" android:textSize="11dp" android:textColor="#95A5A6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- Draft bill -->
+                <androidx.cardview.widget.CardView android:id="@+id/card_draft"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp" app:cardElevation="2dp" android:layout_marginBottom="10dp"
+                    android:visibility="gone">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:gravity="center_vertical">
+                        <View android:layout_width="3dp" android:layout_height="match_parent"
+                            android:background="#F39C12" android:layout_marginEnd="12dp" />
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical">
+                            <TextView android:id="@+id/tv_draft_title" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:textSize="15dp" android:textStyle="bold" />
+                            <TextView android:id="@+id/tv_draft_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:textSize="12dp" android:textColor="#95A5A6" />
+                        </LinearLayout>
+                        <TextView android:id="@+id/tv_draft_status" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="未提交" android:background="#FFF3E0" android:paddingTop="2dp" android:paddingBottom="2dp" android:paddingStart="8dp" android:paddingEnd="8dp"
+                            android:textColor="#E65100" android:textSize="11dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Sales Flow -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📋 销售流水" android:textSize="16dp" android:textStyle="bold"
+                    android:textColor="#2D3436" android:layout_marginBottom="10dp" />
+
+                <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                    android:layout_height="match_parent" app:cardCornerRadius="20dp" app:cardElevation="2dp"
+                    android:paddingStart="8dp" android:paddingEnd="0dp">
+                    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_sales_records"
+                        android:layout_width="match_parent" android:layout_height="match_parent" />
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Sales Flow -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="📋 销售流水" android:textSize="16dp" android:textStyle="bold"
-            android:textColor="#2D3436" android:layout_marginBottom="10dp" />
-
-        <androidx.cardview.widget.CardView android:layout_width="match_parent"
-            android:layout_height="match_parent" app:cardCornerRadius="20dp" app:cardElevation="2dp"
-            android:paddingStart="8dp" android:paddingEnd="0dp">
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_sales_records"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
-
+        </ScrollView>
     </LinearLayout>
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

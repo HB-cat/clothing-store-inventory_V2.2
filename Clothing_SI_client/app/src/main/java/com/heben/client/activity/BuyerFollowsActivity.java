@@ -15,7 +15,7 @@ import com.heben.client.R;
 import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.User;
 import com.heben.client.network.ApiClient;
-import com.heben.client.util.SoundManager;
+import com.heben.client.util.BottomNav;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,15 @@ import retrofit2.Response;
 public class BuyerFollowsActivity extends AppCompatActivity {
 
     private EditText etSearch;
-    private LinearLayout layoutResults;
-    private LinearLayout layoutFollowed;
+    private LinearLayout layoutResults, layoutFollowed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_follows);
+
+        BottomNav.setup(this, R.id.bottom_follow);
+
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
         etSearch = findViewById(R.id.et_search);
@@ -49,14 +51,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
             }
             return false;
         });
-
-        // 底部导航
-        findViewById(R.id.bottom_home).setOnClickListener(v ->
-                startActivity(new Intent(this, BuyerHomeActivity.class)));
-        findViewById(R.id.bottom_messages).setOnClickListener(v ->
-                startActivity(new Intent(this, BuyerMessagesActivity.class)));
-        findViewById(R.id.bottom_profile).setOnClickListener(v ->
-                startActivity(new Intent(this, BuyerProfileActivity.class)));
     }
 
     @Override
@@ -67,10 +61,7 @@ public class BuyerFollowsActivity extends AppCompatActivity {
 
     private void searchShops() {
         String keyword = etSearch.getText().toString().trim();
-        if (keyword.isEmpty()) {
-            addResult(layoutResults, "请输入店铺名或关键字");
-            return;
-        }
+        if (keyword.isEmpty()) { addResult(layoutResults, "请输入店铺名或关键字"); return; }
 
         layoutResults.removeAllViews();
         addResult(layoutResults, "搜索中...");
@@ -83,9 +74,7 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<Map<String, Object>> data = response.body().getData();
                     if (data != null && !data.isEmpty()) {
-                        for (Map<String, Object> shop : data) {
-                            addShopResult(shop);
-                        }
+                        for (Map<String, Object> shop : data) addShopResult(shop);
                     } else {
                         addResult(layoutResults, "未找到相关店铺");
                     }
@@ -93,7 +82,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                     addResult(layoutResults, "搜索失败");
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<List<Map<String, Object>>>> call, Throwable t) {
                 layoutResults.removeAllViews();
@@ -112,9 +100,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                 ? (Boolean) shop.get("isFollowing") : false;
 
         ((TextView) card.findViewById(R.id.tv_shop_name)).setText(shopName != null ? shopName : nickname);
-        ((TextView) card.findViewById(R.id.tv_shop_desc)).setText(
-                (nickname != null ? nickname + " · " : "") +
-                        ((Integer) shop.get("role") == 2 ? "批发商" : "零售商"));
 
         MaterialButton btn = card.findViewById(R.id.btn_follow);
         if (isFollowing) {
@@ -130,7 +115,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                         btn.setEnabled(false);
                         loadFollowed();
                     }
-
                     @Override
                     public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                         Toast.makeText(BuyerFollowsActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
@@ -152,9 +136,7 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                 if (resp.isSuccessful() && resp.body() != null && resp.body().isSuccess()) {
                     List<User> users = resp.body().getData();
                     if (users != null && !users.isEmpty()) {
-                        for (User u : users) {
-                            addFollowedItem(u);
-                        }
+                        for (User u : users) addFollowedItem(u);
                     } else {
                         addResult(layoutFollowed, "暂无关注店铺\n搜索并关注您喜欢的店铺吧");
                     }
@@ -162,7 +144,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                     addResult(layoutFollowed, "暂无关注店铺");
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<List<User>>> call, Throwable t) {
                 layoutFollowed.removeAllViews();
@@ -175,18 +156,12 @@ public class BuyerFollowsActivity extends AppCompatActivity {
         View card = getLayoutInflater().inflate(R.layout.item_shop_search, layoutFollowed, false);
         String shopName = u.shopName != null ? u.shopName : u.nickname;
         ((TextView) card.findViewById(R.id.tv_shop_name)).setText(shopName);
-        ((TextView) card.findViewById(R.id.tv_shop_desc)).setText(
-                (u.nickname != null ? u.nickname + " · " : "") +
-                        (u.role == 2 ? "批发商" : "零售商"));
-
-        // 点击进入商家商品页
         card.setOnClickListener(v -> {
             Intent intent = new Intent(this, BuyerProductsActivity.class);
             intent.putExtra("sellerId", u.id);
             intent.putExtra("sellerName", shopName);
             startActivity(intent);
         });
-
         MaterialButton btn = card.findViewById(R.id.btn_follow);
         btn.setText("取消关注");
         btn.setOnClickListener(v -> {
@@ -195,7 +170,6 @@ public class BuyerFollowsActivity extends AppCompatActivity {
                 public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> resp) {
                     loadFollowed();
                 }
-
                 @Override
                 public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                     Toast.makeText(BuyerFollowsActivity.this, "网络错误", Toast.LENGTH_SHORT).show();

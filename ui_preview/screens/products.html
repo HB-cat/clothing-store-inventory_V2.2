@@ -1,75 +1,44 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>商品管理 - Clothing-SI</title><link rel="stylesheet" href="../css/style.css"></head><body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
-  <div class="top-nav">
-    <button class="back" onclick="history.back()">←</button>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='home.html'">‹</span>
     <span class="title">商品管理</span>
-    <button class="action" onclick="location.href='product-add.html'">➕</button>
+    <span class="action" onclick="location.href='product-add.html'">+</span>
   </div>
   <div class="content">
-    <div class="segment" style="margin-bottom:12px">
-      <button class="opt active">全部</button>
-      <button class="opt">在售</button>
-      <button class="opt">已下架</button>
-      <button class="opt">低库存</button>
+    <div class="quick-command">
+      <input placeholder="🔍 搜索商品...">
     </div>
-    <div class="form-group" style="margin-bottom:12px">
-      <input class="form-input" placeholder="🔍 搜索商品名称...">
+    <div class="segment" id="catSegment">
+      <button class="opt active" onclick="toggleSeg(this)">全部</button>
+      <button class="opt" onclick="toggleSeg(this)">在售</button>
+      <button class="opt" onclick="toggleSeg(this)">已下架</button>
     </div>
-
-    <div class="card" style="padding:0 16px">
-      <div class="list-item" onclick="location.href='product-add.html'">
-        <div class="thumb">👕</div>
-        <div class="info">
-          <div class="name">纯棉圆领T恤</div>
-          <div class="desc">白色·M · 库存: 23</div>
-        </div>
-        <div class="right">
-          <div class="price">¥65</div>
-          <div class="sub">成本 ¥35</div>
-        </div>
+    <div class="recommend-grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="recommend-card" onclick="alert('👕 纯棉圆领T恤 详情')">
+        <div class="emoji">👕</div><div class="name">纯棉圆领T恤</div><div class="meta">白色M · ¥65</div><div style="font-size:14px;font-weight:700;color:var(--primary);margin-top:4px">库存 42</div>
       </div>
-      <div class="list-item">
-        <div class="thumb">👗</div>
-        <div class="info">
-          <div class="name">碎花雪纺连衣裙</div>
-          <div class="desc">蓝色·S/M/L · 库存: 8</div>
-        </div>
-        <div class="right">
-          <div class="price">¥120</div>
-          <div class="sub" style="color:var(--danger)">⚠️ 低库存</div>
-        </div>
+      <div class="recommend-card" onclick="alert('👗 碎花雪纺连衣裙 详情')">
+        <div class="emoji">👗</div><div class="name">碎花雪纺连衣裙</div><div class="meta">蓝色M · ¥120</div><div style="font-size:14px;font-weight:700;color:var(--primary);margin-top:4px">库存 18</div>
       </div>
-      <div class="list-item">
-        <div class="thumb">👖</div>
-        <div class="info">
-          <div class="name">高腰阔腿牛仔裤</div>
-          <div class="desc">浅蓝·26-30 · 库存: 15</div>
-        </div>
-        <div class="right">
-          <div class="price">¥130</div>
-          <div class="sub">成本 ¥70</div>
-        </div>
+      <div class="recommend-card" onclick="alert('👖 高腰阔腿牛仔裤 详情')">
+        <div class="emoji">👖</div><div class="name">高腰阔腿牛仔裤</div><div class="meta">浅蓝27 · ¥130</div><div style="font-size:14px;font-weight:700;color:var(--primary);margin-top:4px">库存 36</div>
       </div>
-      <div class="list-item">
-        <div class="thumb">🧥</div>
-        <div class="info">
-          <div class="name">韩版毛呢大衣</div>
-          <div class="desc">卡其·M/L · 库存: 3</div>
-        </div>
-        <div class="right">
-          <div class="price">¥299</div>
-          <div class="sub" style="color:var(--danger)">⚠️ 低库存</div>
-        </div>
+      <div class="recommend-card" onclick="alert('🧥 休闲西装外套 详情')">
+        <div class="emoji">🧥</div><div class="name">休闲西装外套</div><div class="meta">黑色L · ¥220</div><div style="font-size:14px;font-weight:700;color:var(--primary);margin-top:4px">库存 12</div>
       </div>
     </div>
   </div>
-
   <div class="bottom-nav">
     <button class="tab" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
     <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
-    <button class="tab" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab active" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
     <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
   </div>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
+<script>
+  function toggleSeg(el) { el.parentElement.querySelectorAll('.opt').forEach(function(b) { b.classList.remove('active'); }); el.classList.add('active'); }
+</script>
 </body></html>

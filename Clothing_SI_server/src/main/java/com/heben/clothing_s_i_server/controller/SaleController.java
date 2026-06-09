@@ -88,6 +88,22 @@ public class SaleController {
     }
 
     /**
+     * 删除草稿账单
+     * DELETE /api/draft-bills/{id}
+     */
+    @DeleteMapping("/draft-bills/{id}")
+    public ApiResponse<Void> deleteDraftBill(
+            @RequestAttribute("currentUserId") Long userId,
+            @PathVariable Long id) {
+        try {
+            saleService.deleteDraftBill(userId, id);
+            return ApiResponse.success("已删除", null);
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.badRequest(e.getMessage());
+        }
+    }
+
+    /**
      * 草稿删商品
      * DELETE /api/draft-bills/{id}/items/{itemId}
      */
@@ -168,6 +184,20 @@ public class SaleController {
         LocalDateTime start = startDate.atStartOfDay();
         LocalDateTime end = endDate.atTime(LocalTime.MAX);
         return ApiResponse.success(saleService.getSalesByDateRange(userId, start, end));
+    }
+
+    /**
+     * 按日期范围查询销售流水明细
+     * GET /api/sales/records?startDate=2026-01-01&endDate=2026-01-31
+     */
+    @GetMapping("/sales/records")
+    public ApiResponse<List<SaleRecord>> getSalesRecords(
+            @RequestAttribute("currentUserId") Long userId,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        LocalDateTime start = startDate.atStartOfDay();
+        LocalDateTime end = endDate.atTime(LocalTime.MAX);
+        return ApiResponse.success(saleService.getSalesRecords(userId, start, end));
     }
 
     // ========== 退货 ==========

@@ -99,7 +99,7 @@ public class DataSyncManager {
                     lc.userId = userId;
                     lc.name = c.name;
                     lc.sortOrder = c.sortOrder;
-                    lc.isPreset = c.isPreset;
+                    lc.isPreset = c.isPreset != 0;
                     local.add(lc);
                 }
                 db.categoryDao().deleteAll(userId);
@@ -162,7 +162,7 @@ public class DataSyncManager {
                     lg.id = g.id;
                     lg.userId = userId;
                     lg.name = g.name;
-                    lg.isPreset = g.isPreset;
+                    lg.isPreset = g.isPreset != 0;
                     groups.add(lg);
 
                     if (g.values != null) {

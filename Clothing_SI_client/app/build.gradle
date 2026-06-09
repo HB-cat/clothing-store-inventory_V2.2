@@ -47,6 +47,9 @@ dependencies {
     // ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
+    // SwipeRefreshLayout (下拉刷新)
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
     // Room (local database)
     implementation 'androidx.room:room-runtime:2.6.1'
     annotationProcessor 'androidx.room:room-compiler:2.6.1'

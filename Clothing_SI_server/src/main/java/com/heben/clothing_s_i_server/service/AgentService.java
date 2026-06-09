@@ -2,6 +2,7 @@ package com.heben.clothing_s_i_server.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.heben.clothing_s_i_server.dto.AgentChatResponse;
 import com.heben.clothing_s_i_server.dto.AgentParseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.*;
 public class AgentService {
 
     private final RestTemplate restTemplate;
+    private final AnalyticsService analyticsService;
     private final Gson gson = new Gson();
 
     @Value("${deepseek.api.key}")
@@ -86,6 +88,7 @@ public class AgentService {
 
 10. unknown — 无法识别的指令
     参数: rawText
+    注意：如果用户问与系统功能无关的问题（如"谁给你提供的技术支持"、"你的开发者是谁"、"你是什么"等），也应返回 unknown
     → {"intent":"unknown","entities":{"rawText":"..."},"confidence":0}
 
 === 规则 ===
@@ -94,53 +97,95 @@ public class AgentService {
 - 商品名称精确提取，去掉"商品"、"的"等干扰词
 """;
 
+    /**
+     * 智能问答 System Prompt — 用于 chat 接口
+     * AI 作为服装店分析助手，基于系统提供的真实业务数据回答问题
+     */
+    private static final String CHAT_SYSTEM_PROMPT = """
+你是一个服装店老板的智能分析助手。系统会为你提供店铺的真实经营数据，你需要基于数据回答用户的问题。
+
+回答要求：
+1. **基于数据**：引用系统提供的数据来支撑你的分析，不要编造数据
+2. **结论先行**：先给出核心结论，再展开说明
+3. **简单易懂**：用自然的口语表达，像助手在跟老板汇报
+4. **给出建议**：分析后给出可操作的建议
+5. **简洁明了**：不超过200字，分段清晰
+
+回答风格示例：
+"对比上月，本月销售额增长了15%，从¥12,000涨到了¥13,800。连衣裙是增长主力，多卖了10件。建议趁热打铁，增加连衣裙的陈列位置。"
+
+如果用户问的是与店铺经营无关的问题（天气、百科等），直接用你的知识回答，风格保持亲切友好。
+
+注意：不要使用Markdown格式，用纯文本+emoji即可。
+""";
+
+    /** 最大重试次数 */
+    private static final int MAX_RETRIES = 2;
+
     public AgentParseResponse parse(Long userId, String text) {
         AgentParseResponse response = new AgentParseResponse();
         response.setRawText(text);
 
-        try {
-            Map<String, Object> requestBody = buildDeepSeekRequest(text);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.setBearerAuth(apiKey);
+        Exception lastException = null;
 
-            HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        for (int attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+            try {
+                Map<String, Object> requestBody = buildDeepSeekRequest(text);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.setBearerAuth(apiKey);
 
-            ResponseEntity<Map> rawResponse = restTemplate.exchange(
-                    apiUrl, HttpMethod.POST, request, Map.class
-            );
+                HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
 
-            if (rawResponse.getBody() == null) {
-                return fallbackUnknown(text, "DeepSeek 返回空响应");
-            }
+                ResponseEntity<Map> rawResponse = restTemplate.exchange(
+                        apiUrl, HttpMethod.POST, request, Map.class
+                );
 
-            String content = extractContent(rawResponse.getBody());
-            if (content == null) {
-                return fallbackUnknown(text, "无法解析 DeepSeek 返回格式");
-            }
+                if (rawResponse.getBody() == null) {
+                    if (attempt < MAX_RETRIES) continue;
+                    return fallbackUnknown(text, "DeepSeek 返回空响应");
+                }
 
-            String jsonStr = extractJson(content);
-            Map<String, Object> result = gson.fromJson(jsonStr,
-                    new TypeToken<Map<String, Object>>() {}.getType());
+                String content = extractContent(rawResponse.getBody());
+                if (content == null) {
+                    if (attempt < MAX_RETRIES) continue;
+                    return fallbackUnknown(text, "无法解析 DeepSeek 返回格式");
+                }
 
-            response.setIntent((String) result.getOrDefault("intent", "unknown"));
-            Object entitiesObj = result.get("entities");
-            if (entitiesObj instanceof Map) {
+                String jsonStr = extractJson(content);
+                Map<String, Object> result = gson.fromJson(jsonStr,
+                        new TypeToken<Map<String, Object>>() {}.getType());
+
+                String intent = (String) result.getOrDefault("intent", "unknown");
                 @SuppressWarnings("unchecked")
-                Map<String, Object> entities = (Map<String, Object>) entitiesObj;
-                response.setEntities(entities);
-            }
-            Object confidenceObj = result.get("confidence");
-            if (confidenceObj instanceof Number) {
-                response.setConfidence(((Number) confidenceObj).doubleValue());
-            } else {
-                response.setConfidence(0.5);
-            }
+                Map<String, Object> entities = result.get("entities") instanceof Map
+                        ? (Map<String, Object>) result.get("entities") : null;
+                Object confidenceObj = result.get("confidence");
+                double confidence = confidenceObj instanceof Number
+                        ? ((Number) confidenceObj).doubleValue() : 0.5;
 
-            return response;
+                return AgentParseResponse.fromIntentAndEntities(intent, entities, confidence, text);
 
-        } catch (Exception e) {
-            return fallbackUnknown(text, "解析失败：" + e.getMessage());
+            } catch (Exception e) {
+                lastException = e;
+                if (attempt < MAX_RETRIES) {
+                    try {
+                        Thread.sleep(1000L * (attempt + 1)); // 指数退避: 1s, 2s
+                    } catch (InterruptedException ignored) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            }
+        }
+
+        String errorMsg = lastException != null ? lastException.getMessage() : "未知错误";
+        if (errorMsg.contains("timeout") || errorMsg.contains("timed out")) {
+            return fallbackUnknown(text, "DeepSeek API 请求超时，已重试" + MAX_RETRIES + "次，请稍后重试");
+        } else if (errorMsg.contains("401") || errorMsg.contains("Unauthorized")) {
+            return fallbackUnknown(text, "DeepSeek API 认证失败，请检查 API Key 配置");
+        } else {
+            return fallbackUnknown(text, "DeepSeek API 调用失败：" + errorMsg);
         }
     }
 
@@ -190,12 +235,213 @@ public class AgentService {
     }
 
     private AgentParseResponse fallbackUnknown(String text, String errorMessage) {
-        AgentParseResponse resp = new AgentParseResponse();
-        resp.setIntent("unknown");
-        resp.setEntities(Map.of("rawText", text));
-        resp.setRawText(text);
-        resp.setConfidence(0.0);
-        resp.setErrorMessage(errorMessage);
+        return AgentParseResponse.fromIntentAndEntities("unknown", Map.of("rawText", text), 0.0, text);
+    }
+
+    // ===== Phase B: 智能问答 =====
+
+    /** 需要业务数据的关键词 */
+    private static final Set<String> DATA_KEYWORDS = Set.of(
+            "销售", "生意", "卖", "赚", "亏", "利润", "毛利", "收入", "营业额",
+            "对比", "比较", "趋势", "分析", "涨", "跌", "增长", "下降",
+            "库存", "缺货", "补货", "进货", "热销", "畅销", "滞销",
+            "客户", "顾客", "预约", "订单"
+    );
+
+    /**
+     * 智能问答 — 自动判断是否需要业务数据，带上下文调 DeepSeek
+     */
+    public AgentChatResponse chat(Long userId, String text) {
+        AgentChatResponse resp = new AgentChatResponse();
+        boolean needsData = needsBusinessData(text);
+
+        StringBuilder fullPrompt = new StringBuilder();
+        fullPrompt.append("用户问题：").append(text).append("\n\n");
+
+        if (needsData) {
+            // 获取业务数据上下文
+            String context = buildBusinessContext(userId);
+            fullPrompt.append("=== 以下是你店铺的真实经营数据 ===\n");
+            fullPrompt.append(context).append("\n\n");
+            fullPrompt.append("请基于以上数据回答用户的问题。如果数据不足以回答，请说明并给出基于现有数据的分析。");
+        } else {
+            fullPrompt.append("请直接回答用户的问题，保持友好亲切的语气。");
+        }
+
+        Exception lastException = null;
+
+        for (int attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+            try {
+                Map<String, Object> requestBody = buildChatRequest(fullPrompt.toString());
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.setBearerAuth(apiKey);
+
+                HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+
+                ResponseEntity<Map> rawResponse = restTemplate.exchange(
+                        apiUrl, HttpMethod.POST, request, Map.class
+                );
+
+                if (rawResponse.getBody() == null) {
+                    if (attempt < MAX_RETRIES) continue;
+                    return fallbackChat(text, "网络开小差了，请稍后重试");
+                }
+
+                String content = extractContent(rawResponse.getBody());
+                if (content == null) {
+                    if (attempt < MAX_RETRIES) continue;
+                    return fallbackChat(text, "AI 暂时无法回答，请换个问法试试");
+                }
+
+                resp.setReply(content.trim());
+                resp.setReplyType(needsData ? "analysis" : "knowledge");
+                resp.setShowDataCard(needsData);
+                return resp;
+
+            } catch (Exception e) {
+                lastException = e;
+                if (attempt < MAX_RETRIES) {
+                    try {
+                        Thread.sleep(1000L * (attempt + 1));
+                    } catch (InterruptedException ignored) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            }
+        }
+
+        String errorMsg = lastException != null ? lastException.getMessage() : "";
+        if (errorMsg.contains("timeout") || errorMsg.contains("timed out")) {
+            return fallbackChat(text, "⏰ AI 思考超时了，问题太复杂的话可以拆开问哦");
+        } else if (errorMsg.contains("401") || errorMsg.contains("Unauthorized")) {
+            return fallbackChat(text, "🔑 AI 服务认证失败，请联系管理员检查 API Key 配置");
+        } else {
+            return fallbackChat(text, "📡 AI 服务暂时不可用，请稍后重试");
+        }
+    }
+
+    /**
+     * 判断是否需要查询业务数据
+     */
+    private boolean needsBusinessData(String text) {
+        String lower = text.toLowerCase();
+        return DATA_KEYWORDS.stream().anyMatch(kw -> lower.contains(kw));
+    }
+
+    /**
+     * 构建业务数据上下文
+     */
+    private String buildBusinessContext(Long userId) {
+        StringBuilder ctx = new StringBuilder();
+
+        try {
+            // 今日简报
+            var today = analyticsService.getTodayReport(userId);
+            ctx.append("【今日简报】\n");
+            ctx.append("销售额: ¥").append(today.getTodaySales()).append("\n");
+            ctx.append("毛利: ¥").append(today.getTodayProfit()).append("\n");
+            ctx.append("订单数: ").append(today.getTodayOrders()).append(" 单\n");
+            ctx.append("结论: ").append(today.getSummaryMessage()).append("\n\n");
+
+            // 热销TOP5
+            var topProducts = analyticsService.getTop8(userId);
+            if (!topProducts.isEmpty()) {
+                ctx.append("【热销商品 TOP5】\n");
+                int limit = Math.min(topProducts.size(), 5);
+                for (int i = 0; i < limit; i++) {
+                    var p = topProducts.get(i);
+                    ctx.append(i + 1).append(". ").append(p.getProductName())
+                            .append(" 销量:").append(p.getTotalQuantity())
+                            .append(" 金额:¥").append(p.getTotalAmount()).append("\n");
+                }
+                ctx.append("\n");
+            }
+
+            // 库存预警
+            var lowStock = analyticsService.getLowStock(userId);
+            if (!lowStock.isEmpty()) {
+                ctx.append("【库存预警】\n");
+                for (var p : lowStock) {
+                    ctx.append("- ").append(p.getProductName());
+                    if (p.getAttrsDesc() != null && !p.getAttrsDesc().isEmpty()) {
+                        ctx.append("(").append(p.getAttrsDesc()).append(")");
+                    }
+                    ctx.append(" 仅剩 ").append(p.getStock()).append(" 件\n");
+                }
+                ctx.append("\n");
+            }
+
+            // 近7天趋势
+            var trend = analyticsService.getTrend7Days(userId);
+            if (!trend.isEmpty()) {
+                ctx.append("【近7天销售趋势】\n");
+                for (var d : trend) {
+                    ctx.append("- ").append(d.getDate()).append(": ¥").append(d.getTotalAmount()).append("\n");
+                }
+                ctx.append("\n");
+            }
+
+            // 常客画像 TOP5
+            var customers = analyticsService.getCustomerProfile(userId);
+            if (!customers.isEmpty()) {
+                ctx.append("【常客画像 TOP5】\n");
+                int limit = Math.min(customers.size(), 5);
+                for (int i = 0; i < limit; i++) {
+                    var c = customers.get(i);
+                    ctx.append(i + 1).append(". ").append(c.getBuyerName())
+                            .append(" 消费:").append(c.getOrderCount()).append("次")
+                            .append(" 总额:¥").append(c.getTotalAmount()).append("\n");
+                }
+                ctx.append("\n");
+            }
+
+            // 滞销商品提醒
+            var slowMoving = analyticsService.getSlowMoving(userId);
+            if (!slowMoving.isEmpty()) {
+                ctx.append("【滞销商品提醒】\n");
+                int limit = Math.min(slowMoving.size(), 3);
+                for (int i = 0; i < limit; i++) {
+                    var p = slowMoving.get(i);
+                    ctx.append("- ").append(p.getProductName())
+                            .append(" 已 ").append(p.getDaysWithoutSale()).append(" 天未售出")
+                            .append(" 库存:").append(p.getStock()).append("件\n");
+                }
+                ctx.append("\n");
+            }
+
+        } catch (Exception e) {
+            ctx.append("（暂未获取到经营数据）\n");
+        }
+
+        return ctx.toString();
+    }
+
+    /**
+     * 构建问答请求
+     */
+    private Map<String, Object> buildChatRequest(String userMessage) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", model);
+        body.put("temperature", 0.7); // 聊天场景稍高的温度，更自然
+
+        List<Map<String, String>> messages = new ArrayList<>();
+        messages.add(Map.of("role", "system", "content", CHAT_SYSTEM_PROMPT));
+        messages.add(Map.of("role", "user", "content", userMessage));
+        body.put("messages", messages);
+
+        return body;
+    }
+
+    /**
+     * 问答失败降级
+     */
+    private AgentChatResponse fallbackChat(String text, String message) {
+        AgentChatResponse resp = new AgentChatResponse();
+        resp.setReply(message);
+        resp.setReplyType("knowledge");
+        resp.setShowDataCard(false);
         return resp;
     }
 }

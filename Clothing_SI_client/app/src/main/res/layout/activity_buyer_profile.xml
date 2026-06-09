@@ -2,142 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
-
-    <!-- 顶栏 -->
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp"
-        android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
+    android:orientation="vertical" android:background="@color/bg">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:background="@drawable/header_bar_bg">
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="我的" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+            android:textColor="@color/text_primary" android:layout_centerInParent="true" />
     </RelativeLayout>
-
-    <!-- 内容 -->
     <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
-
-            <!-- 个人信息卡片 -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:background="#FFFFFF" android:padding="16dp"
-                android:layout_marginBottom="12dp">
-                <TextView android:id="@+id/tv_avatar"
-                    android:layout_width="56dp" android:layout_height="56dp"
-                    android:text="👩" android:gravity="center" android:textSize="28dp" />
+                android:background="#FFFFFF" android:padding="16dp" android:layout_marginBottom="16dp">
+                <TextView android:id="@+id/tv_avatar" android:layout_width="56dp" android:layout_height="56dp"
+                    android:text="👤" android:gravity="center" android:textSize="26dp"
+                    android:background="@drawable/circle_bg" />
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="14dp">
-                    <TextView android:id="@+id/tv_buyer_name"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textSize="18dp" android:textStyle="bold" android:textColor="#2D3436" />
-                    <TextView android:id="@+id/tv_buyer_phone"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textSize="12dp" android:textColor="#95A5A6" android:layout_marginTop="2dp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="✏️ 修改头像 / 昵称" android:textSize="11dp"
+                    <TextView android:id="@+id/tv_buyer_name" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textSize="18dp"
+                        android:textStyle="bold" android:textColor="#2D3436" />
+                    <TextView android:id="@+id/tv_buyer_info" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textSize="12dp"
                         android:textColor="#95A5A6" android:layout_marginTop="2dp" />
                 </LinearLayout>
             </LinearLayout>
-
-            <!-- 客户信息标题 -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="👤 客户信息" android:textSize="15dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-
-            <!-- 客户信息卡片 -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical" android:background="#FFFFFF" android:padding="16dp"
-                android:layout_marginBottom="12dp">
-                <!-- 第一行：年龄 身高 体重 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:weightSum="3">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="年龄" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_age" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="身高" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_height" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="体重" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_weight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                </LinearLayout>
-                <!-- 第二行：胸围 腰围 臀围 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:weightSum="3" android:layout_marginTop="12dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="胸围" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_bust" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="腰围" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_waist" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="臀围" android:textSize="11dp" android:textColor="#95A5A6" />
-                        <TextView android:id="@+id/tv_hip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textSize="14dp"
-                            android:textStyle="bold" android:textColor="#2D3436" android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                </LinearLayout>
-                <!-- 穿衣风格 -->
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="12dp" android:textColor="#95A5A6" android:layout_marginTop="12dp"
-                    android:text="穿衣风格偏好：" />
-                <LinearLayout android:id="@+id/layout_styles"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:layout_marginTop="4dp" />
-                <Button android:id="@+id/btn_edit_info"
-                    android:layout_width="wrap_content" android:layout_height="32dp"
-                    android:text="✏️ 编辑" android:textSize="12dp"
-                    android:layout_marginTop="8dp" android:background="@null"
-                    android:textColor="#E85D3A" />
+                android:orientation="vertical" android:background="#FFFFFF" android:padding="0dp">
+                <TextView android:id="@+id/btn_orders" android:layout_width="match_parent"
+                    android:layout_height="48dp" android:text="📋  我的订单" android:textSize="14dp"
+                    android:textColor="#2D3436" android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp" android:background="@drawable/ripple_bg"
+                    android:clickable="true" android:focusable="true" />
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#F0F0F0" android:layout_marginStart="44dp" />
+                <TextView android:id="@+id/btn_appointments" android:layout_width="match_parent"
+                    android:layout_height="48dp" android:text="📅  我的预约" android:textSize="14dp"
+                    android:textColor="#2D3436" android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp" android:background="@drawable/ripple_bg"
+                    android:clickable="true" android:focusable="true" />
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#F0F0F0" android:layout_marginStart="44dp" />
+                <TextView android:id="@+id/btn_favorites" android:layout_width="match_parent"
+                    android:layout_height="48dp" android:text="❤️  收藏店铺" android:textSize="14dp"
+                    android:textColor="#2D3436" android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp" android:background="@drawable/ripple_bg"
+                    android:clickable="true" android:focusable="true" />
             </LinearLayout>
 
-            <!-- 历史订单标题 -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="📋 历史订单" android:textSize="15dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
-            <!-- 历史订单卡片 -->
-            <LinearLayout android:id="@+id/layout_orders"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical" android:background="#FFFFFF"
-                android:padding="0dp" android:layout_marginBottom="12dp" />
-
-            <!-- 退出登录 -->
-            <Button android:id="@+id/btn_logout"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="退出登录" android:background="@null"
-                android:textColor="#E74C3C" android:textSize="14dp" />
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@null"
+                android:text="🚪  退出登录"
+                android:textColor="#E74C3C"
+                android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
-
-    <!-- 底部导航 -->
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center"
-        android:paddingVertical="10dp" android:background="#FFFFFF" android:weightSum="3">
-        <TextView android:id="@+id/bottom_home" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="首页"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-        <TextView android:id="@+id/bottom_messages" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="消息"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-        <TextView android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
-            android:gravity="center" android:text="我的" android:textColor="#E85D3A"
-            android:textStyle="bold" android:textSize="13dp" />
-    </LinearLayout>
+    <include layout="@layout/include_buyer_bottom" />
 </LinearLayout>

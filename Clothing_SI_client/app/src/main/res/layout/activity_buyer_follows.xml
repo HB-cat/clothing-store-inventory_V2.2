@@ -2,75 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#F5F5F5" android:orientation="vertical">
-
+    android:background="@color/bg" android:orientation="vertical">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
         android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="#FFFFFF"
+            android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
             android:gravity="center" android:background="@drawable/circle_bg" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="我的关注" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="#FFFFFF" android:layout_centerInParent="true" />
+            android:textColor="@color/text_primary" android:layout_centerInParent="true" />
     </RelativeLayout>
-
     <ScrollView android:layout_width="match_parent" android:layout_height="0dp"
         android:layout_weight="1">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
-
-            <!-- 搜索 -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🔍 搜索店铺" android:textSize="15dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:layout_marginBottom="16dp">
-                <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:layout_marginEnd="8dp">
                     <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:hint="输入店铺名或关键字" />
+                        android:hint="🔍 输入店铺名或关键字..."
+                        android:imeOptions="actionSearch" android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.button.MaterialButton android:id="@+id/btn_search"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="搜索" app:cornerRadius="20dp" />
             </LinearLayout>
-
-            <!-- 搜索结果 -->
             <LinearLayout android:id="@+id/layout_search_results"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginBottom="16dp" />
-
-            <!-- 我的关注 -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="❤️ 我的关注" android:textSize="15dp" android:textStyle="bold"
                 android:textColor="#2D3436" android:layout_marginBottom="8dp" />
             <LinearLayout android:id="@+id/layout_followed_list"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" />
-
         </LinearLayout>
     </ScrollView>
-
-    <!-- 底部导航 -->
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:gravity="center"
-        android:paddingVertical="10dp" android:background="#FFFFFF"
-        android:weightSum="4" android:elevation="4dp">
-        <TextView android:id="@+id/bottom_home" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
-            android:gravity="center" android:text="首页" android:textColor="#95A5A6"
-            android:textSize="13dp" android:clickable="true" android:focusable="true" />
-        <TextView android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
-            android:gravity="center" android:text="关注" android:textColor="#E85D3A"
-            android:textStyle="bold" android:textSize="13dp" />
-        <TextView android:id="@+id/bottom_messages" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="消息"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-        <TextView android:id="@+id/bottom_profile" android:layout_width="0dp" android:layout_height="40dp"
-            android:layout_weight="1" android:gravity="center" android:text="我的"
-            android:textColor="#95A5A6" android:textSize="13dp"
-            android:clickable="true" android:focusable="true" />
-    </LinearLayout>
+    <include layout="@layout/include_buyer_bottom" />
 </LinearLayout>

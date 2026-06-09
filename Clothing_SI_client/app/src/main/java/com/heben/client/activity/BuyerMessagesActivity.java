@@ -17,6 +17,7 @@ import com.heben.client.model.ApiResponse;
 import com.heben.client.model.Models.Appointment;
 import com.heben.client.model.Models.ChatSession;
 import com.heben.client.network.ApiClient;
+import com.heben.client.util.BottomNav;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +32,17 @@ public class BuyerMessagesActivity extends AppCompatActivity {
     private RecyclerView rv;
     private ChatSessionAdapter adapter;
     private List<ChatSession> list = new ArrayList<>();
+    private TextView tabChat, tabAppointment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_messages);
 
+        BottomNav.setup(this, R.id.bottom_messages);
+
         layoutAppointments = findViewById(R.id.layout_appointments);
         rv = findViewById(R.id.rv_buyer_sessions);
-
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ChatSessionAdapter(list, session -> {
             Intent intent = new Intent(this, ChatDetailActivity.class);
@@ -49,17 +52,38 @@ public class BuyerMessagesActivity extends AppCompatActivity {
         });
         rv.setAdapter(adapter);
 
-        // 底部导航
-        findViewById(R.id.bottom_home).setOnClickListener(v ->
-                startActivity(new Intent(this, BuyerHomeActivity.class)));
-        findViewById(R.id.bottom_profile).setOnClickListener(v ->
-                startActivity(new Intent(this, BuyerProfileActivity.class)));
+        tabChat = findViewById(R.id.tab_chat);
+        tabAppointment = findViewById(R.id.tab_appointment);
+        tabChat.setOnClickListener(v -> switchTab(true));
+        tabAppointment.setOnClickListener(v -> switchTab(false));
+    }
+
+    private void switchTab(boolean isChat) {
+        if (isChat) {
+            tabChat.setBackgroundResource(R.drawable.tab_active_bg);
+            tabChat.setTextColor(0xFFFFFFFF);
+            tabChat.setTypeface(null, android.graphics.Typeface.BOLD);
+            tabAppointment.setBackgroundResource(0);
+            tabAppointment.setTextColor(0xFF636E72);
+            tabAppointment.setTypeface(null, android.graphics.Typeface.NORMAL);
+            rv.setVisibility(View.VISIBLE);
+            layoutAppointments.setVisibility(View.GONE);
+        } else {
+            tabAppointment.setBackgroundResource(R.drawable.tab_active_bg);
+            tabAppointment.setTextColor(0xFFFFFFFF);
+            tabAppointment.setTypeface(null, android.graphics.Typeface.BOLD);
+            tabChat.setBackgroundResource(0);
+            tabChat.setTextColor(0xFF636E72);
+            tabChat.setTypeface(null, android.graphics.Typeface.NORMAL);
+            rv.setVisibility(View.GONE);
+            layoutAppointments.setVisibility(View.VISIBLE);
+            loadAppointments();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadAppointments();
         loadChatSessions();
     }
 
@@ -71,10 +95,7 @@ public class BuyerMessagesActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<Appointment> data = response.body().getData();
                     if (data != null && !data.isEmpty()) {
-                        int count = Math.min(data.size(), 3);
-                        for (int i = 0; i < count; i++) {
-                            addApptCard(data.get(i));
-                        }
+                        for (Appointment a : data) addApptCard(a);
                     } else {
                         addHint("暂无预约");
                     }
@@ -82,7 +103,6 @@ public class BuyerMessagesActivity extends AppCompatActivity {
                     addHint("暂无预约");
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<List<Appointment>>> call, Throwable t) {
                 addHint("暂无预约");
@@ -92,35 +112,28 @@ public class BuyerMessagesActivity extends AppCompatActivity {
 
     private void addApptCard(Appointment a) {
         View card = LayoutInflater.from(this).inflate(R.layout.item_appointment_card, layoutAppointments, false);
-        if (card != null) {
-            ((TextView) card.findViewById(R.id.tv_appt_seller)).setText(a.sellerName);
-            ((TextView) card.findViewById(R.id.tv_appt_time))
-                    .setText((a.appointmentDate != null ? a.appointmentDate : "") + " " +
-                            (a.timeSlot != null ? a.timeSlot : ""));
-            TextView tvStatus = card.findViewById(R.id.tv_appt_status);
-            String status = a.status != null ? a.status : "";
-            tvStatus.setText(getStatusText(status));
-            tvStatus.setTextColor(getStatusColor(status));
-            layoutAppointments.addView(card);
-        }
+        ((TextView) card.findViewById(R.id.tv_appt_seller)).setText(a.sellerName);
+        ((TextView) card.findViewById(R.id.tv_appt_time)).setText(
+                (a.appointmentDate != null ? a.appointmentDate : "") + " " + (a.timeSlot != null ? a.timeSlot : ""));
+        TextView tvStatus = card.findViewById(R.id.tv_appt_status);
+        String st = a.status != null ? a.status : "";
+        tvStatus.setText(getStatusText(st));
+        tvStatus.setTextColor(getStatusColor(st));
+        layoutAppointments.addView(card);
     }
 
-    private String getStatusText(String status) {
-        switch (status) {
-            case "confirmed": return "已确认";
-            case "arrived": return "已到店";
-            case "completed": return "已完成";
-            case "cancelled": return "已取消";
+    private String getStatusText(String s) {
+        switch (s) {
+            case "confirmed": return "已确认"; case "arrived": return "已到店";
+            case "completed": return "已完成"; case "cancelled": return "已取消";
             default: return "待确认";
         }
     }
 
-    private int getStatusColor(String status) {
-        switch (status) {
-            case "confirmed": return 0xFF27AE60;
-            case "arrived": return 0xFF2980B9;
-            case "completed": return 0xFF95A5A6;
-            case "cancelled": return 0xFFE74C3C;
+    private int getStatusColor(String s) {
+        switch (s) {
+            case "confirmed": return 0xFF27AE60; case "arrived": return 0xFF2980B9;
+            case "completed": return 0xFF95A5A6; case "cancelled": return 0xFFE74C3C;
             default: return 0xFFE67E22;
         }
     }
@@ -131,7 +144,7 @@ public class BuyerMessagesActivity extends AppCompatActivity {
         tv.setTextSize(13);
         tv.setTextColor(0xFF95A5A6);
         tv.setGravity(android.view.Gravity.CENTER);
-        tv.setPadding(0, 12, 0, 12);
+        tv.setPadding(0, 16, 0, 16);
         layoutAppointments.addView(tv);
     }
 
@@ -148,7 +161,6 @@ public class BuyerMessagesActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<List<ChatSession>>> call, Throwable t) {
             }

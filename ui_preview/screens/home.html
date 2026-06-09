@@ -2,10 +2,9 @@
 <style>
   .marquee-bar {
     overflow: hidden; white-space: nowrap;
-    padding: 8px 14px; margin-bottom: 14px;
-    border-radius: var(--radius-sm);
+    padding: 10px 14px; margin-bottom: 14px;
+    border-radius: var(--R-lg);
     background: var(--primary-light);
-    border: 1px solid #FADBD8;
   }
   .marquee-track {
     display: inline-block;
@@ -18,93 +17,70 @@
   .marquee-text {
     font-size: 13px; color: var(--primary-dark);
     display: inline-block; padding-right: 4em;
-    font-weight: 500;
+    font-weight: 700;
   }
   .recommend-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
   }
   .recommend-card {
-    background: var(--surface); border-radius: var(--radius);
+    background: var(--surface); border-radius: var(--R-md);
     box-shadow: var(--shadow); padding: 14px 8px; text-align: center;
   }
   .recommend-card .emoji { font-size: 32px; margin-bottom: 4px; }
-  .recommend-card .name { font-size: 12px; font-weight: 500; }
+  .recommend-card .name { font-size: 12px; font-weight: 700; }
   .recommend-card .meta { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
   .recommend-card .hot-badge {
-    display: inline-block; margin-top: 4px; padding: 1px 6px; border-radius: 4px;
-    font-size: 10px; font-weight: 500; background: #FFEBEE; color: #C62828;
+    display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: var(--R-xs);
+    font-size: 10px; font-weight: 600; background: #FFEBEE; color: #C62828;
   }
 </style></head>
 <body>
 <div class="phone-wrapper"><div class="phone">
   <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="top-nav" style="position:relative">
+    <span class="back" onclick="location.href='login.html'">‹</span>
+    <span class="title">欣欣服装店</span>
+    <span class="action" onclick="alert('设置')">⚙</span>
+  </div>
   <div class="content">
-    <!-- 店铺名 + 身份 -->
     <div style="padding: 2px 0 10px">
       <div class="page-title">欣欣服装店</div>
       <div class="page-subtitle" style="margin-bottom:0">零售商 · 欢迎回来</div>
     </div>
-
-    <!-- 快捷指令输入框 (PRD 4.1，去掉智能体链接键) -->
     <div class="quick-command">
       <input placeholder="💡 试试：卖了2件白T恤 或 新建账单...">
     </div>
-
-    <!-- 跑马灯 -->
     <div class="marquee-bar">
-      <div class="marquee-track">
-        <span class="marquee-text">🎵 天天发财 · 生意兴隆 · 元气满满</span>
-        <span class="marquee-text">🎵 天天发财 · 生意兴隆 · 元气满满</span>
+      <div class="marquee-track" id="marqueeTrack">
+        <span class="marquee-text">🎵 天天发财 · 客似云来 · 生意兴隆</span>
+        <span class="marquee-text">🎵 天天发财 · 客似云来 · 生意兴隆</span>
       </div>
     </div>
-
-    <!-- 快捷操作 (右利手：记账在最右) -->
     <div class="quick-actions">
       <button class="quick-action" onclick="location.href='purchase.html'"><span class="icon">📦</span><span class="label">进货</span></button>
       <button class="quick-action" onclick="location.href='new-order.html'"><span class="icon">📋</span><span class="label">新建订单</span></button>
       <button class="quick-action" onclick="location.href='sale.html'"><span class="icon">💰</span><span class="label">记账</span></button>
     </div>
-
-    <!-- 待办事项 -->
     <div class="section-header"><h3>📋 待办事项</h3></div>
     <div class="card" style="padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:default;margin-bottom:12px">
       <span style="font-size:20px">📄</span>
       <span style="flex:1;font-size:14px">有 <strong>2</strong> 个未提交账单</span>
       <span class="badge badge-pending">待处理</span>
-      <button class="btn btn-sm btn-outline" onclick="location.href='new-order.html'" style="flex-shrink:0">去处理</button>
+      <button class="btn btn-sm btn-outline" onclick="location.href='bills.html'" style="flex-shrink:0">去处理</button>
     </div>
-
-    <!-- 今日商品推荐 -->
     <div class="section-header"><h3>🔥 今日推荐</h3><span class="more">近期热卖</span></div>
     <div class="recommend-grid">
-      <div class="recommend-card">
-        <div class="emoji">👕</div>
-        <div class="name">纯棉圆领T恤</div>
-        <div class="meta">白色M · ¥65</div>
-        <div class="hot-badge">月售 32 件</div>
-      </div>
-      <div class="recommend-card">
-        <div class="emoji">👗</div>
-        <div class="name">碎花雪纺连衣裙</div>
-        <div class="meta">蓝色M · ¥120</div>
-        <div class="hot-badge">月售 18 件</div>
-      </div>
-      <div class="recommend-card">
-        <div class="emoji">👖</div>
-        <div class="name">高腰阔腿牛仔裤</div>
-        <div class="meta">浅蓝27 · ¥130</div>
-        <div class="hot-badge">月售 12 件</div>
-      </div>
+      <div class="recommend-card"><div class="emoji">👕</div><div class="name">纯棉圆领T恤</div><div class="meta">白色M · ¥65</div><div class="hot-badge">月售 32</div></div>
+      <div class="recommend-card"><div class="emoji">👗</div><div class="name">碎花雪纺连衣裙</div><div class="meta">蓝色M · ¥120</div><div class="hot-badge">月售 18</div></div>
+      <div class="recommend-card"><div class="emoji">👖</div><div class="name">高腰阔腿牛仔裤</div><div class="meta">浅蓝27 · ¥130</div><div class="hot-badge">月售 12</div></div>
     </div>
   </div>
-
   <div class="bottom-nav">
     <button class="tab active" onclick="location.href='home.html'"><span class="icon">🏠</span>首页</button>
     <button class="tab" onclick="location.href='bills.html'"><span class="icon">📋</span>账单</button>
-    <button class="tab" onclick="location.href='chat-list.html'"><span class="icon">💬</span>消息</button>
+    <button class="tab" onclick="location.href='products.html'"><span class="icon">🏷️</span>商品</button>
     <button class="tab" onclick="location.href='profile.html'"><span class="icon">👤</span>我的</button>
   </div>
-
-  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">🤖</button>
+  <button class="agent-fab" onclick="location.href='agent-panel.html'" title="智能体">AI</button>
 </div></div>
 </body></html>

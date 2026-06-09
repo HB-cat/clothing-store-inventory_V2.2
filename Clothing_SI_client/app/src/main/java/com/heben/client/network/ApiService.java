@@ -44,19 +44,19 @@ public interface ApiService {
     Call<ApiResponse<Void>> sortCategories(@Body Map<String, List<Long>> body);
 
     // ===== Attribute Groups =====
-    @GET("api/attribute-groups")
+    @GET("api/attributes/groups")
     Call<ApiResponse<List<AttributeGroup>>> getAttributeGroups();
 
-    @POST("api/attribute-groups")
+    @POST("api/attributes/groups")
     Call<ApiResponse<AttributeGroup>> addAttributeGroup(@Body Map<String, String> body);
 
-    @DELETE("api/attribute-groups/{id}")
+    @DELETE("api/attributes/groups/{id}")
     Call<ApiResponse<Void>> deleteAttributeGroup(@Path("id") Long id);
 
-    @POST("api/attribute-values")
-    Call<ApiResponse<AttributeValue>> addAttributeValue(@Body Map<String, Object> body);
+    @POST("api/attributes/values")
+    Call<ApiResponse<List<AttributeValue>>> addAttributeValue(@Body Map<String, Object> body);
 
-    @DELETE("api/attribute-values/{id}")
+    @DELETE("api/attributes/values/{id}")
     Call<ApiResponse<Void>> deleteAttributeValue(@Path("id") Long id);
 
     // ===== Products =====
@@ -138,16 +138,17 @@ public interface ApiService {
     Call<ApiResponse<Void>> wholesaleConfirm(@Path("id") Long id, @Body Map<String, Object> body);
 
     // ===== Shared Products =====
-    @GET("api/shared-products/available")
+    @GET("api/shared-products")
     Call<ApiResponse<List<SharedProduct>>> getAvailableSharedProducts(
-            @Query("keyword") String keyword
+            @Query("keyword") String keyword,
+            @Query("wholesalerName") String wholesalerName
     );
 
-    @POST("api/shared-products/share/{productId}")
-    Call<ApiResponse<Void>> shareProduct(@Path("productId") Long productId, @Body Map<String, Object> body);
+    @POST("api/shared-products")
+    Call<ApiResponse<Void>> shareProduct(@Body Map<String, Object> body);
 
-    @DELETE("api/shared-products/unshare/{productId}")
-    Call<ApiResponse<Void>> unshareProduct(@Path("productId") Long productId);
+    @DELETE("api/shared-products/{id}")
+    Call<ApiResponse<Void>> unshareProduct(@Path("id") Long id);
 
     // ===== Analytics =====
     @GET("api/analytics/today")
@@ -159,10 +160,10 @@ public interface ApiService {
     @GET("api/analytics/slow-moving")
     Call<ApiResponse<List<SlowMovingProduct>>> getSlowMovingProducts();
 
-    @GET("api/analytics/top-products")
+    @GET("api/analytics/top8")
     Call<ApiResponse<List<TopProduct>>> getTopProducts();
 
-    @GET("api/analytics/trend")
+    @GET("api/analytics/trend/7days")
     Call<ApiResponse<List<DailyTrend>>> getSalesTrend();
 
     @GET("api/analytics/peak-hours")
@@ -207,6 +208,21 @@ public interface ApiService {
     // ===== Agent =====
     @POST("api/agent/parse")
     Call<ApiResponse<AgentParseResponse>> parseAgentCommand(@Body Map<String, String> body);
+
+    @GET("api/agent/summary")
+    Call<ApiResponse<AgentSummaryResponse>> getAgentSummary();
+
+    @POST("api/agent/chat")
+    Call<ApiResponse<AgentChatResponse>> chatWithAgent(@Body Map<String, String> body);
+
+    @GET("api/agent/messages")
+    Call<ApiResponse<List<AgentChatMessage>>> getAgentMessages(
+            @Query("page") int page,
+            @Query("size") int size
+    );
+
+    @POST("api/agent/messages/save-pair")
+    Call<ApiResponse<Void>> saveAgentMessagePair(@Body Map<String, String> body);
 
     // ===== Buyer APIs =====
     @GET("api/buyer/info")
