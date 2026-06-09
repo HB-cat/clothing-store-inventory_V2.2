@@ -20,9 +20,15 @@ Clothing_SI_client/gradle/wrapper/gradle-wrapper.jar
 .DS_Store
 Thumbs.db
 
-# Environment
+# ====== 密钥/敏感信息 - 禁止上传 ======
+# 本地覆盖配置（含真实 API Key、数据库密码等）
 **/application-local.properties
+**/application-local.yml
+**/application-local.yaml
+**/*-local.properties
 **/*.env
+**/secrets.properties
+**/secrets.yml
 
 # Personal docs (not to be uploaded)
 about_me.md
