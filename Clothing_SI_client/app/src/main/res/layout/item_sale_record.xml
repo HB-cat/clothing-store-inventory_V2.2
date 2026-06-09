@@ -7,18 +7,19 @@
 
     <TextView android:id="@+id/tv_record_thumb"
         android:layout_width="48dp" android:layout_height="48dp"
-        android:textSize="24dp" android:gravity="center"
-        android:background="@color/primary_light" android:layout_marginEnd="12dp" />
+        android:textSize="24sp" android:gravity="center"
+        android:background="@color/md_primary_container" android:layout_marginEnd="12dp" />
 
     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_weight="1" android:orientation="vertical">
         <TextView android:id="@+id/tv_record_product"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="15dp" android:textStyle="bold" android:textColor="#2D3436"
+            android:textSize="15sp" android:textStyle="bold" android:textColor="@color/md_on_surface"
             android:maxLines="1" android:ellipsize="end" />
         <TextView android:id="@+id/tv_record_info"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="12dp" android:textColor="#95A5A6" android:layout_marginTop="2dp"
+            android:textSize="12sp" android:textColor="@color/md_on_surface_variant"
+            android:layout_marginTop="2dp"
             android:maxLines="1" android:ellipsize="end" />
     </LinearLayout>
 
@@ -27,9 +28,9 @@
         android:layout_marginStart="8dp">
         <TextView android:id="@+id/tv_record_amount"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="15dp" android:textStyle="bold" android:textColor="#E74C3C" />
+            android:textSize="15sp" android:textStyle="bold" android:textColor="@color/md_error" />
         <TextView android:id="@+id/tv_record_return"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="11dp" android:layout_marginTop="4dp" />
+            android:textSize="12sp" android:layout_marginTop="4dp" />
     </LinearLayout>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,19 +62,19 @@ public class BuyerMessagesActivity extends AppCompatActivity {
     private void switchTab(boolean isChat) {
         if (isChat) {
             tabChat.setBackgroundResource(R.drawable.tab_active_bg);
-            tabChat.setTextColor(0xFFFFFFFF);
+            tabChat.setTextColor(ContextCompat.getColor(this, R.color.md_on_primary));
             tabChat.setTypeface(null, android.graphics.Typeface.BOLD);
             tabAppointment.setBackgroundResource(0);
-            tabAppointment.setTextColor(0xFF636E72);
+            tabAppointment.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             tabAppointment.setTypeface(null, android.graphics.Typeface.NORMAL);
             rv.setVisibility(View.VISIBLE);
             layoutAppointments.setVisibility(View.GONE);
         } else {
             tabAppointment.setBackgroundResource(R.drawable.tab_active_bg);
-            tabAppointment.setTextColor(0xFFFFFFFF);
+            tabAppointment.setTextColor(ContextCompat.getColor(this, R.color.md_on_primary));
             tabAppointment.setTypeface(null, android.graphics.Typeface.BOLD);
             tabChat.setBackgroundResource(0);
-            tabChat.setTextColor(0xFF636E72);
+            tabChat.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             tabChat.setTypeface(null, android.graphics.Typeface.NORMAL);
             rv.setVisibility(View.GONE);
             layoutAppointments.setVisibility(View.VISIBLE);
@@ -132,9 +133,11 @@ public class BuyerMessagesActivity extends AppCompatActivity {
 
     private int getStatusColor(String s) {
         switch (s) {
-            case "confirmed": return 0xFF27AE60; case "arrived": return 0xFF2980B9;
-            case "completed": return 0xFF95A5A6; case "cancelled": return 0xFFE74C3C;
-            default: return 0xFFE67E22;
+            case "confirmed": return ContextCompat.getColor(this, R.color.md_success);
+            case "arrived": return ContextCompat.getColor(this, R.color.md_secondary);
+            case "completed": return ContextCompat.getColor(this, R.color.md_on_surface_variant);
+            case "cancelled": return ContextCompat.getColor(this, R.color.md_error);
+            default: return ContextCompat.getColor(this, R.color.md_tertiary_container);
         }
     }
 
@@ -142,7 +145,7 @@ public class BuyerMessagesActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setText(text);
         tv.setTextSize(13);
-        tv.setTextColor(0xFF95A5A6);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
         tv.setGravity(android.view.Gravity.CENTER);
         tv.setPadding(0, 16, 0, 16);
         layoutAppointments.addView(tv);

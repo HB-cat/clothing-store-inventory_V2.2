@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.heben.client.R;
@@ -62,10 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
         resetChipStyle(chipWholesaler);
         resetChipStyle(chipBuyer);
 
-        // 高亮选中的
-        selected.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF2D3436));
-        selected.setTextColor(0xFFFFFFFF);
-        selected.setStrokeColor(android.content.res.ColorStateList.valueOf(0xFF2D3436));
+        // 高亮选中的（MD3 Primary）
+        int primaryColor = ContextCompat.getColor(this, R.color.md_primary);
+        int onPrimaryColor = ContextCompat.getColor(this, R.color.md_on_primary);
+        selected.setBackgroundTintList(android.content.res.ColorStateList.valueOf(primaryColor));
+        selected.setTextColor(onPrimaryColor);
+        selected.setStrokeColor(android.content.res.ColorStateList.valueOf(primaryColor));
 
         selectedRole = Integer.parseInt(selected.getTag().toString());
 
@@ -80,9 +83,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void resetChipStyle(MaterialButton chip) {
-        chip.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFFFFFFF));
-        chip.setTextColor(0xFF2D3436);
-        chip.setStrokeColor(android.content.res.ColorStateList.valueOf(0xFFBDC3C7));
+        int surfaceColor = ContextCompat.getColor(this, R.color.md_surface);
+        int onSurfaceVariant = ContextCompat.getColor(this, R.color.md_on_surface_variant);
+        int outlineColor = ContextCompat.getColor(this, R.color.md_outline);
+        chip.setBackgroundTintList(android.content.res.ColorStateList.valueOf(surfaceColor));
+        chip.setTextColor(onSurfaceVariant);
+        chip.setStrokeColor(android.content.res.ColorStateList.valueOf(outlineColor));
     }
 
     private void register() {

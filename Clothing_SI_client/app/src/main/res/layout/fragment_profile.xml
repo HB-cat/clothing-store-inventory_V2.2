@@ -5,123 +5,147 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical" android:background="@color/bg">
+        android:orientation="vertical" android:background="@color/md_surface_container_low">
 
         <!-- Top bar -->
         <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
             android:background="@drawable/header_bar_bg" android:gravity="center_vertical"
             android:paddingHorizontal="16dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="我的" android:textSize="17dp" android:textStyle="bold"
-                android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+                android:text="我的" android:textSize="17sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_centerInParent="true" />
         </RelativeLayout>
 
         <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:padding="16dp">
 
-                <!-- Avatar + Nickname -->
+                <!-- ===== Avatar + Nickname（MD3 宽间距） ===== -->
                 <LinearLayout android:id="@+id/avatar_layout"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
                     android:clickable="true" android:focusable="true"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/card_bg"
+                    android:padding="16dp">
+
                     <FrameLayout android:layout_width="56dp" android:layout_height="56dp">
                         <TextView android:layout_width="56dp" android:layout_height="56dp"
-                            android:text="👤" android:textSize="28dp"
-                            android:gravity="center" android:background="@color/primary_light" />
+                            android:text="👤" android:textSize="28sp"
+                            android:gravity="center"
+                            android:background="@color/md_primary_container" />
                     </FrameLayout>
+
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:layout_marginStart="14dp"
                         android:orientation="vertical">
                         <TextView android:id="@+id/tv_nickname" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="欣欣服装店"
-                            android:textSize="18dp" android:textStyle="bold" android:textColor="#2D3436" />
+                            android:textSize="18sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="点击修改昵称" android:textSize="12dp" android:textColor="#95A5A6" />
+                            android:text="点击编辑个人资料" android:textSize="12sp"
+                            android:textColor="@color/md_on_surface_variant" />
                     </LinearLayout>
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textSize="18sp"
+                        android:textColor="@color/md_outline_variant" />
                 </LinearLayout>
 
-                <!-- Sort hint -->
+                <!-- ===== 排序提示 ===== -->
                 <TextView android:id="@+id/tv_sort_hint"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:text="≡ 长按拖拽可排序" android:textSize="11dp"
-                    android:textColor="@color/text_light" android:gravity="center"
-                    android:layout_marginBottom="8dp" android:visibility="gone" />
+                    android:text="≡ 长按拖拽可排序" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant" android:gravity="center"
+                    android:layout_marginBottom="12dp" android:visibility="gone" />
 
-                <!-- Module List (flat items) -->
-                <androidx.recyclerview.widget.RecyclerView android:id="@+id/module_container"
+                <!-- ===== 功能模块（由 Java 动态填充） ===== -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginBottom="12dp" />
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp"
+                    android:layout_marginBottom="12dp">
+                    <androidx.recyclerview.widget.RecyclerView android:id="@+id/module_container"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </androidx.cardview.widget.CardView>
 
-                <!-- Settings Card -->
+                <!-- ===== 设置 & 帮助（MD3 List 分组） ===== -->
                 <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp" android:layout_marginBottom="12dp">
+                    android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                    app:cardElevation="1dp" android:layout_marginBottom="12dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <!-- 程序设置 -->
                         <LinearLayout android:id="@+id/settings_program"
                             android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:orientation="horizontal" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:gravity="center_vertical"
+                            android:orientation="horizontal" android:paddingVertical="16dp"
+                            android:paddingStart="16dp" android:paddingEnd="16dp"
+                            android:gravity="center_vertical"
                             android:clickable="true" android:focusable="true">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="🛠️" android:textSize="20dp" android:layout_marginEnd="12dp" />
+                                android:text="🛠️" android:textSize="20sp" android:layout_marginEnd="12dp" />
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="程序设置" android:textSize="15dp" />
+                                android:layout_weight="1" android:text="程序设置" android:textSize="15sp"
+                                android:textColor="@color/md_on_surface" />
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="›" android:textSize="14dp" android:textColor="#BDC3C7" />
+                                android:text="›" android:textSize="16sp" android:textColor="@color/md_outline_variant" />
                         </LinearLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
-                <!-- Help Card -->
-                <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp" android:layout_marginBottom="12dp">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        <View android:layout_width="match_parent" android:layout_height="1dp"
+                            android:background="@color/md_outline_variant" />
+
                         <!-- 使用帮助 -->
                         <LinearLayout android:id="@+id/settings_guide"
                             android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:orientation="horizontal" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:gravity="center_vertical"
+                            android:orientation="horizontal" android:paddingVertical="16dp"
+                            android:paddingStart="16dp" android:paddingEnd="16dp"
+                            android:gravity="center_vertical"
                             android:clickable="true" android:focusable="true">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="📖" android:textSize="20dp" android:layout_marginEnd="12dp" />
+                                android:text="📖" android:textSize="20sp" android:layout_marginEnd="12dp" />
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="使用帮助" android:textSize="15dp" />
+                                android:layout_weight="1" android:text="使用帮助" android:textSize="15sp"
+                                android:textColor="@color/md_on_surface" />
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="›" android:textSize="14dp" android:textColor="#BDC3C7" />
+                                android:text="›" android:textSize="16sp" android:textColor="@color/md_outline_variant" />
                         </LinearLayout>
-                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border" />
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp"
+                            android:background="@color/md_outline_variant" />
+
                         <!-- 关于 -->
                         <LinearLayout android:id="@+id/settings_about"
                             android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:orientation="horizontal" android:paddingTop="14dp" android:paddingBottom="14dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:gravity="center_vertical"
+                            android:orientation="horizontal" android:paddingVertical="16dp"
+                            android:paddingStart="16dp" android:paddingEnd="16dp"
+                            android:gravity="center_vertical"
                             android:clickable="true" android:focusable="true">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="ℹ️" android:textSize="20dp" android:layout_marginEnd="12dp" />
+                                android:text="ℹ️" android:textSize="20sp" android:layout_marginEnd="12dp" />
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                android:layout_weight="1" android:text="关于" android:textSize="15dp" />
+                                android:layout_weight="1" android:text="关于" android:textSize="15sp"
+                                android:textColor="@color/md_on_surface" />
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="›" android:textSize="14dp" android:textColor="#BDC3C7" />
+                                android:text="›" android:textSize="16sp" android:textColor="@color/md_outline_variant" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Logout -->
+                <!-- ===== 退出登录（Outlined 风格） ===== -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_logout" android:layout_width="match_parent"
-                    android:layout_height="56dp" android:text="退出登录"
+                    android:layout_height="52dp" android:text="退出登录"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    app:cornerRadius="28dp" app:strokeColor="@color/primary"
-                    android:textColor="@color/primary" />
+                    app:cornerRadius="26dp" app:strokeColor="@color/md_outline"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:layout_marginBottom="12dp" />
 
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:text="--- HeBen_Cat ---" android:textSize="11dp"
-                    android:textColor="#BDC3C7" android:gravity="center"
-                    android:layout_marginTop="12dp" android:layout_marginBottom="20dp" />
+                    android:text="--- HeBen_Cat ---" android:textSize="12sp"
+                    android:textColor="@color/md_outline_variant" android:gravity="center"
+                    android:layout_marginBottom="20dp" />
 
             </LinearLayout>
         </ScrollView>

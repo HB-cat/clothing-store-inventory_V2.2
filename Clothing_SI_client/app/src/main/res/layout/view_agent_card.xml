@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  智能体经营简报富文本卡片（MD3 风格）
+  保持所有 ID 不变（AgentRichCardHelper.java 引用）
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/md_surface"
+    android:elevation="2dp"
+    android:layout_margin="4dp">
+
+    <!-- ===== 1. Header 栏 ===== -->
+    <LinearLayout
+        android:id="@+id/card_header"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/md_primary_container"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/card_header_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/card_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_primary" />
+    </LinearLayout>
+
+    <!-- ===== 2. 数据区 ===== -->
+    <LinearLayout
+        android:id="@+id/card_data_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/row_amount"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:text="💰"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="销售额"
+                android:textSize="14sp"
+                android:textColor="@color/md_on_surface_variant" />
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_surface" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row_profit"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:text="📈"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="毛利"
+                android:textSize="14sp"
+                android:textColor="@color/md_on_surface_variant" />
+            <TextView
+                android:id="@+id/tv_profit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_primary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row_orders"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:text="📋"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="订单数"
+                android:textSize="14sp"
+                android:textColor="@color/md_on_surface_variant" />
+            <TextView
+                android:id="@+id/tv_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_surface" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/md_on_surface_variant"
+            android:lineSpacingExtra="3dp"
+            android:layout_marginTop="6dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- ===== Divider 1 ===== -->
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_outline_variant"
+        android:visibility="gone" />
+
+    <!-- ===== 3. 库存预警区（MD3 Error Container） ===== -->
+    <LinearLayout
+        android:id="@+id/card_warning_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@color/md_error_container">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚠️ 库存预警"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_error_container" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/warning_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp" />
+    </LinearLayout>
+
+    <!-- ===== Divider 2 ===== -->
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_outline_variant"
+        android:visibility="gone" />
+
+    <!-- ===== 4. 热销商品区（MD3 Tertiary Container） ===== -->
+    <LinearLayout
+        android:id="@+id/card_hot_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@color/md_tertiary_container">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⭐ 热销商品"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_tertiary_container" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hot_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp" />
+    </LinearLayout>
+
+    <!-- ===== Divider 3 ===== -->
+    <View
+        android:id="@+id/divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_outline_variant"
+        android:visibility="gone" />
+
+    <!-- ===== 5. 建议区 ===== -->
+    <TextView
+        android:id="@+id/tv_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingBottom="8dp"
+        android:textSize="13sp"
+        android:textColor="@color/md_on_surface_variant"
+        android:lineSpacingExtra="3dp"
+        android:visibility="gone" />
+
+    <!-- ===== 6. 操作按钮栏 ===== -->
+    <LinearLayout
+        android:id="@+id/card_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="12dp"
+        android:paddingTop="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_restock"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="🛒 去补货"
+            android:textSize="13sp"
+            android:textColor="@color/md_on_primary"
+            android:background="@drawable/confirm_btn_bg"
+            android:backgroundTint="@color/md_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="📊 详细分析"
+            android:textSize="13sp"
+            android:textColor="@color/md_primary"
+            android:background="@color/md_primary_container"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+</LinearLayout>

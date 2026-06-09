@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#FFFFFF" android:orientation="horizontal"
+        android:background="@color/md_surface" android:orientation="horizontal"
         android:gravity="center_vertical" android:paddingStart="16dp" android:paddingEnd="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="‹ 返回"
-            android:textSize="16dp" android:textColor="#2D3436" android:padding="8dp" />
+            android:textSize="16sp" android:textColor="@color/md_on_surface" android:padding="8dp" />
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:text="商品共享/导入"
-            android:textSize="17dp" android:textStyle="bold" android:textColor="#2D3436"
+            android:textSize="17sp" android:textStyle="bold" android:textColor="@color/md_on_surface"
             android:gravity="center" android:layout_marginEnd="60dp" />
     </LinearLayout>
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:gravity="center" android:orientation="vertical" android:padding="24dp">
         <TextView android:layout_width="48dp" android:layout_height="48dp"
-            android:text="📦" android:textSize="32dp" />
+            android:text="📦" android:textSize="32sp" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="功能开发中..." android:textSize="16dp" android:textColor="#636E72" android:layout_marginTop="12dp" />
+            android:text="功能开发中..." android:textSize="16sp"
+            android:textColor="@color/md_on_surface_variant" android:layout_marginTop="12dp" />
     </LinearLayout>
 </LinearLayout>

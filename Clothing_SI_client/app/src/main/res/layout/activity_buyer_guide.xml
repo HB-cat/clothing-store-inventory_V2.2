@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#FFFFFF" android:orientation="horizontal"
+        android:background="@color/md_surface" android:orientation="horizontal"
         android:gravity="center_vertical" android:paddingStart="16dp" android:paddingEnd="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="‹ 返回"
-            android:textSize="16dp" android:textColor="#2D3436" android:padding="8dp" />
+            android:textSize="16sp" android:textColor="@color/md_on_surface" android:padding="8dp" />
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:text="买家使用指南"
-            android:textSize="17dp" android:textStyle="bold" android:textColor="#2D3436"
+            android:textSize="17sp" android:textStyle="bold" android:textColor="@color/md_on_surface"
             android:gravity="center" android:layout_marginEnd="60dp" />
     </LinearLayout>
 
@@ -22,49 +22,60 @@
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🛍️ 快速上手" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="🛍️ 快速上手" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="1. 发现商家：在首页搜索框中输入店铺名或关键字\n2. 关注商家：点击「关注」按钮，关注后才可互动\n3. 浏览商品：在关注的商家页面查看商品（售价、图片）\n4. 预约到店：选择2小时时段，提交预约" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="1. 发现商家：在首页搜索框中输入店铺名或关键字\n2. 关注商家：点击「关注」按钮，关注后才可互动\n3. 浏览商品：在关注的商家页面查看商品（售价、图片）\n4. 预约到店：选择2小时时段，提交预约"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="💬 聊天与预约" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="💬 聊天与预约" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 关注商家后，可发送文本、图片消息\n• 在商家页面点击「预约」选择时段\n• 预约状态：待确认→已确认→到店→已完成\n• 取消后可立即重新预约" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="• 关注商家后，可发送文本、图片消息\n• 在商家页面点击「预约」选择时段\n• 预约状态：待确认→已确认→到店→已完成\n• 取消后可立即重新预约"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="👤 个人信息" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="👤 个人信息" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 在「我的」页面完善客户信息（年龄、身高体重、穿衣风格）\n• 这些信息将帮助商家为您提供更好的推荐\n• 历史订单可在「我的」页面查看" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="• 在「我的」页面完善客户信息（年龄、身高体重、穿衣风格）\n• 这些信息将帮助商家为您提供更好的推荐\n• 历史订单可在「我的」页面查看"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardElevation="1dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📞 联系开发者" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="📞 联系开发者" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="邮箱：2330521417@qq.com" android:textSize="13dp" android:textColor="#636E72" />
+                        android:text="邮箱：2330521417@qq.com" android:textSize="13sp"
+                        android:textColor="@color/md_on_surface_variant" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

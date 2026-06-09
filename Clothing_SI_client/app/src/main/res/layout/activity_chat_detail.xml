@@ -2,39 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/bg">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
         android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+            android:text="‹" android:textSize="20sp" android:textColor="@color/md_on_surface"
             android:gravity="center" android:background="@drawable/circle_bg" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="聊天" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="@color/text_primary" android:layout_centerInParent="true"
+            android:text="聊天" android:textSize="17sp" android:textStyle="bold"
+            android:textColor="@color/md_on_surface" android:layout_centerInParent="true"
             android:id="@+id/tv_chat_title" />
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_messages"
         android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
         android:padding="16dp" />
+    <!-- 输入栏 -->
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical"
-        android:paddingTop="10dp" android:paddingBottom="10dp"
-        android:paddingStart="12dp" android:paddingEnd="12dp" android:background="@color/surface">
-        <!-- 选择商品按钮 -->
-        <TextView android:id="@+id/btn_pick_product"
+        android:paddingVertical="10dp" android:paddingHorizontal="12dp"
+        android:background="@color/md_surface">
+        <com.google.android.material.button.MaterialButton android:id="@+id/btn_pick_product"
             android:layout_width="wrap_content" android:layout_height="40dp"
-            android:text="商品" android:textSize="13dp" android:textColor="#2D3436"
-            android:gravity="center" android:paddingHorizontal="12dp"
-            android:background="@drawable/card_bg" android:layout_marginEnd="8dp" />
-        <EditText android:id="@+id/et_message"
+            android:text="商品" android:textSize="13sp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            app:cornerRadius="20dp"
+            android:backgroundTint="@color/md_surface_container_high"
+            android:textColor="@color/md_on_surface_variant" android:layout_marginEnd="8dp" />
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1"
-            android:hint="输入消息..." android:paddingTop="10dp" android:paddingBottom="10dp"
-            android:paddingStart="16dp" android:paddingEnd="16dp" android:textSize="14dp"
-            android:background="@drawable/card_bg" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/md_outline" app:boxStrokeWidth="1dp"
+            android:hint="输入消息...">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_message"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textSize="14sp" android:paddingVertical="6dp" android:background="@null" />
+        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton android:id="@+id/btn_send"
             android:layout_width="44dp" android:layout_height="44dp" android:text="➤"
-            android:textSize="20dp" android:textColor="#FFFFFF"
-            app:cornerRadius="22dp" android:layout_marginStart="8dp"
-            android:backgroundTint="@color/primary" />
+            android:textSize="20sp" app:cornerRadius="22dp" android:layout_marginStart="8dp"
+            android:backgroundTint="@color/md_primary"
+            android:textColor="@color/md_on_primary" />
     </LinearLayout>
 </LinearLayout>

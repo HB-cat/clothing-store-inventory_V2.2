@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/bg">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
         android:background="@drawable/header_bar_bg">
         <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+            android:text="‹" android:textSize="20sp" android:textColor="@color/md_on_surface"
             android:gravity="center" android:background="@drawable/circle_bg" android:visibility="gone" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="逛逛" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+            android:text="逛逛" android:textSize="17sp" android:textStyle="bold"
+            android:textColor="@color/md_on_surface" android:layout_centerInParent="true" />
     </RelativeLayout>
     <ScrollView android:layout_width="match_parent" android:layout_height="0dp"
         android:layout_weight="1">
@@ -19,27 +19,30 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="16dp">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_search"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:hint="🔍 搜索零售商或商品..." android:focusable="false"
-                    android:cursorVisible="false" />
+                    android:hint="🔍 搜索零售商或商品..." android:textSize="15sp"
+                    android:focusable="false" android:cursorVisible="false" />
             </com.google.android.material.textfield.TextInputLayout>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🏪 推荐店铺" android:textSize="15dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+                android:text="🏪 推荐店铺" android:textSize="15sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
             <LinearLayout android:id="@+id/layout_followed_stores"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginBottom="16dp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="📋 我的预约" android:textSize="15dp" android:textStyle="bold"
-                android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+                android:text="📋 我的预约" android:textSize="15sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
             <LinearLayout android:id="@+id/layout_appointments"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginBottom="16dp" />
             <com.google.android.material.button.MaterialButton android:id="@+id/btn_buy"
                 android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="逛逛全部商品" app:cornerRadius="24dp" />
+                android:text="逛逛全部商品" app:cornerRadius="24dp"
+                android:backgroundTint="@color/md_primary"
+                android:textColor="@color/md_on_primary" />
         </LinearLayout>
     </ScrollView>
     <include layout="@layout/include_buyer_bottom" />

@@ -1,10 +1,10 @@
 # Clothing-SI V2.2 数据库ER图
 
-> 版本：V2.2 | 日期：2026-06-06 | 对应PRD：功能梳理确认版
+> 版本：V2.2 | 日期：2026-06-09 | 对应PRD：功能梳理确认版
 
 ---
 
-## 一、表清单（共22张MySQL表）
+## 一、表清单（共23张MySQL表 + 1张本地Room表）
 
 | 编号 | 表名 | 说明 | 所属模块 |
 |:---:|------|------|---------|
@@ -30,6 +30,7 @@
 | 20 | `shared_product_pool` | 批发商共享商品池 | 商品共享 |
 | 21 | `notification_setting` | 通知设置 | 系统设置 |
 | 22 | `operation_log` | 操作幂等日志（离线同步去重） | 系统 |
+| 23 | `agent_message` | 智能体聊天消息 | 智能体 |
 
 > `habit_log`（智能体习惯学习日志）仅存在于 Android Room 本地缓存，不在 MySQL 服务端，故不计入。详见 init.sql。
 
@@ -346,7 +347,7 @@
 
 **索引**：`idx_wholesaler`(wholesaler_id), `idx_product`(product_id)
 
-### 2.19 `habit_log` — 智能体习惯学习日志表（本地Room）
+### 2.24 `habit_log` — 智能体习惯学习日志表（本地Room，非MySQL）
 
 | 字段 | 类型 | 约束 | 说明 |
 |------|------|------|------|
@@ -386,6 +387,20 @@
 | operation_type | VARCHAR(32) | NOT NULL | 操作类型：stock_sync/sale_create/purchase_create |
 | status | TINYINT | DEFAULT 1 | 状态：1=成功 |
 | created_at | DATETIME | NOT NULL | |
+
+### 2.23 `agent_message` — 智能体聊天消息表
+
+| 字段 | 类型 | 约束 | 说明 |
+|------|------|------|------|
+| id | BIGINT | PK, AUTO_INCREMENT | |
+| user_id | BIGINT | FK→sys_user.id | 所属用户ID |
+| role | VARCHAR(10) | NOT NULL DEFAULT 'user' | 角色：user/agent |
+| content | TEXT | DEFAULT NULL | 消息内容 |
+| msg_type | VARCHAR(20) | DEFAULT 'text' | 消息类型：text/rich |
+| created_at | DATETIME | NOT NULL | 创建时间 |
+
+**索引**：`idx_user_created`(user_id, created_at)
+**说明**：用于持久化智能体对话，支持小窗/全屏共享聊天记录。`role`为`user`表示用户发送，`agent`表示智能体回复。`msg_type`为`rich`时表示富文本信息卡片。表由 `AgentTableInitializer.java` 在 Spring Boot 启动时自动创建。
 
 ---
 

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
+
+    private Handler suggestionHandler = new Handler();
 
     @Nullable
     @Override
@@ -71,9 +75,70 @@ public class HomeFragment extends Fragment {
             tvStatus.setText(text);
         }
         checkStockAlert();
+        // 主动弹出建议
+        showProactiveSuggestion();
     }
 
-    // ========== 库存预警 ==========
+    @Override
+    public void onPause() {
+        super.onPause();
+        suggestionHandler.removeCallbacksAndMessages(null);
+    }
+
+    // ========== 主动建议横幅 ==========
+
+    /** 检查并主动弹出建议横幅 */
+    private void showProactiveSuggestion() {
+        if (AgentSuggestionManager.isSuggestDisabled()) return;
+
+        View v = getView();
+        if (v == null) return;
+
+        LinearLayout banner = v.findViewById(R.id.suggestion_banner);
+        if (banner == null) return;
+
+        // 获取建议
+        List<AgentSuggestionManager.Suggestion> suggestions = AgentSuggestionManager.getSuggestions();
+        if (suggestions.isEmpty()) return;
+
+        // 取第一条（最高优先级）
+        AgentSuggestionManager.Suggestion top = suggestions.get(0);
+        if (top.text == null || top.text.isEmpty()) return;
+
+        // 填充横幅
+        TextView tvIcon = banner.findViewById(R.id.banner_icon);
+        TextView tvText = banner.findViewById(R.id.banner_text);
+        TextView tvAction = banner.findViewById(R.id.banner_action);
+        TextView tvClose = banner.findViewById(R.id.banner_close);
+
+        tvIcon.setText(top.text.contains("⚠️") || top.text.contains("库存") ? "💡" : "🤖");
+
+        // 截取简短文本（banner 不宜过长）
+        String shortText = top.text.length() > 50 ? top.text.substring(0, 48) + "…" : top.text;
+        tvText.setText(shortText);
+
+        // "试试"按钮 → 打开智能体弹窗
+        tvAction.setVisibility(View.VISIBLE);
+        tvAction.setOnClickListener(x -> {
+            banner.setVisibility(View.GONE);
+            showAgentSheet();
+        });
+
+        // 关闭按钮 → 隐藏此轮建议
+        tvClose.setOnClickListener(x -> {
+            banner.setVisibility(View.GONE);
+        });
+
+        banner.setVisibility(View.VISIBLE);
+
+        // 10秒后自动隐藏
+        suggestionHandler.removeCallbacksAndMessages(null);
+        suggestionHandler.postDelayed(() -> {
+            if (banner != null) banner.setVisibility(View.GONE);
+        }, 10000);
+    }
+
+    // ========== 库存预警 + 数据总览 ==========
 
     private void checkStockAlert() {
         ApiClient.getService().getLowStockProducts().enqueue(new Callback<ApiResponse<List<LowStockProduct>>>() {
@@ -82,7 +147,14 @@ public class HomeFragment extends Fragment {
                                    Response<ApiResponse<List<LowStockProduct>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<LowStockProduct> list = response.body().getData();
-                    AgentSuggestionManager.setStockAlerts(list != null ? list.size() : 0);
+                    int count = list != null ? list.size() : 0;
+                    AgentSuggestionManager.setStockAlerts(count);
+                    // 更新数据总览卡的库存预警数
+                    View v = getView();
+                    if (v != null) {
+                        TextView tvAlerts = v.findViewById(R.id.stat_alerts_count);
+                        if (tvAlerts != null) tvAlerts.setText(String.valueOf(count));
+                    }
                 }
             }
             @Override

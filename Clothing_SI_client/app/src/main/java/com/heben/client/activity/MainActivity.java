@@ -1,10 +1,12 @@
 package com.heben.client.activity;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             activeFragment = new HomeFragment();
             loadFragment(activeFragment);
+            // 首页默认选中态已在 XML 中预设，但 Java 侧也要同步
+            setTabActive(R.id.nav_home);
         }
 
         // 自定义底部导航点击
@@ -64,16 +68,37 @@ public class MainActivity extends AppCompatActivity {
         if (fragment.getClass().equals(activeFragment != null ? activeFragment.getClass() : null)) return;
         activeFragment = fragment;
         loadFragment(fragment);
+        setTabActive(tabId);
+    }
 
-        // 更新 Tab 文字颜色（只更新4个页面 tab，不包括 agent）
+    /** 统一设置 tab 选中态：icon 加 container 背景、文字加粗变色 */
+    private void setTabActive(int activeTabId) {
         int[] tabIds = {R.id.nav_home, R.id.nav_bills, R.id.nav_messages, R.id.nav_profile};
-        for (int id : tabIds) {
-            View tab = findViewById(id);
-            if (tab instanceof android.widget.LinearLayout) {
-                android.widget.LinearLayout ll = (android.widget.LinearLayout) tab;
-                if (ll.getChildCount() > 1 && ll.getChildAt(1) instanceof TextView) {
-                    ((TextView) ll.getChildAt(1)).setTextColor(id == tabId ? 0xFF2E7D32 : 0xFF5D6D7E);
-                }
+        int[] iconIds = {R.id.nav_home_icon, R.id.nav_bills_icon, R.id.nav_messages_icon, R.id.nav_profile_icon};
+        int[] labelIds = {R.id.nav_home_label, R.id.nav_bills_label, R.id.nav_messages_label, R.id.nav_profile_label};
+
+        int primaryColor = ContextCompat.getColor(this, R.color.md_primary);
+        int variantColor = ContextCompat.getColor(this, R.color.md_on_surface_variant);
+        ColorStateList containerTint = ColorStateList.valueOf(
+                ContextCompat.getColor(this, R.color.md_primary_container));
+
+        for (int i = 0; i < tabIds.length; i++) {
+            boolean isActive = tabIds[i] == activeTabId;
+
+            TextView icon = findViewById(iconIds[i]);
+            TextView label = findViewById(labelIds[i]);
+            if (icon == null || label == null) continue;
+
+            if (isActive) {
+                icon.setBackgroundResource(R.drawable.circle_bg);
+                icon.setBackgroundTintList(containerTint);
+                label.setTextColor(primaryColor);
+                label.setTypeface(null, android.graphics.Typeface.BOLD);
+            } else {
+                icon.setBackgroundResource(android.R.color.transparent);
+                icon.setBackgroundTintList(null);
+                label.setTextColor(variantColor);
+                label.setTypeface(null, android.graphics.Typeface.NORMAL);
             }
         }
     }

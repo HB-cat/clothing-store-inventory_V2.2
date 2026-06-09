@@ -3,50 +3,47 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="horizontal" android:gravity="center_vertical"
     android:padding="14dp"
-    android:background="#FFFFFF"
+    android:background="@color/md_surface"
     android:layout_marginBottom="8dp">
 
-    <!-- Time slot -->
     <TextView android:id="@+id/tv_appt_time"
         android:layout_width="44dp" android:layout_height="wrap_content"
-        android:textSize="12dp" android:textStyle="bold" android:textColor="@color/primary"
+        android:textSize="12sp" android:textStyle="bold" android:textColor="@color/md_primary"
         android:gravity="center_horizontal" android:layout_marginEnd="12dp"
         android:lineSpacingExtra="2dp" />
 
-    <!-- Detail -->
     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_weight="1" android:orientation="vertical">
         <TextView android:id="@+id/tv_appt_name"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="14dp" android:textStyle="bold" android:textColor="#2D3436" />
+            android:textSize="14sp" android:textStyle="bold" android:textColor="@color/md_on_surface" />
         <TextView android:id="@+id/tv_appt_info"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="11dp" android:textColor="#95A5A6" android:layout_marginTop="2dp" />
+            android:textSize="12sp" android:textColor="@color/md_on_surface_variant"
+            android:layout_marginTop="2dp" />
     </LinearLayout>
 
-    <!-- Actions -->
     <LinearLayout android:id="@+id/layout_appt_actions"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical"
         android:layout_marginStart="8dp">
         <TextView android:id="@+id/btn_confirm_appt"
             android:layout_width="36dp" android:layout_height="36dp"
-            android:text="✓" android:textSize="16dp" android:textColor="#27AE60"
+            android:text="✓" android:textSize="16sp" android:textColor="@color/md_primary"
             android:gravity="center"
-            android:background="@drawable/circle_bg" android:backgroundTint="#E8F8F5"
+            android:background="@drawable/circle_bg" android:backgroundTint="@color/md_primary_container"
             android:clickable="true" android:focusable="true" />
         <TextView android:id="@+id/btn_reject_appt"
             android:layout_width="36dp" android:layout_height="36dp"
-            android:text="✗" android:textSize="16dp" android:textColor="#E74C3C"
+            android:text="✗" android:textSize="16sp" android:textColor="@color/md_error"
             android:gravity="center"
-            android:background="@drawable/circle_bg" android:backgroundTint="#FFEBEE"
+            android:background="@drawable/circle_bg" android:backgroundTint="@color/md_error_container"
             android:clickable="true" android:focusable="true"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <!-- Status badge (for confirmed items) -->
     <TextView android:id="@+id/tv_appt_status"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:textSize="11dp" android:paddingVertical="4dp" android:paddingHorizontal="10dp"
+        android:textSize="12sp" android:paddingVertical="4dp" android:paddingHorizontal="10dp"
         android:visibility="gone" />
 </LinearLayout>

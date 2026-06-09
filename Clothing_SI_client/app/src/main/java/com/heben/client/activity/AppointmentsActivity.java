@@ -9,6 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.heben.client.R;
 import com.heben.client.model.ApiResponse;
@@ -103,7 +106,7 @@ public class AppointmentsActivity extends AppCompatActivity {
             TextView empty = new TextView(this);
             empty.setText("暂无" + (status.equals("pending") ? "待确认" : status.equals("confirmed") ? "已确认" : "历史") + "预约");
             empty.setTextSize(13f);
-            empty.setTextColor(0xFF95A5A6);
+            empty.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             empty.setGravity(android.view.Gravity.CENTER);
             empty.setPadding(0, 32, 0, 32);
             container.addView(empty);

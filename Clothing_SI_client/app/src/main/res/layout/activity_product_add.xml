@@ -2,45 +2,46 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#F5F5F5">
-
+    android:background="@color/md_surface_container_low">
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
         <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
             android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
             <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-                android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+                android:text="‹" android:textSize="20sp" android:textColor="@color/md_on_surface"
                 android:gravity="center" android:background="@drawable/circle_bg" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="添加商品" android:textSize="17dp" android:textStyle="bold"
-                android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+                android:text="添加商品" android:textSize="17sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_centerInParent="true" />
             <TextView android:id="@+id/btn_save_top" android:layout_width="36dp" android:layout_height="36dp"
-                android:text="✔️" android:textSize="16dp" android:textColor="@color/text_primary"
+                android:text="✔️" android:textSize="16sp" android:textColor="@color/md_on_surface"
                 android:gravity="center" android:background="@drawable/circle_bg"
                 android:layout_alignParentEnd="true" android:clickable="true" android:focusable="true" />
         </RelativeLayout>
 
-        <ScrollView android:id="@+id/scrollView" android:layout_width="match_parent" android:layout_height="match_parent"
-            android:padding="16dp">
+        <ScrollView android:id="@+id/scrollView" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:padding="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <!-- 商品名称 -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="商品名称" android:textSize="13dp" android:textStyle="bold"
-                    android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                    android:text="商品名称" android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/md_on_surface_variant" android:layout_marginBottom="6dp" />
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                     android:hint="如：纯棉圆领T恤" android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_product_name"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- 分类 -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="分类" android:textSize="13dp" android:textStyle="bold"
-                    android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                    android:text="分类" android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/md_on_surface_variant" android:layout_marginBottom="6dp" />
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -53,43 +54,44 @@
                 <!-- 售价 + 成本价 -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:weightSum="2"
-                    android:layout_marginTop="12dp" android:layout_marginBottom="12dp">
+                    android:layout_marginTop="14dp" android:layout_marginBottom="12dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical"
-                        android:layout_marginEnd="6dp">
+                        android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="6dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="售价（¥）" android:textSize="13dp" android:textStyle="bold"
-                            android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                            android:text="售价（¥）" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface_variant" android:layout_marginBottom="6dp" />
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent" android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp">
                             <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_selling_price"
                                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                                android:hint="¥" android:inputType="numberDecimal" />
+                                android:hint="¥" android:inputType="numberDecimal" android:textSize="15sp" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical"
-                        android:layout_marginStart="6dp">
+                        android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="6dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="成本价（¥）" android:textSize="13dp" android:textStyle="bold"
-                            android:textColor="#95A5A6" android:layout_marginBottom="4dp" />
+                            android:text="成本价（¥）" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface_variant" android:layout_marginBottom="6dp" />
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent" android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp">
                             <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_purchase_price"
                                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                                android:hint="¥" android:inputType="numberDecimal" />
+                                android:hint="¥" android:inputType="numberDecimal" android:textSize="15sp" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <!-- 属性组合库存 -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="🎨 属性组合库存" android:textSize="15dp" android:textStyle="bold"
-                    android:textColor="#2D3436" android:layout_marginTop="8dp" android:layout_marginBottom="4dp" />
+                    android:text="🎨 属性组合库存" android:textSize="15sp" android:textStyle="bold"
+                    android:textColor="@color/md_on_surface" android:layout_marginTop="8dp" android:layout_marginBottom="4dp" />
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:text="选择属性和值，生成组合并设置各组合库存" android:textSize="12dp" android:textColor="#95A5A6" android:layout_marginBottom="10dp" />
+                    android:text="选择属性和值，生成组合并设置各组合库存" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant" android:layout_marginBottom="10dp" />
 
                 <!-- 动态属性组容器 -->
                 <LinearLayout android:id="@+id/layout_attr_groups"
@@ -99,7 +101,7 @@
                 <!-- 库存组合表（动态生成） -->
                 <androidx.cardview.widget.CardView android:id="@+id/card_combinations"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp" app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp"
                     android:layout_marginBottom="16dp" android:visibility="gone">
                     <LinearLayout android:id="@+id/layout_combinations"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -109,5 +111,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 </FrameLayout>

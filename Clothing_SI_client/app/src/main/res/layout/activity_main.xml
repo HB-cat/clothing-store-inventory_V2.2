@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
@@ -10,13 +10,13 @@
             android:layout_width="match_parent" android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- 自定义底部导航（5 tab，🤖 居中） -->
+        <!-- MD3 Navigation Bar -->
         <LinearLayout android:id="@+id/bottom_nav"
-            android:layout_width="match_parent" android:layout_height="64dp"
+            android:layout_width="match_parent" android:layout_height="72dp"
             android:orientation="horizontal" android:gravity="center"
             android:background="@drawable/bottom_nav_bg"
             android:layout_marginHorizontal="8dp" android:layout_marginBottom="8dp"
-            android:paddingTop="6dp" android:paddingBottom="6dp"
+            android:paddingTop="4dp" android:paddingBottom="4dp"
             android:elevation="8dp"
             android:baselineAligned="false">
 
@@ -24,12 +24,19 @@
             <LinearLayout android:id="@+id/nav_home"
                 android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_weight="1" android:gravity="center"
-                android:orientation="vertical" android:clickable="true" android:focusable="true"
-                android:paddingVertical="4dp" android:maxWidth="80dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="🏠" android:textSize="20dp" android:lineSpacingExtra="0dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="首页" android:textSize="11dp" android:textColor="@color/text_primary"
+                android:orientation="vertical" android:clickable="true" android:focusable="true">
+                <TextView android:id="@+id/nav_home_icon"
+                    android:layout_width="34dp" android:layout_height="34dp"
+                    android:text="🏠" android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="@color/md_primary_container"
+                    android:includeFontPadding="false" />
+                <TextView android:id="@+id/nav_home_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="首页" android:textSize="12sp"
+                    android:textColor="@color/md_primary"
+                    android:textStyle="bold"
                     android:includeFontPadding="false" android:lines="1" />
             </LinearLayout>
 
@@ -37,38 +44,53 @@
             <LinearLayout android:id="@+id/nav_bills"
                 android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_weight="1" android:gravity="center"
-                android:orientation="vertical" android:clickable="true" android:focusable="true"
-                android:paddingVertical="4dp" android:maxWidth="80dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="📋" android:textSize="20dp" android:lineSpacingExtra="0dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="账单" android:textSize="11dp" android:textColor="@color/text_secondary"
+                android:orientation="vertical" android:clickable="true" android:focusable="true">
+                <TextView android:id="@+id/nav_bills_icon"
+                    android:layout_width="34dp" android:layout_height="34dp"
+                    android:text="📋" android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:includeFontPadding="false" />
+                <TextView android:id="@+id/nav_bills_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="账单" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant"
                     android:includeFontPadding="false" android:lines="1" />
             </LinearLayout>
 
-            <!-- Tab 3: 智能体（居中圆形背景） -->
+            <!-- Tab 3: 智能体（居中高亮） -->
             <LinearLayout android:id="@+id/nav_agent"
                 android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_weight="1" android:gravity="center"
-                android:orientation="vertical" android:clickable="true" android:focusable="true"
-                android:paddingVertical="4dp" android:maxWidth="80dp">
-                <TextView android:layout_width="44dp" android:layout_height="44dp"
-                    android:text="AI" android:textSize="16dp" android:gravity="center"
-                    android:textStyle="bold" android:textColor="@color/white"
+                android:orientation="vertical" android:clickable="true" android:focusable="true">
+                <TextView android:id="@+id/nav_agent_icon"
+                    android:layout_width="34dp" android:layout_height="34dp"
+                    android:text="AI" android:textSize="12sp" android:gravity="center"
+                    android:textStyle="bold" android:textColor="@color/md_on_primary"
                     android:background="@drawable/circle_agent_bg"
-                    android:layout_marginBottom="2dp" />
+                    android:includeFontPadding="false" />
+                <TextView android:id="@+id/nav_agent_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="智能体" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:includeFontPadding="false" android:lines="1" />
             </LinearLayout>
 
             <!-- Tab 4: 消息 -->
             <LinearLayout android:id="@+id/nav_messages"
                 android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_weight="1" android:gravity="center"
-                android:orientation="vertical" android:clickable="true" android:focusable="true"
-                android:paddingVertical="4dp" android:maxWidth="80dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="💬" android:textSize="20dp" android:lineSpacingExtra="0dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="消息" android:textSize="11dp" android:textColor="@color/text_secondary"
+                android:orientation="vertical" android:clickable="true" android:focusable="true">
+                <TextView android:id="@+id/nav_messages_icon"
+                    android:layout_width="34dp" android:layout_height="34dp"
+                    android:text="💬" android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:includeFontPadding="false" />
+                <TextView android:id="@+id/nav_messages_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="消息" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant"
                     android:includeFontPadding="false" android:lines="1" />
             </LinearLayout>
 
@@ -76,12 +98,17 @@
             <LinearLayout android:id="@+id/nav_profile"
                 android:layout_width="0dp" android:layout_height="match_parent"
                 android:layout_weight="1" android:gravity="center"
-                android:orientation="vertical" android:clickable="true" android:focusable="true"
-                android:paddingVertical="4dp" android:maxWidth="80dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="👤" android:textSize="20dp" android:lineSpacingExtra="0dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="我的" android:textSize="11dp" android:textColor="@color/text_secondary"
+                android:orientation="vertical" android:clickable="true" android:focusable="true">
+                <TextView android:id="@+id/nav_profile_icon"
+                    android:layout_width="34dp" android:layout_height="34dp"
+                    android:text="👤" android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:includeFontPadding="false" />
+                <TextView android:id="@+id/nav_profile_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="我的" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant"
                     android:includeFontPadding="false" android:lines="1" />
             </LinearLayout>
         </LinearLayout>

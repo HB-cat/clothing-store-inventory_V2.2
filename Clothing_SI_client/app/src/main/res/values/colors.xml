@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ===== 原有色板（保持兼容，Java 代码引用不变） ===== -->
     <color name="primary">#2E7D32</color>
     <color name="primary_dark">#1B5E20</color>
     <color name="primary_light">#E8F5E9</color>
@@ -19,4 +20,43 @@
     <color name="transparent">#00000000</color>
     <color name="semi_white_90">#E6FFFFFF</color>
     <color name="overlay_dark">#80000000</color>
+
+    <!-- ===== MD3 语义色板（多巴胺混搭配色） ===== -->
+    <!-- Primary — 活力橙 -->
+    <color name="md_primary">#F97316</color>
+    <color name="md_on_primary">#FFFFFF</color>
+    <color name="md_primary_container">#FFF7ED</color>
+    <color name="md_on_primary_container">#5C3D00</color>
+
+    <!-- Secondary — 电光蓝 -->
+    <color name="md_secondary">#2563EB</color>
+    <color name="md_on_secondary">#FFFFFF</color>
+    <color name="md_secondary_container">#DBEAFE</color>
+    <color name="md_on_secondary_container">#001A3E</color>
+
+    <!-- Success — 翠绿（新增） -->
+    <color name="md_success">#10B981</color>
+    <color name="md_on_success">#FFFFFF</color>
+
+    <!-- Surface / Background — 暖白系 -->
+    <color name="md_surface">#FFFFFF</color>
+    <color name="md_on_surface">#1F2937</color>
+    <color name="md_on_surface_variant">#9CA3AF</color>
+    <color name="md_surface_container_low">#FAFAFA</color>
+    <color name="md_surface_container">#E5E7EB</color>
+    <color name="md_surface_container_high">#D1D5DB</color>
+
+    <!-- Outline -->
+    <color name="md_outline">#9CA3AF</color>
+    <color name="md_outline_variant">#D1D5DB</color>
+
+    <!-- Error — 亮红 -->
+    <color name="md_error">#EF4444</color>
+    <color name="md_on_error">#FFFFFF</color>
+    <color name="md_error_container">#FEE2E2</color>
+    <color name="md_on_error_container">#7F1D1D</color>
+
+    <!-- Tertiary — 亮黄（热销/预警高亮） -->
+    <color name="md_tertiary_container">#FBBF24</color>
+    <color name="md_on_tertiary_container">#5C3D00</color>
 </resources>

@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/bg">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
         android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-            android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+            android:text="‹" android:textSize="20sp" android:textColor="@color/md_on_surface"
             android:gravity="center" android:background="@drawable/circle_bg" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="编辑客户信息" android:textSize="17dp" android:textStyle="bold"
-            android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+            android:text="编辑客户信息" android:textSize="17sp" android:textStyle="bold"
+            android:textColor="@color/md_on_surface" android:layout_centerInParent="true" />
         <TextView android:id="@+id/btn_save" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="保存" android:textSize="14dp" android:textColor="@color/text_primary"
+            android:text="保存" android:textSize="14sp" android:textColor="@color/md_primary"
             android:layout_alignParentEnd="true" android:layout_centerVertical="true"
             android:padding="8dp" android:clickable="true" android:focusable="true" />
     </RelativeLayout>
@@ -22,48 +22,59 @@
             android:orientation="vertical">
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="年龄">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_age"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number" android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="身高 (cm)">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_height"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal" android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="体重 (kg)">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_weight"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal" android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="胸围">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_bust"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="腰围">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_waist"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="12dp" android:hint="臀围">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_hip"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/md_primary" app:boxStrokeWidth="1.5dp"
                 android:layout_marginBottom="16dp" android:hint="穿衣风格偏好 (逗号分隔, 如：休闲风,甜美系)">
                 <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_style"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>

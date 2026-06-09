@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.heben.client.R;
@@ -145,7 +146,7 @@ public class ProductAddActivity extends AppCompatActivity {
             tvLabel.setText(group.name);
             tvLabel.setTextSize(13);
             tvLabel.setTypeface(null, android.graphics.Typeface.BOLD);
-            tvLabel.setTextColor(0xFF95A5A6);
+            tvLabel.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             tvLabel.setPadding(0, 0, 0, 6);
             layoutAttrGroups.addView(tvLabel);
 
@@ -171,7 +172,7 @@ public class ProductAddActivity extends AppCompatActivity {
                 chip.setGravity(android.view.Gravity.CENTER);
                 chip.setPadding(px10, 6, px10, 6);
                 chip.setBackgroundResource(R.drawable.segment_bg);
-                chip.setTextColor(0xFF2D3436);
+                chip.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface));
                 // tag 记录选中状态: 0=未选, 1=已选
                 chip.setTag(0);
 
@@ -184,13 +185,13 @@ public class ProductAddActivity extends AppCompatActivity {
                     int selected = (int) chip.getTag();
                     if (selected == 0) {
                         chip.setTag(1);
-                        chip.setBackgroundColor(0xFF4CAF50);
-                        chip.setTextColor(0xFFFFFFFF);
+                        chip.setBackgroundColor(ContextCompat.getColor(this, R.color.md_primary));
+                        chip.setTextColor(ContextCompat.getColor(this, R.color.md_on_primary));
                         addSelectedValue(groupIdx, valStr);
                     } else {
                         chip.setTag(0);
                         chip.setBackgroundResource(R.drawable.segment_bg);
-                        chip.setTextColor(0xFF2D3436);
+                        chip.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface));
                         removeSelectedValue(groupIdx, valStr);
                     }
                     regenerateCombinations();
@@ -257,7 +258,7 @@ public class ProductAddActivity extends AppCompatActivity {
             th.setText(attrGroupList.get(gi).name);
             th.setTextSize(13);
             th.setTypeface(null, android.graphics.Typeface.BOLD);
-            th.setTextColor(0xFF95A5A6);
+            th.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1);
             th.setLayoutParams(lp);
@@ -267,7 +268,7 @@ public class ProductAddActivity extends AppCompatActivity {
         thStock.setText("库存");
         thStock.setTextSize(13);
         thStock.setTypeface(null, android.graphics.Typeface.BOLD);
-        thStock.setTextColor(0xFF95A5A6);
+        thStock.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
         LinearLayout.LayoutParams lpStock = new LinearLayout.LayoutParams(0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         thStock.setLayoutParams(lpStock);
@@ -278,7 +279,7 @@ public class ProductAddActivity extends AppCompatActivity {
         View divider = new View(this);
         divider.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 1));
-        divider.setBackgroundColor(0xFFE8EAED);
+        divider.setBackgroundColor(ContextCompat.getColor(this, R.color.md_outline_variant));
         layoutCombinations.addView(divider);
 
         // 每一行
@@ -304,7 +305,7 @@ public class ProductAddActivity extends AppCompatActivity {
                 TextView td = new TextView(this);
                 td.setText(combo.get(i));
                 td.setTextSize(13);
-                td.setTextColor(0xFF2D3436);
+                td.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface));
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,
                         LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                 td.setLayoutParams(lp);

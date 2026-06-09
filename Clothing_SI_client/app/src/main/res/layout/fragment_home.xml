@@ -5,59 +5,142 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:background="@color/bg">
+        android:background="@color/md_surface_container_low">
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
 
-            <!-- Shop Name + Subtitle -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="欣欣服装店" android:textSize="24dp" android:textStyle="bold"
-                android:textColor="@color/text_primary" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="零售商 · 欢迎回来" android:textSize="13dp"
-                android:textColor="@color/text_secondary" android:layout_marginBottom="12dp" />
+            <!-- ===== Shop Header：店名 + 状态 chip + 头像 ===== -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="14dp">
 
-            <!-- 快捷指令输入框 -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="欣欣服装店" android:textSize="22sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="零售商 · 欢迎回来" android:textSize="12sp"
+                        android:textColor="@color/md_on_surface_variant" />
+                </LinearLayout>
+
+                <!-- 头像 -->
+                <TextView android:layout_width="44dp" android:layout_height="44dp"
+                    android:text="👤" android:textSize="22sp"
+                    android:gravity="center"
+                    android:background="@color/md_primary_container"
+                    android:backgroundTint="@color/md_primary_container" />
+            </LinearLayout>
+
+            <!-- ===== 快捷指令输入框 ===== -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 app:cardCornerRadius="28dp" app:cardElevation="2dp"
-                android:layout_marginBottom="14dp" app:strokeWidth="0dp">
+                app:cardBackgroundColor="@color/md_surface"
+                android:layout_marginBottom="12dp" app:strokeWidth="0dp">
                 <EditText android:id="@+id/et_quick_cmd"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:paddingVertical="12dp" android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:paddingVertical="14dp" android:paddingStart="20dp" android:paddingEnd="20dp"
                     android:hint="💡 试试：卖了2件白T恤 或 新建账单..."
-                    android:background="@android:color/transparent" android:textSize="14dp"
+                    android:background="@android:color/transparent" android:textSize="14sp"
                     android:focusable="true" android:focusableInTouchMode="true" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 静态文字栏（用户可在程序设置中自定义） -->
-            <TextView android:id="@+id/tv_home_status"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/home_status_text"
-                android:textSize="13dp" android:textColor="@color/primary_dark"
-                android:textStyle="bold" android:gravity="center"
-                android:background="@color/primary_light"
-                android:paddingVertical="8dp" android:paddingHorizontal="16dp"
-                android:layout_marginHorizontal="32dp" android:layout_marginBottom="14dp" />
+            <!-- ===== 智能体主动建议横幅（动态显示） ===== -->
+            <include
+                android:id="@+id/include_suggestion_banner"
+                layout="@layout/view_agent_suggestion_banner" />
 
-            <!-- 快捷操作 -->
+            <!-- ===== 状态 chip（用户自定义） ===== -->
+            <TextView android:id="@+id/tv_home_status"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/home_status_text"
+                android:textSize="12sp" android:textColor="@color/md_on_primary_container"
+                android:textStyle="bold" android:gravity="center"
+                android:background="@color/md_primary_container"
+                android:paddingVertical="6dp" android:paddingHorizontal="18dp"
+                android:layout_marginStart="32dp" android:layout_marginEnd="32dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- ===== 数据总览卡片（新增 MD3 Stats） ===== -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center"
-                android:layout_marginBottom="16dp" android:weightSum="3">
+                android:layout_marginBottom="14dp" android:weightSum="3">
+
+                <!-- 今日销售额 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginEnd="5dp"
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:gravity="center"
+                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        <TextView android:id="@+id/stat_sales_amount"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="--" android:textSize="20sp" android:textStyle="bold"
+                            android:textColor="@color/md_primary" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="今日销售额" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 今日订单 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginHorizontal="5dp"
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:gravity="center"
+                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        <TextView android:id="@+id/stat_orders_count"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="--" android:textSize="20sp" android:textStyle="bold"
+                            android:textColor="@color/md_secondary" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="今日订单" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 库存预警 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginStart="5dp"
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:gravity="center"
+                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        <TextView android:id="@+id/stat_alerts_count"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="--" android:textSize="20sp" android:textStyle="bold"
+                            android:textColor="@color/md_error" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="库存预警" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- ===== 快捷操作（图标按钮式） ===== -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center"
+                android:layout_marginBottom="14dp" android:weightSum="3">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_purchase"
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginEnd="6dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="16dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
-                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        android:paddingVertical="16dp" android:paddingHorizontal="4dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="📦" android:textSize="26dp" />
+                            android:text="📦" android:textSize="24sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="进货" android:textSize="12dp" android:textColor="@color/text_secondary" />
+                            android:text="进货" android:textSize="12sp"
+                            android:textColor="@color/md_on_surface_variant" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -65,14 +148,15 @@
                     android:id="@+id/btn_new_order"
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginHorizontal="3dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="16dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
-                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        android:paddingVertical="16dp" android:paddingHorizontal="4dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="📋" android:textSize="26dp" />
+                            android:text="📋" android:textSize="24sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="新建订单" android:textSize="12dp" android:textColor="@color/text_secondary" />
+                            android:text="新建订单" android:textSize="12sp"
+                            android:textColor="@color/md_on_surface_variant" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -80,59 +164,64 @@
                     android:id="@+id/btn_sale"
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginStart="6dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="16dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
-                        android:paddingVertical="14dp" android:paddingHorizontal="4dp">
+                        android:paddingVertical="16dp" android:paddingHorizontal="4dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="💰" android:textSize="26dp" />
+                            android:text="💰" android:textSize="24sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="记账" android:textSize="12dp" android:textColor="@color/text_secondary" />
+                            android:text="记账" android:textSize="12sp"
+                            android:textColor="@color/md_on_surface_variant" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-            <!-- 待办事项 -->
+            <!-- ===== 待办事项 ===== -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="📋 待办事项" android:textSize="16dp" android:textStyle="bold"
-                android:textColor="@color/text_primary" android:layout_marginBottom="10dp" />
+                android:text="📋 待办事项" android:textSize="15sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/todo_card"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp" app:cardElevation="2dp"
-                android:layout_marginBottom="12dp" android:clickable="true" android:focusable="true">
+                app:cardCornerRadius="12dp" app:cardElevation="1dp"
+                android:layout_marginBottom="14dp" android:clickable="true" android:focusable="true">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
-                    android:paddingVertical="12dp" android:paddingStart="16dp" android:paddingEnd="16dp">
+                    android:paddingVertical="14dp" android:paddingStart="16dp" android:paddingEnd="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📄" android:textSize="20dp" android:layout_marginEnd="10dp" />
+                        android:text="📄" android:textSize="18sp" android:layout_marginEnd="10dp" />
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="有 2 个未提交账单" android:textSize="14dp" />
+                        android:layout_weight="1" android:text="有 2 个未提交账单"
+                        android:textSize="14sp" android:textColor="@color/md_on_surface" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="待处理" android:background="#FFF3E0" android:textColor="#E65100"
-                        android:paddingVertical="2dp" android:paddingHorizontal="6dp"
-                        android:textSize="10dp" android:layout_marginEnd="4dp" />
+                        android:paddingVertical="3dp" android:paddingHorizontal="8dp"
+                        android:textSize="12sp" android:layout_marginEnd="4dp" />
                     <TextView
-                        android:layout_width="wrap_content" android:layout_height="24dp"
-                        android:text="去处理" android:textSize="10dp"
-                        android:minWidth="0dp" android:paddingHorizontal="6dp"
+                        android:layout_width="wrap_content" android:layout_height="28dp"
+                        android:text="去处理" android:textSize="12sp"
+                        android:minWidth="0dp" android:paddingHorizontal="12dp"
                         android:gravity="center"
-                        android:background="@drawable/segment_tab_bg"
-                        android:textColor="@color/primary" android:clickable="true" android:focusable="true" />
+                        android:background="@color/md_primary_container"
+                        android:textColor="@color/md_primary"
+                        android:textStyle="bold"
+                        android:clickable="true" android:focusable="true" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 今日推荐 -->
+            <!-- ===== 今日推荐 ===== -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="center_vertical"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="8dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="🔥 今日推荐" android:textSize="16dp" android:textStyle="bold"
-                    android:textColor="@color/text_primary" />
+                    android:text="🔥 今日推荐" android:textSize="15sp" android:textStyle="bold"
+                    android:textColor="@color/md_on_surface" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="近期热卖" android:textSize="12dp" android:textColor="@color/text_secondary" />
+                    android:text="近期热卖" android:textSize="12sp"
+                    android:textColor="@color/md_on_surface_variant" />
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -142,20 +231,23 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginEnd="5dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
                         android:paddingVertical="14dp" android:paddingHorizontal="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="👕" android:textSize="32dp" />
+                            android:text="👕" android:textSize="28sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="纯棉圆领T恤" android:textSize="12dp" android:textStyle="bold" />
+                            android:text="纯棉圆领T恤" android:textSize="12sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="白色M · ¥65" android:textSize="10dp" android:textColor="@color/text_secondary" />
+                            android:text="白色M · ¥65" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="月售 32 件" android:textSize="10dp" android:textColor="@color/danger"
+                            android:text="月售 32 件" android:textSize="10sp"
+                            android:textColor="@color/md_error"
                             android:background="#FFEBEE"
-                            android:paddingVertical="1dp" android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp" android:paddingHorizontal="8dp"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -163,20 +255,23 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginHorizontal="5dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
                         android:paddingVertical="14dp" android:paddingHorizontal="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="👗" android:textSize="32dp" />
+                            android:text="👗" android:textSize="28sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="碎花雪纺连衣裙" android:textSize="12dp" android:textStyle="bold" />
+                            android:text="碎花雪纺连衣裙" android:textSize="12sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="蓝色M · ¥120" android:textSize="10dp" android:textColor="@color/text_secondary" />
+                            android:text="蓝色M · ¥120" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="月售 18 件" android:textSize="10dp" android:textColor="@color/danger"
+                            android:text="月售 18 件" android:textSize="10sp"
+                            android:textColor="@color/md_error"
                             android:background="#FFEBEE"
-                            android:paddingVertical="1dp" android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp" android:paddingHorizontal="8dp"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -184,20 +279,23 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginStart="5dp"
-                    app:cardCornerRadius="20dp" app:cardElevation="2dp">
+                    app:cardCornerRadius="12dp" app:cardElevation="1dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:gravity="center"
                         android:paddingVertical="14dp" android:paddingHorizontal="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="👖" android:textSize="32dp" />
+                            android:text="👖" android:textSize="28sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="高腰阔腿牛仔裤" android:textSize="12dp" android:textStyle="bold" />
+                            android:text="高腰阔腿牛仔裤" android:textSize="12sp" android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="浅蓝27 · ¥130" android:textSize="10dp" android:textColor="@color/text_secondary" />
+                            android:text="浅蓝27 · ¥130" android:textSize="11sp"
+                            android:textColor="@color/md_on_surface_variant" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="月售 12 件" android:textSize="10dp" android:textColor="@color/danger"
+                            android:text="月售 12 件" android:textSize="10sp"
+                            android:textColor="@color/md_error"
                             android:background="#FFEBEE"
-                            android:paddingVertical="1dp" android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp" android:paddingHorizontal="8dp"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

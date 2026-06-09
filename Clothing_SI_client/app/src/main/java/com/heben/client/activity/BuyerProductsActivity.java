@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.heben.client.R;
@@ -99,7 +100,7 @@ public class BuyerProductsActivity extends AppCompatActivity {
         tabAll.setTextSize(13);
         tabAll.setPadding(16, 8, 16, 8);
         tabAll.setGravity(android.view.Gravity.CENTER);
-        tabAll.setTextColor(0xFFE85D3A);
+        tabAll.setTextColor(ContextCompat.getColor(this, R.color.md_primary));
         tabAll.setBackgroundResource(R.drawable.tab_active_bg);
         tabAll.setTag("");
         tabAll.setOnClickListener(v -> selectCategory(tabAll));
@@ -116,7 +117,7 @@ public class BuyerProductsActivity extends AppCompatActivity {
             tab.setTextSize(13);
             tab.setPadding(16, 8, 16, 8);
             tab.setGravity(android.view.Gravity.CENTER);
-            tab.setTextColor(0xFF636E72);
+            tab.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             tab.setTag(cat);
             tab.setOnClickListener(v -> selectCategory(tab));
             layoutCategories.addView(tab);
@@ -130,7 +131,7 @@ public class BuyerProductsActivity extends AppCompatActivity {
             if (child instanceof TextView) {
                 TextView tab = (TextView) child;
                 boolean isSel = tab == selected;
-                tab.setTextColor(isSel ? 0xFFE85D3A : 0xFF636E72);
+                tab.setTextColor(isSel ? ContextCompat.getColor(this, R.color.md_primary) : ContextCompat.getColor(this, R.color.md_on_surface_variant));
                 tab.setBackgroundResource(isSel ? R.drawable.tab_active_bg : 0);
                 tab.setTypeface(null, isSel ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
             }
@@ -189,7 +190,7 @@ public class BuyerProductsActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setText(text);
         tv.setTextSize(13);
-        tv.setTextColor(0xFF95A5A6);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
         tv.setGravity(android.view.Gravity.CENTER);
         tv.setPadding(0, 40, 0, 40);
         layoutProducts.addView(tv);

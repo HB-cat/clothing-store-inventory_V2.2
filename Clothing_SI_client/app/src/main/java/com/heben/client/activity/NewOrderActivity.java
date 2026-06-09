@@ -11,6 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.heben.client.R;
 import com.heben.client.local.sync.NetworkUtil;
@@ -213,7 +216,7 @@ public class NewOrderActivity extends AppCompatActivity {
             TextView empty = new TextView(this);
             empty.setText("暂未添加商品，点击下方「添加商品」开始");
             empty.setTextSize(13f);
-            empty.setTextColor(0xFF95A5A6);
+            empty.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
             empty.setPadding(16, 24, 16, 24);
             empty.setGravity(android.view.Gravity.CENTER);
             layoutDraftItems.addView(empty);

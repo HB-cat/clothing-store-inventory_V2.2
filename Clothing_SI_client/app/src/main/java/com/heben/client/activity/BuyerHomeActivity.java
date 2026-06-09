@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.heben.client.R;
@@ -142,9 +143,11 @@ public class BuyerHomeActivity extends AppCompatActivity {
 
     private int getStatusColor(String s) {
         switch (s) {
-            case "confirmed": return 0xFF27AE60; case "arrived": return 0xFF2980B9;
-            case "completed": return 0xFF95A5A6; case "cancelled": return 0xFFE74C3C;
-            default: return 0xFFE67E22;
+            case "confirmed": return ContextCompat.getColor(this, R.color.md_success);
+            case "arrived": return ContextCompat.getColor(this, R.color.md_secondary);
+            case "completed": return ContextCompat.getColor(this, R.color.md_on_surface_variant);
+            case "cancelled": return ContextCompat.getColor(this, R.color.md_error);
+            default: return ContextCompat.getColor(this, R.color.md_tertiary_container);
         }
     }
 
@@ -153,7 +156,7 @@ public class BuyerHomeActivity extends AppCompatActivity {
         tv.setText(text);
         tv.setTextSize(13);
         tv.setLineSpacing(4, 1);
-        tv.setTextColor(0xFF95A5A6);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
         tv.setGravity(android.view.Gravity.CENTER);
         tv.setPadding(0, 20, 0, 20);
         parent.addView(tv);

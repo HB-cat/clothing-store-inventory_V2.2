@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/bg">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
         <RelativeLayout android:layout_width="match_parent" android:layout_height="56dp"
             android:background="@drawable/header_bar_bg" android:paddingHorizontal="16dp">
             <TextView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-                android:text="‹" android:textSize="20dp" android:textColor="@color/text_primary"
+                android:text="‹" android:textSize="20sp" android:textColor="@color/md_on_surface"
                 android:gravity="center" android:background="@drawable/circle_bg" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="新建订单" android:textSize="17dp" android:textStyle="bold"
-                android:textColor="@color/text_primary" android:layout_centerInParent="true" />
+                android:text="新建订单" android:textSize="17sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:layout_centerInParent="true" />
             <TextView android:id="@+id/btn_submit_top" android:layout_width="36dp" android:layout_height="36dp"
-                android:text="✔️" android:textSize="16dp" android:textColor="@color/text_primary"
+                android:text="✔️" android:textSize="16sp" android:textColor="@color/md_on_surface"
                 android:gravity="center" android:background="@drawable/circle_bg"
                 android:layout_alignParentEnd="true" android:clickable="true" android:focusable="true" />
         </RelativeLayout>
@@ -25,10 +26,10 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- 草稿卡片横向滚动 -->
+                <!-- ===== 草稿账单横向滚动 ===== -->
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="📄 草稿账单" android:textSize="15dp" android:textStyle="bold"
-                    android:textColor="#2D3436" android:layout_marginBottom="8dp" />
+                    android:text="📄 草稿账单" android:textSize="15sp" android:textStyle="bold"
+                    android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                 <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp">
                     <LinearLayout android:id="@+id/layout_draft_cards"
@@ -39,84 +40,86 @@
                 <!-- 提示 -->
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="📌 草稿最多6个，每单最多30种商品。提交后生成正式销售记录。"
-                    android:textSize="12dp" android:textColor="#95A5A6"
+                    android:textSize="12sp" android:textColor="@color/md_on_surface_variant"
                     android:layout_marginBottom="16dp" />
 
-                <!-- 当前草稿详情 -->
+                <!-- ===== 当前草稿详情 ===== -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
                     android:layout_marginBottom="8dp">
                     <TextView android:id="@+id/tv_draft_title"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📄 草稿 #1" android:textSize="15dp" android:textStyle="bold"
-                        android:textColor="#2D3436" />
+                        android:text="📄 草稿 #1" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" />
                     <TextView android:id="@+id/tv_draft_total"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="合计: ¥0" android:textSize="13dp" android:textStyle="bold"
-                        android:textColor="@color/primary" />
+                        android:text="合计: ¥0" android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/md_primary" />
                 </LinearLayout>
 
-                <!-- 草稿商品列表 -->
+                <!-- ===== 草稿商品列表 ===== -->
                 <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                    android:layout_height="wrap_content" app:cardCornerRadius="20dp" app:cardElevation="0dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                    app:cardElevation="1dp" android:layout_marginBottom="8dp">
                     <LinearLayout android:id="@+id/layout_draft_items"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:paddingVertical="4dp" />
                 </androidx.cardview.widget.CardView>
 
-                <!-- 买家显示 -->
+                <!-- ===== 买家显示 ===== -->
                 <LinearLayout android:id="@+id/layout_buyer_display"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
-                    android:paddingVertical="8dp" android:paddingHorizontal="4dp"
+                    android:paddingVertical="10dp" android:paddingHorizontal="12dp"
+                    android:background="@color/md_surface_container"
                     android:visibility="gone"
                     android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🧾" android:textSize="14dp" android:layout_marginEnd="6dp" />
+                        android:text="🧾" android:textSize="14sp" android:layout_marginEnd="6dp" />
                     <TextView android:id="@+id/tv_selected_buyer"
                         android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:textSize="13dp"
-                        android:textColor="@color/primary" android:textStyle="bold" />
+                        android:layout_weight="1" android:textSize="14sp"
+                        android:textColor="@color/md_primary" android:textStyle="bold" />
                     <TextView android:id="@+id/btn_clear_buyer"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="✕" android:textSize="14dp" android:textColor="#95A5A6"
-                        android:padding="4dp" android:clickable="true" android:focusable="true" />
+                        android:text="✕" android:textSize="14sp" android:textColor="@color/md_on_surface_variant"
+                        android:padding="6dp" android:clickable="true" android:focusable="true" />
                 </LinearLayout>
 
-                <!-- 操作按钮 -->
+                <!-- ===== 操作按钮 ===== -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:weightSum="3"
-                    android:layout_marginTop="4dp" android:layout_marginBottom="12dp">
+                    android:layout_marginTop="8dp" android:layout_marginBottom="12dp">
                     <com.google.android.material.button.MaterialButton android:id="@+id/btn_add_item"
                         android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
-                        android:text="➕ 添加商品" android:textSize="13dp"
+                        android:text="➕ 添加商品" android:textSize="13sp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        app:cornerRadius="22dp" app:strokeColor="@color/primary"
-                        android:textColor="@color/primary" android:layout_marginEnd="4dp" />
+                        app:cornerRadius="22dp" app:strokeColor="@color/md_primary"
+                        android:textColor="@color/md_primary" android:layout_marginEnd="4dp" />
                     <com.google.android.material.button.MaterialButton android:id="@+id/btn_new_draft"
                         android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
-                        android:text="📄 新建草稿" android:textSize="13dp"
+                        android:text="📄 新建草稿" android:textSize="13sp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        app:cornerRadius="22dp" app:strokeColor="#E85D3A"
-                        android:textColor="#E85D3A" android:layout_marginHorizontal="4dp" />
+                        app:cornerRadius="22dp" app:strokeColor="@color/md_primary"
+                        android:textColor="@color/md_primary" android:layout_marginHorizontal="4dp" />
                     <com.google.android.material.button.MaterialButton android:id="@+id/btn_select_buyer"
                         android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
-                        android:text="🧾 选择买家" android:textSize="13dp"
+                        android:text="🧾 选择买家" android:textSize="13sp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        app:cornerRadius="22dp" app:strokeColor="#95A5A6"
-                        android:textColor="#95A5A6" android:layout_marginStart="4dp" />
+                        app:cornerRadius="22dp" app:strokeColor="@color/md_outline"
+                        android:textColor="@color/md_on_surface_variant" android:layout_marginStart="4dp" />
                 </LinearLayout>
 
+                <!-- ===== 提交按钮 ===== -->
                 <com.google.android.material.button.MaterialButton android:id="@+id/btn_submit_order"
-                    android:layout_width="match_parent" android:layout_height="56dp"
-                    android:text="提交账单" android:textSize="16dp" app:cornerRadius="28dp"
-                    android:backgroundTint="@color/primary" />
-
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:text="提交账单" android:textSize="16sp" android:textStyle="bold"
+                    app:cornerRadius="26dp"
+                    android:backgroundTint="@color/md_primary"
+                    android:textColor="@color/md_on_primary" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 </FrameLayout>

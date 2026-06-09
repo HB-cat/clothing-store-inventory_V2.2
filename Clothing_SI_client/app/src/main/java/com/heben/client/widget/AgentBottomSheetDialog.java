@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.heben.client.R;
+import com.heben.client.agent.AgentRichCardHelper;
 import com.heben.client.agent.AgentRuleEngine;
 import com.heben.client.agent.AgentSuggestionManager;
 import com.heben.client.agent.OfflineAgentExecutor;
@@ -61,6 +62,12 @@ public class AgentBottomSheetDialog extends BottomSheetDialogFragment {
         offlineExecutor = new OfflineAgentExecutor(requireContext());
 
         v.findViewById(R.id.btn_sheet_close).setOnClickListener(x -> dismiss());
+        v.findViewById(R.id.btn_sheet_fullscreen).setOnClickListener(x -> {
+            dismiss();
+            Intent fullIntent = new Intent(requireContext(), com.heben.client.activity.AgentActivity.class);
+            fullIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(fullIntent);
+        });
         btnSend.setOnClickListener(x -> sendCommand());
 
         loadChatHistory();
@@ -335,7 +342,8 @@ public class AgentBottomSheetDialog extends BottomSheetDialogFragment {
                         if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                             AgentSummaryResponse data = response.body().getData();
                             if (data != null) {
-                                addAgentBubbleAndSave(buildRichSummary(data));
+                                // 富文本卡片展示 + 文本兜底
+                                addAgentCardBubble(data, buildRichSummary(data));
                             } else {
                                 addAgentBubbleAndSave("暂时没有经营数据");
                             }
@@ -437,5 +445,65 @@ public class AgentBottomSheetDialog extends BottomSheetDialogFragment {
         bubble.findViewById(R.id.layout_user).setVisibility(View.GONE);
         chatContainer.addView(bubble);
         scrollToBottom();
+    }
+
+    /** 添加富文本经营简报卡片到聊天区 */
+    private void addAgentCardBubble(AgentSummaryResponse data, String fallbackText) {
+        // 构建卡片 View
+        View card = AgentRichCardHelper.buildSummaryCard(requireContext(), data,
+                // 去补货按钮 → 打开进货页面
+                () -> {
+                    Intent i = new Intent(requireContext(), com.heben.client.activity.PurchaseActivity.class);
+                    startActivity(i);
+                },
+                // 详细分析按钮 → 打开经营分析页面
+                () -> {
+                    Intent i = new Intent(requireContext(), com.heben.client.activity.AnalyticsActivity.class);
+                    startActivity(i);
+                });
+
+        // 包装：左侧头像 + 卡片
+        LinearLayout wrapper = new LinearLayout(requireContext());
+        wrapper.setOrientation(LinearLayout.HORIZONTAL);
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        wrapper.setPadding(0, 0, 0, 12);
+
+        // 头像
+        TextView avatar = new TextView(requireContext());
+        avatar.setText("🤖");
+        avatar.setTextSize(18);
+        avatar.setGravity(android.view.Gravity.CENTER);
+        LinearLayout.LayoutParams avatarLp = new LinearLayout.LayoutParams(dp2px(36), dp2px(36));
+        avatarLp.setMargins(0, dp2px(4), dp2px(8), 0);
+        avatar.setLayoutParams(avatarLp);
+
+        wrapper.addView(avatar);
+        wrapper.addView(card);
+
+        chatContainer.addView(wrapper);
+        scrollToBottom();
+
+        // 同时保存文本版本到后端（持久化）
+        saveCardTextToBackend(fallbackText);
+    }
+
+    /** 保存卡片文本版本到后端聊天历史 */
+    private void saveCardTextToBackend(String fallbackText) {
+        if (lastUserText != null && fallbackText != null) {
+            HashMap<String, String> body = new HashMap<>();
+            body.put("userMessage", lastUserText);
+            body.put("agentMessage", fallbackText);
+            ApiClient.getService().saveAgentMessagePair(body).enqueue(new Callback<>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {}
+                @Override
+                public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {}
+            });
+        }
+    }
+
+    private int dp2px(int dp) {
+        return (int) (dp * requireContext().getResources().getDisplayMetrics().density + 0.5f);
     }
 }

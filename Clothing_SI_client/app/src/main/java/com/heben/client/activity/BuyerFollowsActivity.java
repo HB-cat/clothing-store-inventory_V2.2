@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.heben.client.R;
@@ -183,7 +184,7 @@ public class BuyerFollowsActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setText(text);
         tv.setTextSize(13);
-        tv.setTextColor(0xFF95A5A6);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.md_on_surface_variant));
         tv.setGravity(android.view.Gravity.CENTER);
         tv.setPadding(0, 24, 0, 24);
         tv.setLineSpacing(4, 1);

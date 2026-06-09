@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.heben.client.R;
 import com.heben.client.local.sync.ChartDataHolder;
@@ -328,9 +329,9 @@ public class AnalyticsActivity extends AppCompatActivity {
                     if (list != null && !list.isEmpty()) {
                         tvProfileConclusion.setText("你的客户偏年轻，喜欢休闲风");
                         // Add tag chips
-                        addProfileTag("女性 75%", "#E0F2F1", "#00695C");
-                        addProfileTag("25-35岁 60%", "#E3F2FD", "#1565C0");
-                        addProfileTag("休闲风偏好", "#FFF3E0", "#E65100");
+                        addProfileTag("女性 75%", R.color.md_tertiary_container, R.color.md_on_tertiary_container);
+                        addProfileTag("25-35岁 60%", R.color.md_primary_container, R.color.md_on_primary_container);
+                        addProfileTag("休闲风偏好", R.color.md_error_container, R.color.md_on_error_container);
                     } else {
                         tvProfileConclusion.setText("暂无客户数据");
                     }
@@ -341,14 +342,12 @@ public class AnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void addProfileTag(String text, String bgColor, String textColor) {
+    private void addProfileTag(String text, int bgColorRes, int textColorRes) {
         TextView tv = new TextView(this);
         tv.setText(text);
         tv.setTextSize(12);
-        int bg = android.graphics.Color.parseColor(bgColor);
-        int tc = android.graphics.Color.parseColor(textColor);
-        tv.setBackgroundColor(bg);
-        tv.setTextColor(tc);
+        tv.setBackgroundColor(ContextCompat.getColor(this, bgColorRes));
+        tv.setTextColor(ContextCompat.getColor(this, textColorRes));
         tv.setPadding(12, 4, 12, 4);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

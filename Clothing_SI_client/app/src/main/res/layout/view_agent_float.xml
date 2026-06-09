@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="56dp" android:layout_height="56dp"
-    android:background="@drawable/circle_bg"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
     android:clickable="true"
     android:focusable="true">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:gravity="center" android:orientation="vertical"
-        android:background="@color/primary_dark" android:alpha="0.92">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="🤖" android:textSize="20dp" />
+
+    <!-- MD3 FAB 风格：圆形 + 主题色 + 阴影 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/circle_bg"
+        android:backgroundTint="@color/md_primary"
+        android:elevation="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🤖"
+            android:textSize="22sp" />
     </LinearLayout>
+
     <!-- 建议指示角标 -->
-    <TextView android:id="@+id/tv_float_badge"
-        android:layout_width="10dp" android:layout_height="10dp"
-        android:background="#FF4444"
+    <TextView
+        android:id="@+id/tv_float_badge"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@color/md_error"
         android:visibility="gone"
         android:layout_gravity="top|end" />
 </FrameLayout>

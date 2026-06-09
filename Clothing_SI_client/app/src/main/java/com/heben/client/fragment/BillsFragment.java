@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,33 +122,36 @@ public class BillsFragment extends Fragment {
         activePreset = "custom";
         updateDateDisplay();
         // Deselect all presets
-        chipToday.setTextColor(0xFF95A5A6);
-        chipMonth.setTextColor(0xFF95A5A6);
-        chipYear.setTextColor(0xFF95A5A6);
+        int variantColor = ContextCompat.getColor(requireContext(), R.color.md_on_surface_variant);
+        chipToday.setTextColor(variantColor);
+        chipMonth.setTextColor(variantColor);
+        chipYear.setTextColor(variantColor);
         loadData();
     }
 
     private void applyPreset(String preset) {
         activePreset = preset;
         LocalDate now = LocalDate.now();
+        int primaryColor = ContextCompat.getColor(requireContext(), R.color.md_primary);
+        int variantColor = ContextCompat.getColor(requireContext(), R.color.md_on_surface_variant);
         switch (preset) {
             case "today":
                 selectedDate = now;
-                chipToday.setTextColor(0xFFE85D3A);
-                chipMonth.setTextColor(0xFF95A5A6);
-                chipYear.setTextColor(0xFF95A5A6);
+                chipToday.setTextColor(primaryColor);
+                chipMonth.setTextColor(variantColor);
+                chipYear.setTextColor(variantColor);
                 break;
             case "month":
                 selectedDate = now.withDayOfMonth(1);
-                chipToday.setTextColor(0xFF95A5A6);
-                chipMonth.setTextColor(0xFFE85D3A);
-                chipYear.setTextColor(0xFF95A5A6);
+                chipToday.setTextColor(variantColor);
+                chipMonth.setTextColor(primaryColor);
+                chipYear.setTextColor(variantColor);
                 break;
             case "year":
                 selectedDate = now.withDayOfYear(1);
-                chipToday.setTextColor(0xFF95A5A6);
-                chipMonth.setTextColor(0xFF95A5A6);
-                chipYear.setTextColor(0xFFE85D3A);
+                chipToday.setTextColor(variantColor);
+                chipMonth.setTextColor(variantColor);
+                chipYear.setTextColor(primaryColor);
                 break;
         }
         updateDateDisplay();

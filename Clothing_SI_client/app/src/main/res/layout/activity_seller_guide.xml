@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="#F5F5F5">
+    android:orientation="vertical" android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="#FFFFFF" android:orientation="horizontal"
+        android:background="@color/md_surface" android:orientation="horizontal"
         android:gravity="center_vertical" android:paddingStart="16dp" android:paddingEnd="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="‹ 返回"
-            android:textSize="16dp" android:textColor="#2D3436" android:padding="8dp" />
+            android:textSize="16sp" android:textColor="@color/md_on_surface" android:padding="8dp" />
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:text="卖家使用指南"
-            android:textSize="17dp" android:textStyle="bold" android:textColor="#2D3436"
+            android:textSize="17sp" android:textStyle="bold" android:textColor="@color/md_on_surface"
             android:gravity="center" android:layout_marginEnd="60dp" />
     </LinearLayout>
 
@@ -22,49 +22,60 @@
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📋 快速上手" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="📋 快速上手" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="1. 添加商品：填写名称、进价/售价、选择分类，可选属性组合库存\n2. 销售记账：点击「新建账单」或使用智能体输入「卖了...」\n3. 进货入库：可从已有商品/新建/批发商共享库三个来源\n4. 查看经营分析：热销TOP8、趋势图、客户画像" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="1. 添加商品：填写名称、进价/售价、选择分类，可选属性组合库存\n2. 销售记账：点击「新建账单」或使用智能体输入「卖了...」\n3. 进货入库：可从已有商品/新建/批发商共享库三个来源\n4. 查看经营分析：热销TOP8、趋势图、客户画像"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🤖 智能体指令" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="🤖 智能体指令" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 「卖了2件M码白T恤」— 快速记账\n• 「进货牛仔裤10条」— 快捷入库\n• 「查询本月销售额」— 经营查询\n• 「把商品管理放到第一位」— 模块排序\n• 「关闭提示音」— 系统设置" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="• 「卖了2件M码白T恤」— 快速记账\n• 「进货牛仔裤10条」— 快捷入库\n• 「查询本月销售额」— 经营查询\n• 「把商品管理放到第一位」— 模块排序\n• 「关闭提示音」— 系统设置"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp" android:layout_marginBottom="10dp">
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📦 批零交易" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="📦 批零交易" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 零售商：从「商品导入」进入批发商共享库，选择商品发起进货请求\n• 批发商：确认售出后，商品+库存自动联动\n• 聊天中可收发商品单推荐，一键导入" android:textSize="13dp" android:textColor="#636E72" android:lineSpacingExtra="3dp" />
+                        android:text="• 零售商：从「商品导入」进入批发商共享库，选择商品发起进货请求\n• 批发商：确认售出后，商品+库存自动联动\n• 聊天中可收发商品单推荐，一键导入"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardElevation="1dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📞 联系开发者" android:textSize="15dp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        android:text="📞 联系开发者" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="邮箱：2330521417@qq.com" android:textSize="13dp" android:textColor="#636E72" />
+                        android:text="邮箱：2330521417@qq.com" android:textSize="13sp"
+                        android:textColor="@color/md_on_surface_variant" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -59,6 +59,7 @@
         <activity android:name=".activity.SellerGuideActivity" />
         <activity android:name=".activity.BuyerGuideActivity" />
         <activity android:name=".activity.SharedProductsActivity" />
+        <activity android:name=".activity.AgentActivity" android:windowSoftInputMode="adjustResize" />
 
     </application>
 </manifest>

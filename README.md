@@ -2,11 +2,13 @@
 
 面向小商户的全栈进销存协同系统，覆盖零售商、批发商、买家三种角色 + 管理员后台。
 
+> 🎨 **2026-06-10：全端 MD3 结构级重写 + 多巴胺配色体系上线**
+
 ## 系统架构
 
 ```
 后端: Spring Boot 3.2.0 + MyBatis-Plus + MySQL 8.0
-客户端: Android (Java + Retrofit2 + Material Design)
+客户端: Android (Java + Retrofit2 + Material Design 3)
 管理后台: Thymeleaf + Bootstrap 5
 ```
 
@@ -14,25 +16,26 @@
 
 ```
 Clothing_S_I_V2.2/
-├── clothing_SI_server/          # 后端 Maven 项目
+├── Clothing_SI_server/          # 后端 Maven 项目
 │   ├── src/main/java/           # Java 源码 (Controller/Service/Entity)
 │   ├── src/main/resources/      # 配置文件 + Thymeleaf 模板
 │   ├── pom.xml                  # Maven 依赖
 │   └── test-*.http              # API 测试文件
 ├── Clothing_SI_client/          # Android 客户端
 │   └── app/src/main/
-│       ├── java/.../activity/   # 25个 Activity + 4个 Fragment
-│       ├── java/.../adapter/    # 8个 RecyclerView Adapter
+│       ├── java/.../activity/   # 25+ Activity + 4 Fragment
+│       ├── java/.../adapter/    # 8 个 RecyclerView Adapter
 │       ├── java/.../model/      # 全部数据模型
+│       ├── java/.../agent/      # 智能体引擎（规则引擎/建议/离线执行）
 │       ├── java/.../util/       # SoundManager/TokenManager/AppContext/BottomNav
-│       ├── java/.../network/    # ApiClient + ApiService (46+接口)
-│       └── res/layout/          # 50个布局文件（含ui_preview全面改造）
-├── ui_preview/                  # 17个HTML设计稿（暖橙主题标准）
-├── Clothing_SI_database/        # 数据库脚本
-│   ├── init.sql                 # 建表 (19张表)
-│   └── seed_data.sql            # 种子数据
-├── 工作进度表.md                # 详细开发进度与修复记录
-├── 接受引导书.md                # 项目验收/测试引导
+│       ├── java/.../network/    # ApiClient + ApiService（50+接口）
+│       ├── res/layout/          # 60+ 布局文件（MD3 重写）
+│       └── res/drawable/        # MD3 drawable（圆角背景/分段控件/按钮选择器）
+├── ui_preview/                  # 17个HTML设计稿（历史参考）
+├── Clothing_SI_database/        # 数据库脚本（19张表）
+├── PRD_split/                   # 14章产品需求文档
+├── 接受引导书.md                # 项目接手/验收/测试引导（新开发者必读）
+├── 工作进度表.md                # 完整开发进度与修复记录
 └── README.md                    # 本文件
 ```
 
@@ -40,11 +43,24 @@ Clothing_S_I_V2.2/
 
 | 模块 | 状态 | 详情 |
 |:----:|:----:|------|
-| 后端 API (45+接口) | ✅ 100% | 注册登录/商品/销售/进货/分析/聊天/预约/智能体 |
+| 后端 API (50+接口) | ✅ 100% | 注册登录/商品/销售/进货/分析/聊天/预约/智能体/买家端 |
 | 管理员后台 (4页面) | ✅ 100% | Thymeleaf 页面，管理员账号 heben/heben0831 |
-| Android 客户端 | ✅ 100% | BUILD SUCCESSFUL，集成测试&崩溃修复完成 |
-| 买家端布局简化重写 | ✅ 100% | 白色顶栏+共享底部导航+按钮不重叠 |
-| 集成测试 | ✅ 100% | 详见 [接受引导书.md](接受引导书.md) |
+| Android MD3 重写 | ✅ 100% | 60+ 布局文件 4 批全部完成，含卖家/买家/智能体/公共页 |
+| 多巴胺配色体系 | ✅ 100% | 橙 C 位 + 蓝辅 + 黄点缀 + 绿确认 + 红警告 |
+| 买家端布局 | ✅ 100% | 8 布局（含共享底部导航） |
+| 集成测试 | ✅ 完成 | 崩溃修复 + 布局精调 |
+
+## 🎨 MD3 + 多巴胺配色速查
+
+| 色块 | 语义色 | 色值 | 用途 |
+|:----:|--------|:----:|------|
+| 🟠 | `md_primary` | `#F97316` | 主按钮、导航选中态、顶栏 |
+| 🔵 | `md_secondary` | `#2563EB` | 辅助按钮、链接文字 |
+| 🟡 | `md_tertiary_container` | `#FBBF24` | 热销标签、预警高亮 |
+| 🟢 | `md_success` | `#10B981` | 已确认状态 |
+| 🔴 | `md_error` | `#EF4444` | 删除/取消/错误 |
+| ⚪ | `md_surface` | `#FFFFFF` | 卡片/输入框背景 |
+| ⚫ | `md_on_surface` | `#1F2937` | 主文字 |
 
 ## Android 客户端功能概览
 
@@ -62,9 +78,9 @@ Clothing_S_I_V2.2/
 | 经营分析 | AnalyticsActivity | 7 |
 | 聊天 | ChatDetailActivity | 2 |
 | 预约 | AppointmentsActivity | 3 |
-| 智能体 | AgentPanelActivity | 1 |
-| 买家端 | BuyerHome/Products/Follows/Messages/Profile | 2 |
-| 数据管理 | DataManageActivity | （留接口）|
+| 智能体 | AgentPanelActivity + AgentActivity | 1 |
+| 买家端 | BuyerHome/Products/Follows/Messages/Profile/InfoEdit/Guide | 8 |
+| 数据管理 | DataManageActivity | — |
 
 > 详细接手说明见 [接受引导书.md](接受引导书.md)
 
@@ -78,11 +94,11 @@ Clothing_S_I_V2.2/
 CREATE DATABASE IF NOT EXISTS clothing_si_db;
 ```
 
-然后运行 `Clothing_SI_database/init.sql` 建表。
+然后运行 `Clothing_SI_database/init.sql` 建表，`seed_data.sql` 导入种子数据。
 
 ### 2. 配置
 
-编辑 `clothing_SI_server/src/main/resources/application.properties`:
+编辑 `Clothing_SI_server/src/main/resources/application.properties`:
 
 ```properties
 spring.datasource.username=root
@@ -92,7 +108,7 @@ spring.datasource.password=root
 ### 3. 启动后端
 
 ```bash
-cd clothing_SI_server
+cd Clothing_SI_server
 mvn spring-boot:run
 ```
 
@@ -125,6 +141,7 @@ deepseek.api.key=sk-你的DeepSeek API Key
 | 乐观锁扣库存 | version 字段, UPDATE ... WHERE version = ? |
 | 响应格式 | 统一 ApiResponse {code, message, data} |
 | Android 网络层 | Retrofit2 + Gson + TokenInterceptor |
+| 配色体系 | MD3 语义色板（15 个 md_* 色），多巴胺混搭 |
 
 ## 技术栈
 
@@ -141,4 +158,4 @@ deepseek.api.key=sk-你的DeepSeek API Key
 
 ---
 
-*Clothing-SI V2.2 — HeBen_Cat*
+*Clothing-SI V2.2 — HeBen_Cat | 2026-06-10*
