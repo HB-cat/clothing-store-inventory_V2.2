@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp" app:cardElevation="1dp"
+    android:layout_marginBottom="10dp" app:contentPadding="14dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical">
+        <!-- Emoji thumb -->
+        <TextView android:id="@+id/tv_order_thumb" android:layout_width="44dp"
+            android:layout_height="44dp" android:textSize="22sp" android:gravity="center"
+            android:background="@drawable/circle_bg" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+            <!-- Product names -->
+            <TextView android:id="@+id/tv_order_products" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="14sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" android:maxLines="2" android:ellipsize="end" />
+            <!-- Time -->
+            <TextView android:id="@+id/tv_order_time" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="12sp"
+                android:textColor="@color/md_on_surface_variant" android:layout_marginTop="2dp" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="end">
+            <!-- Total amount -->
+            <TextView android:id="@+id/tv_order_amount" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold"
+                android:textColor="@color/md_on_surface" />
+            <!-- Quantity -->
+            <TextView android:id="@+id/tv_order_qty" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="12sp"
+                android:textColor="@color/md_on_surface_variant" android:layout_marginTop="2dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

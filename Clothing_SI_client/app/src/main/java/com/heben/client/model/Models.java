@@ -84,6 +84,7 @@ public class Models {
     // ===== Sales =====
     public static class SaleRecord {
         public Long id;
+        public Long userId;         // 卖家ID（关联的店铺）
         public String buyerName;
         public double totalAmount;
         public int itemCount;

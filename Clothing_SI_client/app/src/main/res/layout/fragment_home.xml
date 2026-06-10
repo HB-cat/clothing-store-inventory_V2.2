@@ -29,8 +29,8 @@
                 <TextView android:layout_width="44dp" android:layout_height="44dp"
                     android:text="👤" android:textSize="22sp"
                     android:gravity="center"
-                    android:background="@color/md_primary_container"
-                    android:backgroundTint="@color/md_primary_container" />
+                    android:background="@drawable/btn_gradient_container"
+                    android:includeFontPadding="false" />
             </LinearLayout>
 
             <!-- ===== 快捷指令输入框 ===== -->

@@ -21,7 +21,7 @@
                 android:layout_width="match_parent" android:layout_height="52dp"
                 android:text="导出数据" android:textSize="16sp" android:textStyle="bold"
                 app:cornerRadius="26dp"
-                android:backgroundTint="@color/md_primary"
+                android:background="@drawable/btn_gradient_primary" app:backgroundTint="@null"
                 android:textColor="@color/md_on_primary"
                 android:layout_marginBottom="12dp" />
             <com.google.android.material.button.MaterialButton android:id="@+id/btn_import"

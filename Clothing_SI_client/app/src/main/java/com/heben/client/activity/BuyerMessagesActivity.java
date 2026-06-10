@@ -57,6 +57,11 @@ public class BuyerMessagesActivity extends AppCompatActivity {
         tabAppointment = findViewById(R.id.tab_appointment);
         tabChat.setOnClickListener(v -> switchTab(true));
         tabAppointment.setOnClickListener(v -> switchTab(false));
+
+        // 支持从外部 intent 直接切到预约 tab
+        if (getIntent().getBooleanExtra("switch_to_appointment", false)) {
+            switchTab(false);
+        }
     }
 
     private void switchTab(boolean isChat) {

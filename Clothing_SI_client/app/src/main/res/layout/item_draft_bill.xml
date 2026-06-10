@@ -20,7 +20,7 @@
         <com.google.android.material.button.MaterialButton android:id="@+id/btn_submit_draft"
             android:layout_width="match_parent" android:layout_height="40dp" android:text="提交账单"
             android:textSize="13sp" app:cornerRadius="20dp"
-            android:backgroundTint="@color/md_primary"
+            android:background="@drawable/btn_gradient_primary" app:backgroundTint="@null"
             android:textColor="@color/md_on_primary"
             android:layout_marginTop="10dp" />
     </LinearLayout>

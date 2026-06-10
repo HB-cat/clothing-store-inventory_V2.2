@@ -41,7 +41,7 @@
             <com.google.android.material.button.MaterialButton android:id="@+id/btn_buy"
                 android:layout_width="match_parent" android:layout_height="48dp"
                 android:text="逛逛全部商品" app:cornerRadius="24dp"
-                android:backgroundTint="@color/md_primary"
+                android:background="@drawable/btn_gradient_primary" app:backgroundTint="@null"
                 android:textColor="@color/md_on_primary" />
         </LinearLayout>
     </ScrollView>

@@ -5,14 +5,14 @@
     android:orientation="vertical" android:background="@color/md_surface_container_low">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-        android:background="@color/md_surface" android:orientation="horizontal"
+        android:background="@drawable/header_bar_bg" android:orientation="horizontal"
         android:gravity="center_vertical" android:paddingStart="16dp" android:paddingEnd="16dp">
         <TextView android:id="@+id/btn_back" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="‹ 返回"
-            android:textSize="16sp" android:textColor="@color/md_on_surface" android:padding="8dp" />
+            android:layout_height="wrap_content" android:text="‹ 返回" android:textSize="16sp"
+            android:textColor="@color/md_on_surface" android:padding="8dp" />
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-            android:layout_weight="1" android:text="买家使用指南"
-            android:textSize="17sp" android:textStyle="bold" android:textColor="@color/md_on_surface"
+            android:layout_weight="1" android:text="🛍️ 买家使用指南" android:textSize="17sp"
+            android:textStyle="bold" android:textColor="@color/md_on_surface"
             android:gravity="center" android:layout_marginEnd="60dp" />
     </LinearLayout>
 
@@ -20,51 +20,119 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
 
+            <!-- 注册与登录 -->
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
                 app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🛍️ 快速上手" android:textSize="15sp" android:textStyle="bold"
-                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
+                        android:text="🔐 注册与登录" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="1. 发现商家：在首页搜索框中输入店铺名或关键字\n2. 关注商家：点击「关注」按钮，关注后才可互动\n3. 浏览商品：在关注的商家页面查看商品（售价、图片）\n4. 预约到店：选择2小时时段，提交预约"
+                        android:text="1️⃣ 打开 App → 点「注册」→ 选「买家」\n2️⃣ 填昵称 + 密码 → 系统给你一个用户名（如 buy_xxx）\n3️⃣ 用用户名 + 密码登录\n💡 填个人信息后，商家推荐更准哦"
                         android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
                         android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 首页 -->
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
                 app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="💬 聊天与预约" android:textSize="15sp" android:textStyle="bold"
-                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
+                        android:text="🏪 首页 — 发现好店" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 关注商家后，可发送文本、图片消息\n• 在商家页面点击「预约」选择时段\n• 预约状态：待确认→已确认→到店→已完成\n• 取消后可立即重新预约"
+                        android:text="🔍 搜索框 → 输入店铺名或关键字\n❤️ 看到心仪的店 → 点「关注」（关注后才能预约和聊天）\n👀 浏览商品 → 商品名、售价、图片\n⚡ 快捷入口 → 我的关注 · 我的预约"
                         android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
                         android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 预约到店 -->
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
                 app:cardElevation="1dp" android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="👤 个人信息" android:textSize="15sp" android:textStyle="bold"
-                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
+                        android:text="📅 预约到店" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="• 在「我的」页面完善客户信息（年龄、身高体重、穿衣风格）\n• 这些信息将帮助商家为您提供更好的推荐\n• 历史订单可在「我的」页面查看"
+                        android:text="1️⃣ 进商家页 → 点「预约」→ 选时段（9-11、11-13、14-16、16-18）\n2️⃣ 提交后状态为「待确认」\n⏳ 待确认 → ✅ 已确认 → ✔️ 已完成 → ❌ 已拒绝\n⚠️ 累计 6 次不到店，预约功能停 1 个月\n⏰ 预约前 30 分钟会有推送提醒"
                         android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
                         android:lineSpacingExtra="3dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 聊天 -->
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="💬 与商家聊天" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="📝 文字聊天 — 像微信一样\n🖼️ 图片 — 发照片给商家看\n🃏 商品卡片 — 发商家店里的商品链接"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 消息页 -->
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="📬 消息页" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🏪 顶部 — 最近预约（最多 6 条）\n💬 下方 — 聊天列表，支持按店名搜索\n📅 支持聊天/预约 tab 切换"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 我的页面 -->
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="👤 我的页面" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🖼️ 头像 → 可换 | ✏️ 昵称 → 可改 | 🔑 用户名 → 不可改\n📋 客户信息 → 完善年龄/身高/三围/风格，推荐更精准\n📄 历史订单 → 按商品名搜索\n🧭 底部导航：首页 | 消息 | 我的"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 注意事项 -->
+            <androidx.cardview.widget.CardView android:layout_width="match_parent"
+                android:layout_height="wrap_content" app:cardCornerRadius="12dp"
+                app:cardElevation="1dp" android:layout_marginBottom="10dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="📌 注意事项" android:textSize="15sp" android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🌐 买家功能需要联网，断网时用不了\n🔒 个人信息仅用于商家推荐参考，密码不会泄露"
+                        android:textSize="13sp" android:textColor="@color/md_on_surface_variant"
+                        android:lineSpacingExtra="3dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 联系开发者 -->
             <androidx.cardview.widget.CardView android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:cardCornerRadius="12dp"
                 app:cardElevation="1dp">
@@ -72,7 +140,7 @@
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📞 联系开发者" android:textSize="15sp" android:textStyle="bold"
-                        android:textColor="@color/md_on_surface" android:layout_marginBottom="8dp" />
+                        android:textColor="@color/md_on_surface" android:layout_marginBottom="6dp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="邮箱：2330521417@qq.com" android:textSize="13sp"
                         android:textColor="@color/md_on_surface_variant" />

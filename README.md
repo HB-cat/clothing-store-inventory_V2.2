@@ -34,7 +34,7 @@ Clothing_S_I_V2.2/
 ├── ui_preview/                  # 17个HTML设计稿（历史参考）
 ├── Clothing_SI_database/        # 数据库脚本（19张表）
 ├── PRD_split/                   # 14章产品需求文档
-├── 接受引导书.md                # 项目接手/验收/测试引导（新开发者必读）
+├── 接手引导书.md                # 项目接手/验收/测试引导（新开发者必读）
 ├── 工作进度表.md                # 完整开发进度与修复记录
 └── README.md                    # 本文件
 ```
@@ -82,7 +82,7 @@ Clothing_S_I_V2.2/
 | 买家端 | BuyerHome/Products/Follows/Messages/Profile/InfoEdit/Guide | 8 |
 | 数据管理 | DataManageActivity | — |
 
-> 详细接手说明见 [接受引导书.md](接受引导书.md)
+> 详细接手说明见 [接手引导书.md](接手引导书.md)
 
 ## 快速启动
 

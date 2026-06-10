@@ -49,6 +49,7 @@
         <activity android:name=".activity.BuyerMessagesActivity" />
         <activity android:name=".activity.BuyerProfileActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.BuyerFollowsActivity" />
+        <activity android:name=".activity.BuyerOrdersActivity" />
         <activity android:name=".activity.BuyerInfoEditActivity" android:windowSoftInputMode="adjustResize" />
 
         <!-- Agent Overlay Service -->
