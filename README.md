@@ -32,7 +32,7 @@ Clothing_S_I_V2.2/
 │       ├── res/layout/          # 60+ 布局文件（MD3 重写）
 │       └── res/drawable/        # MD3 drawable（圆角背景/分段控件/按钮选择器）
 ├── ui_preview/                  # 17个HTML设计稿（历史参考）
-├── Clothing_SI_database/        # 数据库脚本（19张表）
+├── Clothing_SI_database/        # 数据库脚本（23张表）
 ├── PRD_split/                   # 14章产品需求文档
 ├── 接手引导书.md                # 项目接手/验收/测试引导（新开发者必读）
 ├── 工作进度表.md                # 完整开发进度与修复记录
